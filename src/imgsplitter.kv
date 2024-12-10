@@ -1,0 +1,160 @@
+#:kivy 1.0
+#:import kivy kivy
+#:import win kivy.core.window
+
+
+# BoxLayout:
+# 	orientation: 'vertical'
+# 	Label:
+# 		text: 'Python Kivy Tutorial'
+# 		font_size: '30pt'
+# 	Label:
+# 		text: 'From TutorialsPoint'
+# 		font_size: '50'
+# 		color: (1,0,0,1)
+
+# Main box
+BoxLayout:
+	orientation: 'vertical'
+	padding: 0
+	spacing: 0
+
+	# menu bar
+	BoxLayout:
+		orientation: 'horizontal'
+		size_hint: (.2, .05)
+
+
+		Button:
+			text: 'Open File'
+		Button:
+			text: 'Spliterise'
+
+	BoxLayout:
+		orientation: 'horizontal'
+		# work area
+		size_hint: (1, 1)
+		FloatLayout:
+		# canvas:
+			canvas:
+				Color:
+					rgb: 1, 1, 1, 0
+				Rectangle:
+					source: 'data/images/background.png'
+					size: self.size
+
+			# canvas:
+				# size: 88, 88
+				Rectangle:
+					source: 'data/images/shadow32.png'
+					# size: self.size
+					size: (.8, 88)
+
+		# config tool box
+		BoxLayout:
+			size_hint: (.3, 1)
+			# size_hint: (1, None)
+			# size_hint: (20, 10)
+			# width: .3
+			orientation: 'vertical'
+			BoxLayout:
+				size_hint: (1, 0.5)
+				orientation: 'horizontal'
+				Label:
+					text: ""
+				Label:
+					text: ""
+				Label:
+					text: "Top"
+				Label:
+					text: ""
+				Label:
+					text: ""
+			BoxLayout:
+				size_hint: (1, 0.5)
+				orientation: 'horizontal'
+				Label:
+					text: ""
+				Label:
+					text: ""
+				TextInput:
+					halign: "center"
+					multiline: False
+					text: "0"
+				Label:
+					text: ""
+				Label:
+					text: ""
+			BoxLayout:
+				size_hint: (1, 0.5)
+				orientation: 'horizontal'
+				Label:
+					text: ""
+				Label:
+					text: ""
+				Label:
+					text: "Height"
+				Label:
+					text: ""
+				Label:
+					text: ""
+			BoxLayout:
+				size_hint: (1, 0.5)
+				orientation: 'horizontal'
+				Label:
+					text: ""
+				Label:
+					text: ""
+				TextInput:
+					halign: "center"
+					multiline: False
+					text: "0"
+				Label:
+					text: ""
+				Label:
+					text: ""
+			BoxLayout:
+				size_hint: (1, 0.5)
+				orientation: 'horizontal'
+				Label:
+					text: "Left"
+				TextInput:
+					halign: "center"
+					multiline: False
+					text: "0"
+				Label:
+					text: "Width"
+				TextInput:
+					halign: "center"
+					multiline: False
+					text: "0"
+				Label:
+					text: ""
+			BoxLayout:
+				size_hint: (1, 0.5)
+				orientation: 'horizontal'
+				Label:
+					text: "Rows"
+				TextInput:
+					halign: "center"
+					multiline: False
+					text: "0"
+				Label:
+					text: "Columns"
+				TextInput:
+					halign: "center"
+					multiline: False
+					text: "0"
+				Label:
+					text: ""
+			BoxLayout:
+				size_hint: (1, 5)
+				orientation: 'horizontal'
+				Label:
+					text: ""
+		# BoxLayout:
+		# 	size_hint: (.3, 1)
+		# 	orientation: 'vertical'
+		# BoxLayout:
+		# 	size_hint: (1, 1)
+		# 	orientation: 'vertical'
