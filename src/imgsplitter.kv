@@ -3,7 +3,7 @@
 #:import win kivy.core.window
 
 
-# BoxLayout:
+# MDBoxLayout:
 # 	orientation: 'vertical'
 # 	Label:
 # 		text: 'Python Kivy Tutorial'
@@ -14,147 +14,356 @@
 # 		color: (1,0,0,1)
 
 # Main box
-BoxLayout:
-	orientation: 'vertical'
-	padding: 0
-	spacing: 0
+<ImgSplitterWindow>:
+# 	FloatLayout:
+# 		pos:0,0
+# 		size: root.width, root.height
+	# img_src = 'data/images/transperent.png'
 
-	# menu bar
-	BoxLayout:
-		orientation: 'horizontal'
-		size_hint: (.2, .05)
+	# canvas:
+	# 	Color:
+	# 		rgba: root.background_color
+	# 	Rectangle:
+	# 		pos: self.pos
+	# 		size: self.size
+
+	MDBoxLayout:
+		padding: 1
+		spacing: 3
+		orientation: 'vertical'
+
+		# menu bar
+		MDBoxLayout:
+			orientation: 'horizontal'
+			# size_hint: (1, .05)
+			size_hint: (1, .6)
+			# size_hint: (1, 1)
 
 
-		Button:
-			text: 'Open File'
-		Button:
-			text: 'Spliterise'
+			MDRaisedButton:
+				id: open_file
+				text: 'Open File'
+				# on_press: root.on_MDRaisedButton_press_open_file(parent=self.parent.parent.parent)
+				# on_press: root.on_MDRaisedButton_press_open_file(spliterise)
+				on_press: root.show_load()
+				valign: "top"
 
-	BoxLayout:
-		orientation: 'horizontal'
-		# work area
-		size_hint: (1, 1)
-		FloatLayout:
-		# canvas:
-			canvas:
-				Color:
-					rgb: 1, 1, 1, 0
-				Rectangle:
-					source: 'data/images/background.png'
-					size: self.size
+			Label:
+				# size_hint: (5, 0.05)
+				text: ""
 
-			# canvas:
-				# size: 88, 88
-				Rectangle:
-					source: 'data/images/shadow32.png'
-					# size: self.size
-					size: (.8, 88)
+			MDRaisedButton:
+				id: spliterise
+				text: 'Spliterise'
+				on_press: root.on_button_press(spliterise)
+				valign: "top"
 
-		# config tool box
-		BoxLayout:
-			size_hint: (.3, 1)
-			# size_hint: (1, None)
-			# size_hint: (20, 10)
-			# width: .3
-			orientation: 'vertical'
-			BoxLayout:
-				size_hint: (1, 0.5)
-				orientation: 'horizontal'
-				Label:
-					text: ""
-				Label:
-					text: ""
-				Label:
-					text: "Top"
-				Label:
-					text: ""
-				Label:
-					text: ""
-			BoxLayout:
-				size_hint: (1, 0.5)
-				orientation: 'horizontal'
-				Label:
-					text: ""
-				Label:
-					text: ""
-				TextInput:
-					halign: "center"
-					multiline: False
-					text: "0"
-				Label:
-					text: ""
-				Label:
-					text: ""
-			BoxLayout:
-				size_hint: (1, 0.5)
-				orientation: 'horizontal'
-				Label:
-					text: ""
-				Label:
-					text: ""
-				Label:
-					text: "Height"
-				Label:
-					text: ""
-				Label:
-					text: ""
-			BoxLayout:
-				size_hint: (1, 0.5)
-				orientation: 'horizontal'
-				Label:
-					text: ""
-				Label:
-					text: ""
-				TextInput:
-					halign: "center"
-					multiline: False
-					text: "0"
-				Label:
-					text: ""
-				Label:
-					text: ""
-			BoxLayout:
-				size_hint: (1, 0.5)
-				orientation: 'horizontal'
-				Label:
-					text: "Left"
-				TextInput:
-					halign: "center"
-					multiline: False
-					text: "0"
-				Label:
-					text: "Width"
-				TextInput:
-					halign: "center"
-					multiline: False
-					text: "0"
-				Label:
-					text: ""
-			BoxLayout:
-				size_hint: (1, 0.5)
-				orientation: 'horizontal'
-				Label:
-					text: "Rows"
-				TextInput:
-					halign: "center"
-					multiline: False
-					text: "0"
-				Label:
-					text: "Columns"
-				TextInput:
-					halign: "center"
-					multiline: False
-					text: "0"
-				Label:
-					text: ""
-			BoxLayout:
-				size_hint: (1, 5)
-				orientation: 'horizontal'
-				Label:
-					text: ""
-		# BoxLayout:
-		# 	size_hint: (.3, 1)
-		# 	orientation: 'vertical'
-		# BoxLayout:
+			# Label:
+			# 	size_hint: (3, 0.05)
+			# 	text: ""
+
+			# Custom:
+			# 	values: ['Dark', 'Light']
+
+		# MDBoxLayout:
+		# 	orientation: 'horizontal'
+		# 	# size_hint: (1, .05)
+		# 	size_hint: (1, .3)
+		#
+		# 	Label:
+		# 		# size_hint: (5, 0.05)
+		# 		text: ""
+
+
+		MDBoxLayout:
+			id: imgbox
+			orientation: 'horizontal'
+			# work area
+			size_hint: (1, 9)
+			# img_src = 'data/images/transperent.png'
+			valign: "top"
+
+			# MDFloatLayout:
+				# valign: "top"
+			FloatLayout:
+				id: img_canvas
+				size_hint: (1, 1)
+				# anchor_y: 'top'
+				# anchor_y: 'center'
+
+				canvas:
+					Color:
+						rgb: 1, 1, 1, 0
+						# rgb: 1, 1, 1, .5
+						# rgb: 0, 0, 0, 0.8
+						# anchor_y: 'top'
+					Rectangle:
+						id: bg
+						source: 'data/images/checkerboard.png'
+						size: self.size
+					Rectangle:
+						id: img
+						# source: 'data/images/shadow32.png'
+						# source: 'data/images/transperent.png'
+						source: root.img_src
+						size: self.size
+						# size: (.8, 88)
+
+			# config tool box
+			MDBoxLayout:
+				size_hint: (.3, 1)
+				# size_hint: (1, None)
+				# size_hint: (20, 10)
+				# width: .3
+				orientation: 'vertical'
+
+				# spacer row
+				MDBoxLayout:
+					size_hint: (1, 0.5)
+					orientation: 'horizontal'
+					MDLabel:
+						text: ""
+				# 	MDLabel:
+				# 		text: ""
+				# 	MDLabel:
+				# 		text: "Top"
+				# 	MDLabel:
+				# 		text: ""
+				# 	MDLabel:
+				# 		text: ""
+				MDBoxLayout:
+					size_hint: (1, 0.5)
+					orientation: 'horizontal'
+					MDLabel:
+						text: ""
+					MDLabel:
+						text: ""
+					MDTextField:
+						id: offset_top
+						halign: "center"
+						multiline: False
+						text: "0"
+						hint_text: "Top"
+						# mode: "rectangle"
+					MDLabel:
+						text: ""
+					MDLabel:
+						text: ""
+				# spacer row
+				MDBoxLayout:
+					size_hint: (1, 0.1)
+					orientation: 'horizontal'
+					MDLabel:
+						text: ""
+				# MDBoxLayout:
+				# 	size_hint: (1, 0.5)
+				# 	orientation: 'horizontal'
+				# 	MDLabel:
+				# 		text: ""
+				# 	MDLabel:
+				# 		text: ""
+				# 	MDLabel:
+				# 		text: "Height"
+				# 	MDLabel:
+				# 		text: ""
+				# 	MDLabel:
+				# 		text: ""
+				MDBoxLayout:
+					size_hint: (1, 0.5)
+					orientation: 'horizontal'
+					MDLabel:
+						text: ""
+					MDLabel:
+						text: ""
+					MDTextField:
+						id: size_height
+						halign: "center"
+						multiline: False
+						text: "0"
+						hint_text: "Height"
+					MDLabel:
+						text: ""
+					MDLabel:
+						text: ""
+				# spacer row
+				MDBoxLayout:
+					size_hint: (1, 0.1)
+					orientation: 'horizontal'
+					MDLabel:
+						text: ""
+				MDBoxLayout:
+					size_hint: (1, 0.5)
+					orientation: 'horizontal'
+					MDLabel:
+						# text: "Left"
+						text: ""
+					MDTextField:
+						id: offset_left
+						halign: "center"
+						multiline: False
+						text: "0"
+						hint_text: "Left"
+					MDLabel:
+						# text: "Width"
+						text: ""
+					MDTextField:
+						id: size_width
+						halign: "center"
+						multiline: False
+						text: "0"
+						hint_text: "Width"
+					MDLabel:
+						text: ""
+				# spacer row
+				MDBoxLayout:
+					size_hint: (1, 0.1)
+					orientation: 'horizontal'
+					MDLabel:
+						text: ""
+				MDBoxLayout:
+					size_hint: (1, 0.5)
+					orientation: 'horizontal'
+					Label:
+						# text: "Rows"
+						text: ""
+					MDTextField:
+						id: count_rows
+						halign: "center"
+						multiline: False
+						text: "0"
+						hint_text: "Rows"
+					MDLabel:
+						# text: "Columns"
+						text: ""
+					MDTextField:
+						id: count_cols
+						halign: "center"
+						multiline: False
+						text: "0"
+						hint_text: "Columns"
+					MDLabel:
+						text: ""
+				# Block space row
+				MDBoxLayout:
+					size_hint: (1, 5)
+					orientation: 'horizontal'
+					MDLabel:
+						text: ""
+				# MDBoxLayout:
+				# 	size_hint: (.3, 1)
+				# 	orientation: 'vertical'
+				# MDBoxLayout:
+				# 	size_hint: (1, 1)
+				# 	orientation: 'vertical'
+				MDBoxLayout:
+					size_hint: (1, 0.5)
+					orientation: 'horizontal'
+					MDLabel:
+						text: root.version_display
+						halign: "center"
+
+		# MDBoxLayout:
+		# 	orientation: 'horizontal'
+		# MDBoxLayout:
+		# 	orientation: 'horizontal'
+		# MDBoxLayout:
+		# 	orientation: 'horizontal'
+		# MDBoxLayout:
+		# 	orientation: 'horizontal'
+		# MDBoxLayout:
+		# 	orientation: 'horizontal'
+
+		# # status bar
+		# MDBoxLayout:
+		# 	orientation: 'horizontal'
+		# 	# size_hint: (1, .05)
 		# 	size_hint: (1, 1)
-		# 	orientation: 'vertical'
+		# 	valign: "bottom"
+		# 	halign: "left"
+		#
+		# 	MDLabel:
+		# 		id: status_bar
+		# 		# size_hint: (5, 0.05)
+		# 		text: root.status_bar
+		# 		valign: "bottom"
+		# 		halign: "left"
+
+
+
+<Custom@Switch>:
+	values: ['OFF', 'ON']
+	canvas:
+		Color:
+			rgb: 0.2, 0.709, 0.898, 1
+		Rectangle:
+			size: [sp(41.5), sp(20)]
+			pos: [self.center_x - sp(41.5), self.center_y - sp(10)]
+		Color:
+			rgb: 0.4, 0.4, 0.4, 1
+		Rectangle:
+			size: [sp(41.5), sp(20)]
+			pos: [self.center_x, self.center_y - sp(10)]
+	MDLabel:
+		text: '[b]{}[/b]'.format(root.values[0])
+		markup: True
+		font_size: 13
+		pos: [root.center_x - sp(70), root.center_y - sp(50)]
+	MDLabel:
+		color: 0.75, 0.75, 0.75, 1
+		text: '[b]{}[/b]'.format(root.values[1])
+		markup: True
+		font_size: 13
+		pos: [root.center_x - sp(30), root.center_y - sp(50)]
+
+
+<LoadDialog>:
+	MDBoxLayout:
+		size: root.size
+		pos: root.pos
+		orientation: "vertical"
+		FileChooserListView:
+		# MDFileManager:
+			id: filechooser
+			path: "."
+
+		MDBoxLayout:
+			size_hint_y: None
+			height: 30
+			MDRaisedButton:
+				id: test
+				text: "Cancel"
+				on_release: root.cancel()
+
+			MDLabel:
+				text: ""
+
+			MDRaisedButton:
+				text: "Load"
+				on_release: root.load(filechooser.path, filechooser.selection)
+
+<SaveDialog>:
+	text_input: text_input
+	MDBoxLayout:
+		size: root.size
+		pos: root.pos
+		orientation: "vertical"
+		FileChooserListView:
+			id: filechooser
+			on_selection: text_input.text = self.selection and self.selection[0] or ''
+
+		MDTextField:
+			id: text_input
+			size_hint_y: None
+			height: 30
+			multiline: False
+
+		MDBoxLayout:
+			size_hint_y: None
+			height: 30
+			MDRaisedButton:
+				text: "Cancel"
+				on_release: root.cancel()
+
+			MDRaisedButton:
+				text: "Save"
+				on_release: root.save(filechooser.path, text_input.text)
