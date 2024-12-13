@@ -69,10 +69,13 @@ class ImgSplitterWindow(MDBoxLayout):
 	subimg_top = NumericProperty(10)
 	subimg_left = NumericProperty(10)
 
+	subimg_horz = NumericProperty(5)
+	subimg_vert = NumericProperty(5)
+
 	subimg_height = NumericProperty(64)
 	subimg_width = NumericProperty(64)
 
-	subimg_cols = NumericProperty(6)
+	subimg_cols = NumericProperty(5)
 	subimg_rows = NumericProperty(5)
 
 	# def build(self):
@@ -93,6 +96,12 @@ class ImgSplitterWindow(MDBoxLayout):
 	def set_subimg_left(self, instance):
 		# print("Left New Value: ", instance.text, "	Current Value", self.subimg_left)
 		self.subimg_left = int(instance.text)
+
+	def set_subimg_horz(self, instance):
+		self.subimg_horz = int(instance.text)
+
+	def set_subimg_vert(self, instance):
+		self.subimg_vert = int(instance.text)
 
 	def set_subimg_height(self, instance):
 		# print("Height New Value: ", instance.text, "	Current Value", self.subimg_height)

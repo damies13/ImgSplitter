@@ -118,6 +118,24 @@
 				# width: .3
 				orientation: 'vertical'
 
+				# header row
+				MDBoxLayout:
+					size_hint: (1, 0.5)
+					orientation: 'horizontal'
+					MDLabel:
+						text: "(pixels)"
+						halign: "center"
+						valign: 'middle'
+						text_size: self.size
+				# sub header row
+				MDBoxLayout:
+					size_hint: (1, 0.5)
+					orientation: 'horizontal'
+					MDLabel:
+						text: "Offset"
+						halign: "left"
+						valign: 'middle'
+						text_size: self.size
 				# spacer row
 				MDBoxLayout:
 					size_hint: (1, 0.5)
@@ -137,6 +155,16 @@
 					orientation: 'horizontal'
 					MDLabel:
 						text: ""
+					MDTextField:
+						id: offset_left
+						halign: "center"
+						multiline: False
+						input_filter: 'int'
+						text: str(root.subimg_left)
+						hint_text: "Left"
+						on_text_validate: root.set_subimg_left(offset_left)
+						on_touch_move: root.set_subimg_left(offset_left)
+						on_touch_up: root.set_subimg_left(offset_left)
 					MDLabel:
 						text: ""
 					MDTextField:
@@ -152,32 +180,80 @@
 						on_touch_up: root.set_subimg_top(offset_top)
 					MDLabel:
 						text: ""
-					MDLabel:
-						text: ""
-				# spacer row
+				# sub header row
 				MDBoxLayout:
-					size_hint: (1, 0.1)
+					size_hint: (1, 0.5)
 					orientation: 'horizontal'
 					MDLabel:
-						text: ""
-				# MDBoxLayout:
-				# 	size_hint: (1, 0.5)
-				# 	orientation: 'horizontal'
-				# 	MDLabel:
-				# 		text: ""
-				# 	MDLabel:
-				# 		text: ""
-				# 	MDLabel:
-				# 		text: "Height"
-				# 	MDLabel:
-				# 		text: ""
-				# 	MDLabel:
-				# 		text: ""
+						text: "Seperation"
+						halign: "left"
+						valign: 'middle'
+						text_size: self.size
+				# spacer row
 				MDBoxLayout:
 					size_hint: (1, 0.5)
 					orientation: 'horizontal'
 					MDLabel:
 						text: ""
+				MDBoxLayout:
+					size_hint: (1, 0.5)
+					orientation: 'horizontal'
+					MDLabel:
+						text: ""
+					MDTextField:
+						id: offset_vert
+						halign: "center"
+						multiline: False
+						input_filter: 'int'
+						text: str(root.subimg_vert)
+						hint_text: "Verical"
+						on_text_validate: root.set_subimg_vert(offset_vert)
+						on_touch_move: root.set_subimg_vert(offset_vert)
+						on_touch_up: root.set_subimg_vert(offset_vert)
+					MDLabel:
+						text: ""
+					MDTextField:
+						id: offset_horz
+						halign: "center"
+						multiline: False
+						input_filter: 'int'
+						text: str(root.subimg_horz)
+						hint_text: "Horizontal"
+						on_text_validate: root.set_subimg_horz(offset_horz)
+						on_touch_move: root.set_subimg_horz(offset_horz)
+						on_touch_up: root.set_subimg_horz(offset_horz)
+					MDLabel:
+						text: ""
+				# sub header row
+				MDBoxLayout:
+					size_hint: (1, 0.5)
+					orientation: 'horizontal'
+					MDLabel:
+						text: "Sub Image"
+						halign: "left"
+						valign: 'middle'
+						text_size: self.size
+				# spacer row
+				MDBoxLayout:
+					size_hint: (1, 0.5)
+					orientation: 'horizontal'
+					MDLabel:
+						text: ""
+				MDBoxLayout:
+					size_hint: (1, 0.5)
+					orientation: 'horizontal'
+					MDLabel:
+						text: ""
+					MDTextField:
+						id: size_width
+						halign: "center"
+						multiline: False
+						input_filter: 'int'
+						text: str(root.subimg_width)
+						hint_text: "Width"
+						on_text_validate: root.set_subimg_width(size_width)
+						on_touch_move: root.set_subimg_width(size_width)
+						on_touch_up: root.set_subimg_width(size_width)
 					MDLabel:
 						text: ""
 					MDTextField:
@@ -192,48 +268,18 @@
 						on_touch_up: root.set_subimg_height(size_height)
 					MDLabel:
 						text: ""
-					MDLabel:
-						text: ""
-				# spacer row
-				MDBoxLayout:
-					size_hint: (1, 0.1)
-					orientation: 'horizontal'
-					MDLabel:
-						text: ""
+				# sub header row
 				MDBoxLayout:
 					size_hint: (1, 0.5)
 					orientation: 'horizontal'
 					MDLabel:
-						# text: "Left"
-						text: ""
-					MDTextField:
-						id: offset_left
-						halign: "center"
-						multiline: False
-						input_filter: 'int'
-						text: str(root.subimg_left)
-						hint_text: "Left"
-						on_text_validate: root.set_subimg_left(offset_left)
-						on_touch_move: root.set_subimg_left(offset_left)
-						on_touch_up: root.set_subimg_left(offset_left)
-					MDLabel:
-						# text: "Width"
-						text: ""
-					MDTextField:
-						id: size_width
-						halign: "center"
-						multiline: False
-						input_filter: 'int'
-						text: str(root.subimg_width)
-						hint_text: "Width"
-						on_text_validate: root.set_subimg_width(size_width)
-						on_touch_move: root.set_subimg_width(size_width)
-						on_touch_up: root.set_subimg_width(size_width)
-					MDLabel:
-						text: ""
+						text: "Grid"
+						halign: "left"
+						valign: 'middle'
+						text_size: self.size
 				# spacer row
 				MDBoxLayout:
-					size_hint: (1, 0.1)
+					size_hint: (1, 0.5)
 					orientation: 'horizontal'
 					MDLabel:
 						text: ""
@@ -241,20 +287,6 @@
 					size_hint: (1, 0.5)
 					orientation: 'horizontal'
 					Label:
-						# text: "Rows"
-						text: ""
-					MDTextField:
-						id: count_rows
-						halign: "center"
-						multiline: False
-						input_filter: 'int'
-						text: str(root.subimg_rows)
-						hint_text: "Rows"
-						on_text_validate: root.set_subimg_rows(count_rows)
-						on_touch_move: root.set_subimg_rows(count_rows)
-						on_touch_up: root.set_subimg_rows(count_rows)
-					MDLabel:
-						# text: "Columns"
 						text: ""
 					MDTextField:
 						id: count_cols
@@ -266,6 +298,18 @@
 						on_text_validate: root.set_subimg_cols(count_cols)
 						on_touch_move: root.set_subimg_cols(count_cols)
 						on_touch_up: root.set_subimg_cols(count_cols)
+					MDLabel:
+						text: ""
+					MDTextField:
+						id: count_rows
+						halign: "center"
+						multiline: False
+						input_filter: 'int'
+						text: str(root.subimg_rows)
+						hint_text: "Rows"
+						on_text_validate: root.set_subimg_rows(count_rows)
+						on_touch_move: root.set_subimg_rows(count_rows)
+						on_touch_up: root.set_subimg_rows(count_rows)
 					MDLabel:
 						text: ""
 				# Block space row
