@@ -6,6 +6,9 @@ kivy.require('2.3.0')
 # from os.path import join, dirname
 from kivymd.app import MDApp
 from kivy.logger import Logger
+
+from kivy.clock import Clock
+
 # from kivy.uix.scatter import Scatter
 from kivy.properties import StringProperty
 from kivy.properties import ObjectProperty
@@ -20,11 +23,15 @@ from kivy.utils import platform
 
 from kivy.graphics import *
 
+from threading import Thread
+from PIL import Image
 
 import os
 
 
 class ImgSplitterApp(MDApp):
+
+	appwindow = None
 
 	def build(self):
 
@@ -38,8 +45,13 @@ class ImgSplitterApp(MDApp):
 		# self.theme_cls.accent_palette = "Amber"
 		self.theme_cls.accent_palette = "Yellow"
 
+		self.appwindow = ImgSplitterWindow()
 
-		return ImgSplitterWindow()
+		return self.appwindow
+
+	def on_start(self, **kwargs):
+		print("ImgSplitterApp APP LOADED")
+		self.appwindow.on_start()
 
 	def set_theme(self, theme, primary, accent):
 		self.theme_cls.theme_style = theme
@@ -65,6 +77,9 @@ class ImgSplitterWindow(MDBoxLayout):
 	# status_bar = StringProperty('')
 	status_bar = StringProperty("Status Bar")
 
+	crop_bars = {}
+	img_data = {}
+
 	subimg = {}
 	subimg_top = NumericProperty(10)
 	subimg_left = NumericProperty(10)
@@ -78,8 +93,24 @@ class ImgSplitterWindow(MDBoxLayout):
 	subimg_cols = NumericProperty(5)
 	subimg_rows = NumericProperty(5)
 
+	def on_start(self, **kwargs):
+		# self.layout.label.text = "APP LOADED"
+		print("ImgSplitterWindow APP LOADED")
+		# t = Thread(target=self.delayed_start)
+		# t.run()
+
+		Clock.schedule_once(self.draw_cut_bars, 1)
+
+	# def delayed_start(self):
+	#
+	# 	print("delayed_start APP LOADED")
+	# 	self.draw_cut_bars()
+
 	# def build(self):
-	# def __init__(self):
+	# 	self.draw_cut_bars()
+	# def __init__(self, parent):
+	# 	# self.root = parent
+	# 	self.draw_cut_bars()
 	# 	# print("self:", self)
 	# 	# print("self.root:", self.root)
 	# 	# print("self.parent:", self.parent)
@@ -89,9 +120,93 @@ class ImgSplitterWindow(MDBoxLayout):
 	# self.theme_cls.theme_style = 'Dark'
 	# 	pass
 
+	def draw_cut_bars(self, *kwargs):
+
+		print("self", self)
+		# print("self.img_canvas", self.img_canvas)
+		print("self.ids", self.ids)
+		# print("self.ids.imgbox", self.ids.imgbox)
+
+		# print("self.root:", self.root)
+		# print("self.root.ids:", self.root.ids)
+
+		print("self.ids.img_canvas", self.ids.img_canvas)
+		print("self.ids.img_canvas.ids", self.ids.img_canvas.ids)
+
+
+		img_canvas = self.ids["img_canvas"]
+		print("img_canvas:", img_canvas)
+		print("img_canvas.size:", img_canvas.size)
+		print("img_canvas.ids:", img_canvas.ids)
+		print("img_canvas.canvas:", img_canvas.canvas)
+
+
+		# print("img_canvas.canvas.ids:", img_canvas.canvas.ids)
+		print("img_canvas.canvas.children:", img_canvas.canvas.children)
+		print("img_canvas.canvas.children[-1]:", img_canvas.canvas.children[-1])
+		# print("img_canvas.canvas.group:", img_canvas.canvas.group)
+
+		# img_canvas.canvas.add(Rectangle(pos=(13, 13), size=(13, 13)))
+		# app = MDApp.get_running_app()
+		# print("app:", app)
+		# print("app.ids:", app.ids)
+
+		# img_canvas.canvas.ask_update()
+		print("img_canvas.size:", img_canvas.size)
+		# img_canvas.size = 1280, 720
+		# img_canvas.canvas.ask_update()
+		# print("img_canvas.size:", img_canvas.size)
+
+
+		# self.crop_bars["R0"] = InstructionGroup()
+		# self.crop_bars["R0"].add(Color(1, .5, 0.5, 0.4))
+		# self.crop_bars["R0"].add(Rectangle(pos=(0, 550), size=(615, 10)))
+		# img_canvas.canvas.add(self.crop_bars["R0"])
+
+		# img_canvas.canvas.ask_update()
+
+		self.update_img_data()
+		self.get_img_ratios()
+
+
+	def get_img_ratios(self):
+		self.img_ratios = {"x": 0, "y": 0}
+		print("self.img_data[self.img_src][size]", self.img_data[self.img_src]["size"])
+
+		img_canvas = self.ids["img_canvas"]
+		print("img_canvas:", img_canvas)
+		print("img_canvas.size:", img_canvas.size)
+
+		image_x = self.img_data[self.img_src]["size"][0]
+		image_y = self.img_data[self.img_src]["size"][1]
+
+		canvas_x = img_canvas.size[0]
+		canvas_y = img_canvas.size[1]
+
+		print("x ratio", image_x / canvas_x)
+		print("y ratio", image_y / canvas_y)
+
+		self.img_ratios["x"] = image_x / canvas_x
+		self.img_ratios["y"] = image_y / canvas_y
+
+	def update_img_data(self):
+
+		print("self.img_src", self.img_src)
+		print("self.img_data", self.img_data)
+
+		if self.img_src not in self.img_data.keys():
+			self.img_data[self.img_src] = {}
+			img = Image.open(self.img_src)
+			# get width and height
+			self.img_data[self.img_src]["width"] = img.width
+			self.img_data[self.img_src]["height"] = img.height
+			self.img_data[self.img_src]["size"] = img.size
+			img.close()
+
 	def set_subimg_top(self, instance):
 		# print("Top New Value: ", instance.text, "	Current Value", self.subimg_top)
 		self.subimg_top = int(instance.text)
+		self.draw_cut_bars()
 
 	def set_subimg_left(self, instance):
 		# print("Left New Value: ", instance.text, "	Current Value", self.subimg_left)

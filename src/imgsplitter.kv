@@ -91,6 +91,9 @@
 				# anchor_y: 'top'
 				# anchor_y: 'center'
 
+				canvas.before:
+					Color:
+						rgba: 1, 1, 1, 0
 				canvas:
 					# id: base_canvas
 					Color:
@@ -102,6 +105,7 @@
 						id: bg
 						source: 'data/images/checkerboard.png'
 						size: self.size
+						group: "checkerboard"
 					Rectangle:
 						id: img
 						# source: 'data/images/shadow32.png'
@@ -109,6 +113,11 @@
 						source: root.img_src
 						size: self.size
 						# size: (.8, 88)
+						group: "image"
+
+				canvas.after:
+					Color:
+						rgba: 1, 1, 1, 0
 
 			# config tool box
 			MDBoxLayout:
@@ -123,7 +132,7 @@
 					size_hint: (1, 0.5)
 					orientation: 'horizontal'
 					MDLabel:
-						text: "(pixels)"
+						text: "(image pixels)"
 						halign: "center"
 						valign: 'middle'
 						text_size: self.size
