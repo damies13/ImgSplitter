@@ -10,6 +10,7 @@ from kivy.logger import Logger
 from kivy.properties import StringProperty
 from kivy.properties import ObjectProperty
 from kivy.properties import ColorProperty
+from kivy.properties import NumericProperty
 
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.floatlayout import MDFloatLayout
@@ -64,6 +65,16 @@ class ImgSplitterWindow(MDBoxLayout):
 	# status_bar = StringProperty('')
 	status_bar = StringProperty("Status Bar")
 
+	subimg = {}
+	subimg_top = NumericProperty(10)
+	subimg_left = NumericProperty(10)
+
+	subimg_height = NumericProperty(64)
+	subimg_width = NumericProperty(64)
+
+	subimg_cols = NumericProperty(6)
+	subimg_rows = NumericProperty(5)
+
 	# def build(self):
 	# def __init__(self):
 	# 	# print("self:", self)
@@ -74,6 +85,30 @@ class ImgSplitterWindow(MDBoxLayout):
 	# 	# self.theme_cls.theme_style = "Light"
 	# self.theme_cls.theme_style = 'Dark'
 	# 	pass
+
+	def set_subimg_top(self, instance):
+		# print("Top New Value: ", instance.text, "	Current Value", self.subimg_top)
+		self.subimg_top = int(instance.text)
+
+	def set_subimg_left(self, instance):
+		# print("Left New Value: ", instance.text, "	Current Value", self.subimg_left)
+		self.subimg_left = int(instance.text)
+
+	def set_subimg_height(self, instance):
+		# print("Height New Value: ", instance.text, "	Current Value", self.subimg_height)
+		self.subimg_height = int(instance.text)
+
+	def set_subimg_width(self, instance):
+		# print("Width New Value: ", instance.text, "	Current Value", self.subimg_width)
+		self.subimg_width = int(instance.text)
+
+	def set_subimg_cols(self, instance):
+		# print("Cols New Value: ", instance.text, "	Current Value", self.subimg_cols)
+		self.subimg_cols = int(instance.text)
+
+	def set_subimg_rows(self, instance):
+		# print("Rows New Value: ", instance.text, "	Current Value", self.subimg_rows)
+		self.subimg_rows = int(instance.text)
 
 	def on_button_press(self, instance):
 		print("{} Button pressed!".format(instance.text))

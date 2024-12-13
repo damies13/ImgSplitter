@@ -92,6 +92,7 @@
 				# anchor_y: 'center'
 
 				canvas:
+					# id: base_canvas
 					Color:
 						rgb: 1, 1, 1, 0
 						# rgb: 1, 1, 1, .5
@@ -142,9 +143,13 @@
 						id: offset_top
 						halign: "center"
 						multiline: False
-						text: "0"
+						input_filter: 'int'
+						text: str(root.subimg_top)
 						hint_text: "Top"
 						# mode: "rectangle"
+						on_text_validate: root.set_subimg_top(offset_top)
+						on_touch_move: root.set_subimg_top(offset_top)
+						on_touch_up: root.set_subimg_top(offset_top)
 					MDLabel:
 						text: ""
 					MDLabel:
@@ -179,8 +184,12 @@
 						id: size_height
 						halign: "center"
 						multiline: False
-						text: "0"
+						input_filter: 'int'
+						text: str(root.subimg_height)
 						hint_text: "Height"
+						on_text_validate: root.set_subimg_height(size_height)
+						on_touch_move: root.set_subimg_height(size_height)
+						on_touch_up: root.set_subimg_height(size_height)
 					MDLabel:
 						text: ""
 					MDLabel:
@@ -201,8 +210,12 @@
 						id: offset_left
 						halign: "center"
 						multiline: False
-						text: "0"
+						input_filter: 'int'
+						text: str(root.subimg_left)
 						hint_text: "Left"
+						on_text_validate: root.set_subimg_left(offset_left)
+						on_touch_move: root.set_subimg_left(offset_left)
+						on_touch_up: root.set_subimg_left(offset_left)
 					MDLabel:
 						# text: "Width"
 						text: ""
@@ -210,8 +223,12 @@
 						id: size_width
 						halign: "center"
 						multiline: False
-						text: "0"
+						input_filter: 'int'
+						text: str(root.subimg_width)
 						hint_text: "Width"
+						on_text_validate: root.set_subimg_width(size_width)
+						on_touch_move: root.set_subimg_width(size_width)
+						on_touch_up: root.set_subimg_width(size_width)
 					MDLabel:
 						text: ""
 				# spacer row
@@ -230,8 +247,12 @@
 						id: count_rows
 						halign: "center"
 						multiline: False
-						text: "0"
+						input_filter: 'int'
+						text: str(root.subimg_rows)
 						hint_text: "Rows"
+						on_text_validate: root.set_subimg_rows(count_rows)
+						on_touch_move: root.set_subimg_rows(count_rows)
+						on_touch_up: root.set_subimg_rows(count_rows)
 					MDLabel:
 						# text: "Columns"
 						text: ""
@@ -239,8 +260,12 @@
 						id: count_cols
 						halign: "center"
 						multiline: False
-						text: "0"
+						input_filter: 'int'
+						text: str(root.subimg_cols)
 						hint_text: "Columns"
+						on_text_validate: root.set_subimg_cols(count_cols)
+						on_touch_move: root.set_subimg_cols(count_cols)
+						on_touch_up: root.set_subimg_cols(count_cols)
 					MDLabel:
 						text: ""
 				# Block space row
