@@ -175,13 +175,68 @@ class ImgSplitterWindow(MDBoxLayout):
 			self.cut_row(r+1)
 
 		# w = self.calculate_row_width()
-
 		# self.cut_row(1)
+
+		self.cut_col(0)
+		# self.cut_col(1)
+		for c in range(self.subimg_cols):
+			print("col:", c)
+			self.cut_col(c+1)
+
 
 		img_canvas.canvas.ask_update()
 
 	def calculate_something(self):
 		pass
+
+	def cut_col(self, colnum):
+
+		x = 0
+		y = self.calculate_col_position(colnum)
+		w = self.calculate_col_width(colnum)
+		h = self.ids["img_canvas"].height
+		id = f"C{colnum}"
+
+		if id in self.crop_bars:
+				self.ids["img_canvas"].canvas.remove(self.crop_bars[id]["ig"])
+		self.crop_bars[id] = {}
+		self.crop_bars[id]["x"] = x
+		self.crop_bars[id]["y"] = y
+		self.crop_bars[id]["w"] = w
+		self.crop_bars[id]["h"] = h
+		self.crop_bars[id]["ig"] = InstructionGroup()
+		self.crop_bars[id]["ig"].add(Color(1, .5, 0.5, 0.4))
+		print("col", colnum, ": x:", x, " y:", y, " w:", w, " h:", h)
+		self.crop_bars[id]["ig"].add(Rectangle(pos=(self.crop_bars[id]["y"], self.crop_bars[id]["x"]), size=(self.crop_bars[id]["w"], self.crop_bars[id]["h"])))
+		self.ids["img_canvas"].canvas.add(self.crop_bars[id]["ig"])
+		print("added col", colnum, " to canvas")
+
+
+	def calculate_col_width(self, colnum):
+		if colnum > 0:
+			dispwidth = self.subimg_vert / self.img_ratios["x"]
+			print("calculate_col_width:", self.subimg_vert, " / ", self.img_ratios["x"], " = dispwidth:", dispwidth)
+			return dispwidth
+		else:
+			dispwidth = self.subimg_left / self.img_ratios["x"]
+			print("calculate_col_width:", self.subimg_left, " / ", self.img_ratios["x"], " = dispwidth:", dispwidth)
+			return dispwidth
+
+	def calculate_col_position(self, colnum):
+		img_pos = 0
+		if colnum > 0:
+			img_pos = self.subimg_left + (self.subimg_vert + self.subimg_width + self.subimg_vert) * colnum - self.subimg_vert
+			print("calculate_col_position", self.subimg_left, " + (", self.subimg_vert, " + ", self.subimg_width, ") * ", colnum, " - ", self.subimg_vert, " = ", img_pos)
+		else:
+			# img_pos = self.subimg_left
+			img_pos = 0
+
+		# rev_img_pos = self.img_data[self.img_src].width - img_pos
+		print("colnum:", colnum, "	img_pos:", img_pos)
+
+		disp_pos = img_pos / self.img_ratios["x"]
+		print("colnum:", colnum, "	disp_pos:", disp_pos)
+		return disp_pos
 
 	def cut_row(self, rownum):
 
@@ -200,10 +255,10 @@ class ImgSplitterWindow(MDBoxLayout):
 		self.crop_bars[id]["h"] = h
 		self.crop_bars[id]["ig"] = InstructionGroup()
 		self.crop_bars[id]["ig"].add(Color(1, .5, 0.5, 0.4))
-		print("ig: x:", x, " y:", y, " w:", w, " h:", h)
+		print("row", rownum, ": x:", x, " y:", y, " w:", w, " h:", h)
 		self.crop_bars[id]["ig"].add(Rectangle(pos=(self.crop_bars[id]["y"], self.crop_bars[id]["x"]), size=(self.crop_bars[id]["w"], self.crop_bars[id]["h"])))
 		self.ids["img_canvas"].canvas.add(self.crop_bars[id]["ig"])
-		print("added to canvas")
+		print("added row", rownum, " to canvas")
 
 		# self.crop_bars[id]["x"] = x
 		# self.crop_bars[id]["y"] = y
@@ -211,8 +266,8 @@ class ImgSplitterWindow(MDBoxLayout):
 		# self.crop_bars[id]["h"] = h
 		# print("x:", x, " y:", y, " w:", w, " h:", h)
 
-		print("img_canvas group:", self.ids["img_canvas"].canvas.group)
-		print("img_canvas children:", self.ids["img_canvas"].canvas.children)
+		# print("img_canvas group:", self.ids["img_canvas"].canvas.group)
+		# print("img_canvas children:", self.ids["img_canvas"].canvas.children)
 
 	def calculate_row_height(self, rownum):
 		if rownum > 0:
