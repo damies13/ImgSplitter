@@ -81,11 +81,11 @@ class ImgSplitterWindow(MDBoxLayout):
 	img_data = {}
 
 	subimg = {}
-	subimg_top = NumericProperty(10)
-	subimg_left = NumericProperty(10)
+	subimg_top = NumericProperty(38)
+	subimg_left = NumericProperty(28)
 
-	subimg_horz = NumericProperty(5)
-	subimg_vert = NumericProperty(5)
+	subimg_horz = NumericProperty(32)
+	subimg_vert = NumericProperty(32)
 
 	subimg_height = NumericProperty(64)
 	subimg_width = NumericProperty(64)
@@ -169,16 +169,86 @@ class ImgSplitterWindow(MDBoxLayout):
 		self.get_img_ratios()
 
 
+		self.cut_row(0)
+		for r in range(self.subimg_rows):
+			print("row:", r)
+			self.cut_row(r+1)
+
+		# w = self.calculate_row_width()
+
+		# self.cut_row(1)
+
+		img_canvas.canvas.ask_update()
+
+	def calculate_something(self):
+		pass
+
+	def cut_row(self, rownum):
+
+		x = self.calculate_row_position(rownum)
+		y = 0
+		w = self.ids["img_canvas"].width
+		h = self.calculate_row_height(rownum)
+		id = f"R{rownum}"
+
+		if id in self.crop_bars:
+				self.ids["img_canvas"].canvas.remove(self.crop_bars[id]["ig"])
+		self.crop_bars[id] = {}
+		self.crop_bars[id]["x"] = x
+		self.crop_bars[id]["y"] = y
+		self.crop_bars[id]["w"] = w
+		self.crop_bars[id]["h"] = h
+		self.crop_bars[id]["ig"] = InstructionGroup()
+		self.crop_bars[id]["ig"].add(Color(1, .5, 0.5, 0.4))
+		print("ig: x:", x, " y:", y, " w:", w, " h:", h)
+		self.crop_bars[id]["ig"].add(Rectangle(pos=(self.crop_bars[id]["y"], self.crop_bars[id]["x"]), size=(self.crop_bars[id]["w"], self.crop_bars[id]["h"])))
+		self.ids["img_canvas"].canvas.add(self.crop_bars[id]["ig"])
+		print("added to canvas")
+
+		# self.crop_bars[id]["x"] = x
+		# self.crop_bars[id]["y"] = y
+		# self.crop_bars[id]["w"] = w
+		# self.crop_bars[id]["h"] = h
+		# print("x:", x, " y:", y, " w:", w, " h:", h)
+
+		print("img_canvas group:", self.ids["img_canvas"].canvas.group)
+		print("img_canvas children:", self.ids["img_canvas"].canvas.children)
+
+	def calculate_row_height(self, rownum):
+		if rownum > 0:
+			dispheight = self.subimg_horz / self.img_ratios["y"]
+			print("dispheight:", dispheight)
+			return dispheight
+		else:
+			dispheight = self.subimg_top / self.img_ratios["y"]
+			print("dispheight:", dispheight)
+			return dispheight
+
+
+	def calculate_row_position(self, rownum):
+		img_pos = 0
+		if rownum > 0:
+			img_pos = self.subimg_top + (self.subimg_horz + self.subimg_height) * rownum
+		else:
+			img_pos = self.subimg_top
+
+		rev_img_pos = self.img_data[self.img_src].height - img_pos
+		print("rownum:", rownum, "	img_pos:", rev_img_pos)
+
+		disp_pos = rev_img_pos / self.img_ratios["y"]
+		print("rownum:", rownum, "	disp_pos:", disp_pos)
+		return disp_pos
+
 	def get_img_ratios(self):
 		self.img_ratios = {"x": 0, "y": 0}
-		print("self.img_data[self.img_src][size]", self.img_data[self.img_src]["size"])
+		print("self.img_data[self.img_src][size]", self.img_data[self.img_src].size)
 
 		img_canvas = self.ids["img_canvas"]
 		print("img_canvas:", img_canvas)
 		print("img_canvas.size:", img_canvas.size)
 
-		image_x = self.img_data[self.img_src]["size"][0]
-		image_y = self.img_data[self.img_src]["size"][1]
+		image_x = self.img_data[self.img_src].width
+		image_y = self.img_data[self.img_src].height
 
 		canvas_x = img_canvas.size[0]
 		canvas_y = img_canvas.size[1]
@@ -195,13 +265,14 @@ class ImgSplitterWindow(MDBoxLayout):
 		print("self.img_data", self.img_data)
 
 		if self.img_src not in self.img_data.keys():
-			self.img_data[self.img_src] = {}
+			# self.img_data[self.img_src] = {}
+			self.img_data = {} 		# clear old image
 			img = Image.open(self.img_src)
 			# get width and height
-			self.img_data[self.img_src]["width"] = img.width
-			self.img_data[self.img_src]["height"] = img.height
-			self.img_data[self.img_src]["size"] = img.size
+			print("img:", img)
+			self.img_data[self.img_src] = img
 			img.close()
+			print("self.img_data", self.img_data)
 
 	def set_subimg_top(self, instance):
 		# print("Top New Value: ", instance.text, "	Current Value", self.subimg_top)
@@ -277,18 +348,18 @@ class ImgSplitterWindow(MDBoxLayout):
 							size_hint=(0.9, 0.9))
 		self._popup.open()
 
-	def show_save(self):
-		content = SaveDialog(save=self.save, cancel=self.dismiss_popup)
-		PATH = "."
-		if platform == "android":
-		  from android.permissions import request_permissions, Permission
-		  request_permissions([Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE])
-		  app_folder = os.path.dirname(os.path.abspath(__file__))
-		  PATH = "/storage/emulated/0" #app_folder
-		content.ids.filechooser.path = PATH
-		self._popup = Popup(title="Save file", content=content,
-							size_hint=(0.9, 0.9))
-		self._popup.open()
+	# def show_save(self):
+	# 	content = SaveDialog(save=self.save, cancel=self.dismiss_popup)
+	# 	PATH = "."
+	# 	if platform == "android":
+	# 	  from android.permissions import request_permissions, Permission
+	# 	  request_permissions([Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE])
+	# 	  app_folder = os.path.dirname(os.path.abspath(__file__))
+	# 	  PATH = "/storage/emulated/0" #app_folder
+	# 	content.ids.filechooser.path = PATH
+	# 	self._popup = Popup(title="Save file", content=content,
+	# 						size_hint=(0.9, 0.9))
+	# 	self._popup.open()
 
 	def load(self, path, filename):
 		# with open(os.path.join(path, filename[0])) as stream:
@@ -299,26 +370,29 @@ class ImgSplitterWindow(MDBoxLayout):
 		# print("self.img_src", self.img_src)
 		self.img_src = filepath
 		# print("self.img_src", self.img_src)
-		self.status_bar = f"Loaded file {filename[0]}"
+		self.status_bar = f"Loaded file {filepath}"
+
+		self.update_img_data()
+		self.get_img_ratios()
 
 		self.dismiss_popup()
 
-	def save(self, path, filename):
-		with open(os.path.join(path, filename), 'w') as stream:
-			stream.write(self.text_input.text)
-
-		self.dismiss_popup()
+	# def save(self, path, filename):
+	# 	with open(os.path.join(path, filename), 'w') as stream:
+	# 		stream.write(self.text_input.text)
+	#
+	# 	self.dismiss_popup()
 
 class LoadDialog(MDFloatLayout):
 	load = ObjectProperty(None)
 	cancel = ObjectProperty(None)
 
 
-class SaveDialog(MDFloatLayout):
-	save = ObjectProperty(None)
-	text_input = ObjectProperty(None)
-	cancel = ObjectProperty(None)
-
+# class SaveDialog(MDFloatLayout):
+# 	save = ObjectProperty(None)
+# 	text_input = ObjectProperty(None)
+# 	cancel = ObjectProperty(None)
+#
 
 
 if __name__ == '__main__':
