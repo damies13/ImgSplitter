@@ -104,25 +104,6 @@ class ImgSplitterWindow(MDBoxLayout):
 
 		Clock.schedule_once(self.draw_cut_bars, 1)
 
-	# def delayed_start(self):
-	#
-	# 	print("delayed_start APP LOADED")
-	# 	self.draw_cut_bars()
-
-	# def build(self):
-	# 	self.draw_cut_bars()
-	# def __init__(self, parent):
-	# 	# self.root = parent
-	# 	self.draw_cut_bars()
-	# 	# print("self:", self)
-	# 	# print("self.root:", self.root)
-	# 	# print("self.parent:", self.parent)
-	#
-	# 	# self.theme_cls.theme_style = "Dark"
-	# 	# self.theme_cls.theme_style = "Light"
-	# self.theme_cls.theme_style = 'Dark'
-	# 	pass
-
 	def split_images(self):
 
 		print("cell_data:", self.cell_data)
@@ -157,8 +138,8 @@ class ImgSplitterWindow(MDBoxLayout):
 
 		return subimg
 
-	def calculate_something(self):
-		pass
+	# def calculate_something(self):
+	# 	pass
 
 	def draw_cut_bars(self, *kwargs):
 
