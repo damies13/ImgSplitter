@@ -1,3 +1,4 @@
+from kivy_deps import sdl2, glew
 # -*- mode: python ; coding: utf-8 -*-
 
 a = Analysis(
@@ -17,6 +18,7 @@ pyz = PYZ(a.pure)
 
 exe = EXE(
     pyz,
+    Tree('src\\'),
     a.scripts,
     a.binaries,
     a.datas,

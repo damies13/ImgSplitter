@@ -4,6 +4,7 @@ on: [push]
 
 env:
   KIVY_GL_BACKEND: angle_sdl2
+  # https://github.com/Alb-310/Geogramint/issues/8#issuecomment-1366548008
 
 jobs:
   Build-Windows:
@@ -15,17 +16,21 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.x"
-      - name: install pip packages
+
+      - name: install pip packages - win
         run: pip install -r build_requirements/pip_requirements-win.txt
-      - name: build
-        run: python -m PyInstaller --name ImgSplitter src/main.py
+      - name: install pip packages - kivy
+        run: pip install -r build_requirements/pip_requirements.txt
+
+      # - name: build
+      #   run: python -m PyInstaller --name ImgSplitter src/main.py
         # run: python -m PyInstaller --onefile --name ImgSplitter src/main.py
         # python -m PyInstaller --name ImgSplitter --icon path/to/icon.ico src/main.py
-      # - name: copy spec file
-      #   run: copy build_requirements/ImgSplitter.spec.src ImgSplitter.spec
+      - name: copy spec file
+        run: copy build_requirements/ImgSplitter.spec.src ImgSplitter.spec
 
-      # - name: build spec
-      #   run: python -m PyInstaller ImgSplitter.spec
+      - name: build spec
+        run: python -m PyInstaller ImgSplitter.spec
 
       - name: Archive Manager Build
         uses: actions/upload-artifact@v4
