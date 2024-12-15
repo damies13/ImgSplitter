@@ -81,6 +81,8 @@ class ImgSplitterWindow(MDBoxLayout):
 	img_data = {}
 	cell_data = {}
 
+	is_animated = False
+
 	subimg = {}
 	subimg_top = NumericProperty(38)
 	subimg_left = NumericProperty(28)
@@ -200,7 +202,10 @@ class ImgSplitterWindow(MDBoxLayout):
 					print("subImage:", subImage)
 					outpath = f"{pathprefix}_{r}_{c}{pathsuffix}"
 					print("outpath:", outpath)
-					subImage.save(outpath)
+					if self.is_animated:
+						subImage.save(outpath, save_all=True)
+					else:
+						subImage.save(outpath)
 
 	def get_subImage(self, imgdata, row, col):
 		print("row:", row, " col:", col)
@@ -358,6 +363,13 @@ class ImgSplitterWindow(MDBoxLayout):
 
 		print("self.img_src", self.img_src)
 		print("self.img_data", self.img_data)
+		self.is_animated = False
+		is_animatable = False
+
+		file, ext = os.path.splitext(self.img_src)
+		if ext in [".gif", ".png"]:
+			is_animatable = True
+			print("is_animatable", is_animatable)
 
 		if self.img_src not in self.img_data.keys():
 			# self.img_data[self.img_src] = {}
@@ -366,8 +378,17 @@ class ImgSplitterWindow(MDBoxLayout):
 			# get width and height
 			print("img:", img)
 			self.img_data[self.img_src] = img
+
+			if is_animatable:
+				self.is_animated = img.is_animated
+				print("img.is_animated", img.is_animated)
+
 			img.close()
 			print("self.img_data", self.img_data)
+			print("self.is_animated", self.is_animated)
+
+			# animated gif and apng
+			# https://stackoverflow.com/questions/1412529/how-do-i-programmatically-check-whether-a-gif-image-is-animated
 
 	def set_subimg_top(self, instance):
 		# print("Top New Value: ", instance.text, "	Current Value", self.subimg_top)
