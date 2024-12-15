@@ -1,0 +1,11 @@
+# wheel
+# setuptools
+# doctools
+# pygments
+# pipiwin32
+kivy.deps.sdl2
+kivy.deps.glew
+
+kivy[base]
+kivymd
+pyinstaller

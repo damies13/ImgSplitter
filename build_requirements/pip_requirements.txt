@@ -1,3 +1,0 @@
-kivy[base]
-kivymd
-pyinstaller
