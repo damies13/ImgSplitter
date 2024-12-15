@@ -1,5 +1,10 @@
 name: Build Windows
+
 on: [push]
+
+env:
+  KIVY_GL_BACKEND: angle_sdl2
+
 jobs:
   Build-Windows:
     runs-on: windows-latest
