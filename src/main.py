@@ -123,6 +123,43 @@ class ImgSplitterWindow(MDBoxLayout):
 	# self.theme_cls.theme_style = 'Dark'
 	# 	pass
 
+	def split_images(self):
+
+		print("cell_data:", self.cell_data)
+
+		pathprefix, pathsuffix = os.path.splitext(self.img_src)
+
+		with Image.open(self.img_src) as imgdata:
+			for r in range(self.subimg_rows):
+				for c in range(self.subimg_cols):
+					print("row:", r, " col:", c)
+					subImage = self.get_subImage(imgdata, r, c)
+					print("subImage:", subImage)
+					outpath = f"{pathprefix}_{r}_{c}{pathsuffix}"
+					print("outpath:", outpath)
+					if self.is_animated:
+						subImage.save(outpath, save_all=True)
+					else:
+						subImage.save(outpath)
+
+	def get_subImage(self, imgdata, row, col):
+		print("row:", row, " col:", col)
+		rid = f"R{row}"
+		cid = f"R{col}"
+
+		x = self.cell_data[cid]
+		y = self.cell_data[rid]
+		w = self.subimg_width + x
+		h = self.subimg_height + y
+
+		workingimg = imgdata.copy()
+		subimg = workingimg.crop((x, y, w, h))
+
+		return subimg
+
+	def calculate_something(self):
+		pass
+
 	def draw_cut_bars(self, *kwargs):
 
 		print("self", self)
@@ -188,44 +225,6 @@ class ImgSplitterWindow(MDBoxLayout):
 
 		img_canvas.canvas.ask_update()
 
-	def split_images(self):
-
-		print("cell_data:", self.cell_data)
-
-		pathprefix, pathsuffix = os.path.splitext(self.img_src)
-
-		with Image.open(self.img_src) as imgdata:
-			for r in range(self.subimg_rows):
-				for c in range(self.subimg_cols):
-					print("row:", r, " col:", c)
-					subImage = self.get_subImage(imgdata, r, c)
-					print("subImage:", subImage)
-					outpath = f"{pathprefix}_{r}_{c}{pathsuffix}"
-					print("outpath:", outpath)
-					if self.is_animated:
-						subImage.save(outpath, save_all=True)
-					else:
-						subImage.save(outpath)
-
-	def get_subImage(self, imgdata, row, col):
-		print("row:", row, " col:", col)
-		rid = f"R{row}"
-		cid = f"R{col}"
-
-		x = self.cell_data[cid]
-		y = self.cell_data[rid]
-		w = self.subimg_width + x
-		h = self.subimg_height + y
-
-		workingimg = imgdata.copy()
-		subimg = workingimg.crop((x, y, w, h))
-
-		return subimg
-
-
-	def calculate_something(self):
-		pass
-
 	def cut_col(self, colnum):
 
 		x = 0
@@ -247,7 +246,6 @@ class ImgSplitterWindow(MDBoxLayout):
 		self.crop_bars[id]["ig"].add(Rectangle(pos=(self.crop_bars[id]["y"], self.crop_bars[id]["x"]), size=(self.crop_bars[id]["w"], self.crop_bars[id]["h"])))
 		self.ids["img_canvas"].canvas.add(self.crop_bars[id]["ig"])
 		print("added col", colnum, " to canvas")
-
 
 	def calculate_col_width(self, colnum):
 		if colnum > 0:
@@ -320,7 +318,6 @@ class ImgSplitterWindow(MDBoxLayout):
 			dispheight = self.subimg_top / self.img_ratios["y"]
 			print("dispheight:", dispheight)
 			return dispheight
-
 
 	def calculate_row_position(self, rownum):
 		img_pos = 0
