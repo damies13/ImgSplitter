@@ -1,0 +1,26 @@
+name: Build Windows
+on: [push]
+jobs:
+  Build-Windows:
+    runs-on: windows-latest
+    steps:
+      - name: setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.13
+      - name: install pip packages
+        run: pip install -r build_requirements/pip_requirements.txt
+      - name: build
+        run: python -m PyInstaller --name ImgSplitter src/main.py
+        # python -m PyInstaller --name ImgSplitter --icon path/to/icon.ico src/main.py
+
+      - name: Archive Manager Build
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-windows
+          path: build
+      - name: Archive Manager dist
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-windows
+          path: dist
