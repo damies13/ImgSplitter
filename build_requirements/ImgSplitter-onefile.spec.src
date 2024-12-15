@@ -18,7 +18,7 @@ pyz = PYZ(a.pure)
 
 exe = EXE(
     pyz,
-    Tree('src\\data\\'),
+    Tree('src\\'),
     a.scripts,
     a.binaries,
     a.datas,

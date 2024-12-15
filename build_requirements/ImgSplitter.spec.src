@@ -38,7 +38,7 @@ exe = EXE(
 )
 coll = COLLECT(
     exe,
-    Tree('src\\data\\'),
+    Tree('src\\'),
     a.binaries,
     a.datas,
     *[Tree(p) for p in (sdl2.dep_bins + glew.dep_bins)],
