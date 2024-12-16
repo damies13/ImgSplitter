@@ -3,6 +3,9 @@
 # doctools
 # pygments
 # pipiwin32
+
+pywin32 # win32timezone
+
 kivy.deps.sdl2
 kivy.deps.glew
 
