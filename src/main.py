@@ -105,7 +105,7 @@ class ImgSplitterWindow(MDBoxLayout):
 
 		print("__file__:", __file__)
 		self.src_dir = os.path.dirname(__file__)
-		tmp_img_src = os.path.join(str(self.img_src).split("/"))
+		tmp_img_src = os.path.join(*f"{self.img_src}".split("/"))
 		self.img_src = os.path.abspath(os.path.join(self.src_dir, tmp_img_src))
 
 		Clock.schedule_once(self.draw_cut_bars, 1)
