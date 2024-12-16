@@ -27,7 +27,7 @@ jobs:
         # run: python -m PyInstaller --onefile --name ImgSplitter src/main.py
         # python -m PyInstaller --name ImgSplitter --icon path/to/icon.ico src/main.py
       - name: copy spec file
-        run: copy build_requirements/ImgSplitter.spec.src ImgSplitter.spec
+        run: copy build_requirements/ImgSplitter-onefile.spec.src ImgSplitter.spec
 
       - name: build spec
         run: python -m PyInstaller ImgSplitter.spec
