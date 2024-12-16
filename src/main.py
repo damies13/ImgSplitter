@@ -137,7 +137,7 @@ class ImgSplitterWindow(MDBoxLayout):
 	def get_subImage(self, imgdata, row, col):
 		print("row:", row, " col:", col)
 		rid = f"R{row}"
-		cid = f"R{col}"
+		cid = f"C{col}"
 
 		x = self.cell_data[cid]
 		y = self.cell_data[rid]
@@ -200,6 +200,7 @@ class ImgSplitterWindow(MDBoxLayout):
 		self.update_img_data()
 		self.get_img_ratios()
 
+		self.remove_cut_bars()
 
 		self.cut_row(0)
 		for r in range(self.subimg_rows):
@@ -216,6 +217,12 @@ class ImgSplitterWindow(MDBoxLayout):
 			self.cut_col(c+1)
 
 		img_canvas.canvas.ask_update()
+
+	def remove_cut_bars(self):
+		for id in self.crop_bars.keys():
+			self.ids["img_canvas"].canvas.remove(self.crop_bars[id]["ig"])
+
+		self.cell_data = {}
 
 	def cut_col(self, colnum):
 
@@ -252,7 +259,7 @@ class ImgSplitterWindow(MDBoxLayout):
 	def calculate_col_position(self, colnum):
 		img_pos = 0
 		if colnum > 0:
-			img_pos = self.subimg_left + (self.subimg_vert + self.subimg_width + self.subimg_vert) * colnum - self.subimg_vert
+			img_pos = (self.subimg_left + (self.subimg_vert + self.subimg_width ) * colnum) - self.subimg_vert
 			print("calculate_col_position", self.subimg_left, " + (", self.subimg_vert, " + ", self.subimg_width, ") * ", colnum, " - ", self.subimg_vert, " = ", img_pos)
 		else:
 			# img_pos = self.subimg_left
@@ -262,6 +269,8 @@ class ImgSplitterWindow(MDBoxLayout):
 			self.cell_data[f"C{colnum}"] = img_pos + self.subimg_vert
 		else:
 			self.cell_data[f"C{colnum}"] = img_pos + self.subimg_left
+
+		print(f"self.cell_data[C{colnum}]:", self.cell_data[f"C{colnum}"])
 
 		# rev_img_pos = self.img_data[self.img_src].width - img_pos
 		print("colnum:", colnum, "	img_pos:", img_pos)
@@ -320,6 +329,7 @@ class ImgSplitterWindow(MDBoxLayout):
 
 
 		self.cell_data[f"R{rownum}"] = img_pos
+		print(f"self.cell_data[R{rownum}]:", self.cell_data[f"R{rownum}"])
 
 		rev_img_pos = self.img_data[self.img_src].height - img_pos
 		print("rownum:", rownum, "	img_pos:", rev_img_pos)
