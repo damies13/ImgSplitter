@@ -73,6 +73,7 @@ class ImgSplitterWindow(MDBoxLayout):
 
 	# img_src = 'data/images/transperent.png'
 	img_src = StringProperty('data/images/transperent.png')
+	src_dir = None
 
 	# status_bar = StringProperty('')
 	status_bar = StringProperty("Status Bar")
@@ -102,7 +103,17 @@ class ImgSplitterWindow(MDBoxLayout):
 		# t = Thread(target=self.delayed_start)
 		# t.run()
 
+		print("__file__:", __file__)
+		self.src_dir = os.path.dirname(__file__)
+		tmp_img_src = os.path.join(str(self.img_src).split("/"))
+		self.img_src = os.path.abspath(os.path.join(self.src_dir, tmp_img_src))
+
 		Clock.schedule_once(self.draw_cut_bars, 1)
+
+	# def safe_path_join(self, *paths):
+	# 	outpaths = []
+	# 	for path in paths:
+	# 		pathparts =
 
 	def split_images(self):
 
