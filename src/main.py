@@ -18,6 +18,8 @@ from kivy.properties import NumericProperty
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.floatlayout import MDFloatLayout
 from kivy.uix.popup import Popup
+from kivymd.uix.dialog import MDDialog
+from kivymd.uix.button import MDRaisedButton
 
 from kivy.utils import platform
 
@@ -64,6 +66,8 @@ class ImgSplitterWindow(MDBoxLayout):
 # class ImgSplitterWindow(Screen):
 
 	__version__ = "0.1.0"
+
+	dialogue = None
 
 	version_display = StringProperty(f"Version: {__version__}")
 
@@ -134,6 +138,8 @@ class ImgSplitterWindow(MDBoxLayout):
 					else:
 						subImage.save(outpath)
 
+		self.ok_dialogue("Finished exporting images.")
+
 	def get_subImage(self, imgdata, row, col):
 		print("row:", row, " col:", col)
 		rid = f"R{row}"
@@ -148,6 +154,29 @@ class ImgSplitterWindow(MDBoxLayout):
 		subimg = workingimg.crop((x, y, w, h))
 
 		return subimg
+
+	def ok_dialogue(self, message):
+		print("ok_dialogue message:", message)
+		if not self.dialogue:
+			self.dialogue = MDDialog(
+				text=message,
+				buttons=[
+					MDRaisedButton(
+						text="OK",
+						# theme_text_color="Custom",
+						# text_color=self.theme_cls.primary_color,
+						# on_press=self.close_dialogue,
+						on_release=self.close_dialogue,
+						# on_release=self.dialogue.dismiss(force=True),
+					),
+				],
+			)
+			self.dialogue.open()
+		print("ok_dialogue message:", message)
+
+	def close_dialogue(self, *kwargs):
+		self.dialogue.dismiss(force=True)
+		print("close_dialogue")
 
 	# def calculate_something(self):
 	# 	pass
