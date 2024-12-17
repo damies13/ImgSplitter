@@ -15,10 +15,12 @@ jobs:
       - name: setup python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.x"
+          # python-version: "3.x"
+          python-version: "3.12"
 
       - name: macos - build dependacies
-        run: brew reinstall --build-from-source sdl2 sdl2_image sdl2_ttf sdl2_mixer
+        # run: brew reinstall --build-from-source sdl2 sdl2_image sdl2_ttf sdl2_mixer
+        run: brew reinstall sdl2 sdl2_image sdl2_ttf sdl2_mixer
 
       - name: install pip packages - macos
         run: pip install -r build_requirements/pip_requirements-macos.txt
