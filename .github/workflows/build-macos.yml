@@ -27,8 +27,8 @@ jobs:
       - name: install pip packages - kivy
         run: pip install -r build_requirements/pip_requirements.txt
 
-      - name: copy spec file
-        run: cp build_requirements/ImgSplitter-macos-onefile.spec.src ImgSplitter.spec
+      # - name: copy spec file
+      #   run: cp build_requirements/ImgSplitter-macos-onefile.spec.src ImgSplitter.spec
 
         # - name: build
         #   run: python -m PyInstaller --name ImgSplitter src/main.py
