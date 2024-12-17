@@ -7,7 +7,7 @@ env:
   # https://github.com/Alb-310/Geogramint/issues/8#issuecomment-1366548008
 
 jobs:
-  Build-Windows:
+  Build-MacOS:
     runs-on: macos-latest
     steps:
       - name: Checkout
@@ -31,8 +31,8 @@ jobs:
         run: cp build_requirements/ImgSplitter-macos-onefile.spec.src ImgSplitter.spec
 
       - name: build spec
-        # run: python -m PyInstaller ImgSplitter.spec
-        run: pyinstaller -y --clean --windowed ImgSplitter.spec
+        run: python -m PyInstaller ImgSplitter.spec
+        # run: pyinstaller -y --clean --windowed ImgSplitter.spec
 
       - name: Archive Manager Build
         uses: actions/upload-artifact@v4
