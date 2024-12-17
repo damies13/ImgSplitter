@@ -27,11 +27,25 @@ jobs:
       - name: install pip packages - kivy
         run: pip install -r build_requirements/pip_requirements.txt
 
-      - name: copy spec file
-        run: cp build_requirements/ImgSplitter-macos-onefile.spec.src ImgSplitter.spec
+      # - name: copy spec file
+      #   run: cp build_requirements/ImgSplitter-macos-onefile.spec.src ImgSplitter.spec
 
-      - name: build spec
-        run: python -m PyInstaller ImgSplitter.spec
+        # - name: build
+        #   run: python -m PyInstaller --name ImgSplitter src/main.py
+        # run: python -m PyInstaller --onefile --name ImgSplitter src/main.py
+        # python -m PyInstaller --name ImgSplitter --icon path/to/icon.ico src/main.py
+
+      - name: generate spec
+        run: pyinstaller -y --clean --windowed --name ImgSplitter --exclude-module _tkinter --exclude-module Tkinter --exclude-module enchant --exclude-module twisted src/main.py
+
+      - name: Archive Manager spec
+        uses: actions/upload-artifact@v4
+        with:
+          name: spec-macos
+          path: ImgSplitter.spec
+
+      # - name: build spec
+      #   run: python -m PyInstaller ImgSplitter.spec
         # run: pyinstaller -y --clean --windowed ImgSplitter.spec
 
       - name: Archive Manager Build
