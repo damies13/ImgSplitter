@@ -8,8 +8,8 @@ on: [push]
 
 jobs:
   Build-MacOS:
-    # runs-on: macos-latest
-    runs-on: macos-13
+    runs-on: macos-latest
+    # runs-on: macos-13
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -38,8 +38,8 @@ jobs:
 
       - name: generate spec
         # run: pyinstaller -y --clean --windowed --name ImgSplitter --exclude-module _tkinter --exclude-module Tkinter --exclude-module enchant --exclude-module twisted --target-arch universal2 src/main.py
-        run: pyinstaller -y --clean --windowed --name ImgSplitter --exclude-module _tkinter --exclude-module Tkinter --exclude-module enchant --exclude-module twisted --target-arch x86_64 src/main.py
-        # run: pyinstaller -y --clean --windowed --name ImgSplitter --exclude-module _tkinter --exclude-module Tkinter --exclude-module enchant --exclude-module twisted --target-arch arm64 src/main.py
+        # run: pyinstaller -y --clean --windowed --name ImgSplitter --exclude-module _tkinter --exclude-module Tkinter --exclude-module enchant --exclude-module twisted --target-arch x86_64 src/main.py
+        run: pyinstaller -y --clean --windowed --name ImgSplitter --exclude-module _tkinter --exclude-module Tkinter --exclude-module enchant --exclude-module twisted --target-arch arm64 src/main.py
 
       - name: Archive Manager spec
         uses: actions/upload-artifact@v4
