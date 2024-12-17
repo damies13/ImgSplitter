@@ -2,8 +2,8 @@ name: Build MacOS
 
 on: [push]
 
-# env:
-#   KIVY_GL_BACKEND: angle_sdl2
+env:
+  KIVY_GL_BACKEND: angle_sdl2
   # https://github.com/Alb-310/Geogramint/issues/8#issuecomment-1366548008
 
 jobs:
