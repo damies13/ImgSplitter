@@ -28,24 +28,24 @@ jobs:
       - name: install pip packages - kivy
         run: pip install -r build_requirements/pip_requirements.txt
 
-      # - name: copy spec file
-      #   run: cp build_requirements/ImgSplitter-macos-onefile.spec.src ImgSplitter.spec
+      - name: copy spec file
+        run: cp build_requirements/ImgSplitter-macos-onefile.spec.src ImgSplitter.spec
 
         # - name: build
         #   run: python -m PyInstaller --name ImgSplitter src/main.py
         # run: python -m PyInstaller --onefile --name ImgSplitter src/main.py
         # python -m PyInstaller --name ImgSplitter --icon path/to/icon.ico src/main.py
 
-      - name: generate spec
-        # run: pyinstaller -y --clean --windowed --name ImgSplitter --exclude-module _tkinter --exclude-module Tkinter --exclude-module enchant --exclude-module twisted --target-arch universal2 src/main.py
-        # run: pyinstaller -y --clean --windowed --name ImgSplitter --exclude-module _tkinter --exclude-module Tkinter --exclude-module enchant --exclude-module twisted --target-arch x86_64 src/main.py
-        run: pyinstaller -y --clean --windowed --name ImgSplitter --exclude-module _tkinter --exclude-module Tkinter --exclude-module enchant --exclude-module twisted --target-arch arm64 src/main.py
-
-      - name: Archive Manager spec
-        uses: actions/upload-artifact@v4
-        with:
-          name: spec-macos
-          path: ImgSplitter.spec
+        # - name: generate spec
+        #   # run: pyinstaller -y --clean --windowed --name ImgSplitter --exclude-module _tkinter --exclude-module Tkinter --exclude-module enchant --exclude-module twisted --target-arch universal2 src/main.py
+        #   # run: pyinstaller -y --clean --windowed --name ImgSplitter --exclude-module _tkinter --exclude-module Tkinter --exclude-module enchant --exclude-module twisted --target-arch x86_64 src/main.py
+        #   run: pyinstaller -y --clean --windowed --name ImgSplitter --exclude-module _tkinter --exclude-module Tkinter --exclude-module enchant --exclude-module twisted --target-arch arm64 src/main.py
+        #
+        # - name: Archive Manager spec
+        #   uses: actions/upload-artifact@v4
+        #   with:
+        #     name: spec-macos
+        #     path: ImgSplitter.spec
 
         # --target-architecture ARCH, --target-arch ARCH
         #                       Target architecture (macOS only; valid values: x86_64, arm64, universal2). Enables switching between universal2 and single-arch version of frozen application (provided
