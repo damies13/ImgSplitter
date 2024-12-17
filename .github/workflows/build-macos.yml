@@ -2,8 +2,8 @@ name: Build MacOS
 
 on: [push]
 
-env:
-  KIVY_GL_BACKEND: angle_sdl2
+# env:
+#   KIVY_GL_BACKEND: angle_sdl2
   # https://github.com/Alb-310/Geogramint/issues/8#issuecomment-1366548008
 
 jobs:
@@ -37,8 +37,9 @@ jobs:
         # python -m PyInstaller --name ImgSplitter --icon path/to/icon.ico src/main.py
 
       - name: generate spec
-        run: pyinstaller -y --clean --windowed --name ImgSplitter --exclude-module _tkinter --exclude-module Tkinter --exclude-module enchant --exclude-module twisted --target-arch universal2 src/main.py
-        # run: pyinstaller -y --clean --windowed --name ImgSplitter --exclude-module _tkinter --exclude-module Tkinter --exclude-module enchant --exclude-module twisted --target-arch x86_64 src/main.py
+        # run: pyinstaller -y --clean --windowed --name ImgSplitter --exclude-module _tkinter --exclude-module Tkinter --exclude-module enchant --exclude-module twisted --target-arch universal2 src/main.py
+        run: pyinstaller -y --clean --windowed --name ImgSplitter --exclude-module _tkinter --exclude-module Tkinter --exclude-module enchant --exclude-module twisted --target-arch x86_64 src/main.py
+        # run: pyinstaller -y --clean --windowed --name ImgSplitter --exclude-module _tkinter --exclude-module Tkinter --exclude-module enchant --exclude-module twisted --target-arch arm64 src/main.py
 
       - name: Archive Manager spec
         uses: actions/upload-artifact@v4
