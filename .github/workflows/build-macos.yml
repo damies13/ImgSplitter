@@ -17,16 +17,20 @@ jobs:
         with:
           python-version: "3.x"
 
+      - name: macos - build dependacies
+        run: brew reinstall --build-from-source sdl2 sdl2_image sdl2_ttf sdl2_mixer
+
       - name: install pip packages - macos
         run: pip install -r build_requirements/pip_requirements-macos.txt
       - name: install pip packages - kivy
         run: pip install -r build_requirements/pip_requirements.txt
 
       - name: copy spec file
-        run: copy build_requirements/ImgSplitter-macos-onefile.spec.src ImgSplitter.spec
+        run: cp build_requirements/ImgSplitter-macos-onefile.spec.src ImgSplitter.spec
 
       - name: build spec
-        run: python -m PyInstaller ImgSplitter.spec
+        # run: python -m PyInstaller ImgSplitter.spec
+        run: pyinstaller -y --clean --windowed ImgSplitter.spec
 
       - name: Archive Manager Build
         uses: actions/upload-artifact@v4

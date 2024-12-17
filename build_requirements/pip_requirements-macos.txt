@@ -2,4 +2,6 @@
 # kivy.deps.sdl2
 # kivy.deps.glew
 
+Cython==3.0.0
+
 pyinstaller
