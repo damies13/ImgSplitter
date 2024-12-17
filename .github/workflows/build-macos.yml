@@ -46,7 +46,8 @@ jobs:
 
       - name: build spec
         # run: python -m PyInstaller ImgSplitter.spec
-        run: pyinstaller -y --clean --windowed ImgSplitter.spec
+        run: PyInstaller -y --clean ImgSplitter.spec
+        # run: pyinstaller -y --clean --windowed ImgSplitter.spec
 
       - name: Archive Manager Build
         uses: actions/upload-artifact@v4
