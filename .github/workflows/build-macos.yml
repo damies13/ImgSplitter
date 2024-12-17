@@ -8,7 +8,7 @@ env:
 
 jobs:
   Build-Windows:
-    runs-on: windows-latest
+    runs-on: macos-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -17,13 +17,13 @@ jobs:
         with:
           python-version: "3.x"
 
-      - name: install pip packages - win
-        run: pip install -r build_requirements/pip_requirements-win.txt
+      - name: install pip packages - macos
+        run: pip install -r build_requirements/pip_requirements-macos.txt
       - name: install pip packages - kivy
         run: pip install -r build_requirements/pip_requirements.txt
 
       - name: copy spec file
-        run: copy build_requirements/ImgSplitter-windows-onefile.spec.src ImgSplitter.spec
+        run: copy build_requirements/ImgSplitter-macos-onefile.spec.src ImgSplitter.spec
 
       - name: build spec
         run: python -m PyInstaller ImgSplitter.spec
@@ -31,10 +31,17 @@ jobs:
       - name: Archive Manager Build
         uses: actions/upload-artifact@v4
         with:
-          name: build-windows
+          name: build-macos
           path: build
+
+      - name: Create DMG File
+        run:
+          pushd dist
+          hdiutil create ./ImgSplitter.dmg -srcfolder ImgSplitter.app -ov
+          popd
+
       - name: Archive Manager dist
         uses: actions/upload-artifact@v4
         with:
-          name: dist-windows
+          name: dist-macos
           path: dist
