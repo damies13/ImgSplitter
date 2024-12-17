@@ -53,8 +53,8 @@ jobs:
 
       - name: build spec
         # run: python -m PyInstaller ImgSplitter.spec
-        # run: PyInstaller -y --clean ImgSplitter.spec
-        run: PyInstaller -y --clean --target-arch universal2 ImgSplitter.spec
+        run: PyInstaller -y --clean ImgSplitter.spec
+        # run: PyInstaller -y --clean --target-arch universal2 ImgSplitter.spec
         # run: pyinstaller -y --clean --windowed ImgSplitter.spec
 
       - name: Archive Manager Build
