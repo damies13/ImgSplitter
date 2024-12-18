@@ -63,15 +63,15 @@ jobs:
       - name: Archive xcode project
         uses: actions/upload-artifact@v4
         with:
-          name: xcode-ios
+          name: ImgSplitter-ios-xcode
           path: ImgSplitter-ios
 
 
-      - name: Archive whole shebang
-        uses: actions/upload-artifact@v4
-        with:
-          name: whole-shebang
-          path: .
+      # - name: Archive whole shebang
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: whole-shebang
+      #     path: .
 
 
       # - name: macos - build dependacies
