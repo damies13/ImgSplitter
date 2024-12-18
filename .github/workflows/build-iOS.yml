@@ -38,6 +38,9 @@ jobs:
 
       # - name: xcode build numpy
       #   run: toolchain build numpy
+      
+      - name: xcode build kivy
+        run: toolchain build kivy
 
       - name: create xcode project
         run: toolchain create ImgSplitter $(pwd)/src
@@ -54,9 +57,6 @@ jobs:
       - name: xcode build?
         run: toolchain update ImgSplitter-ios
 
-
-      - name: xcode build kivy
-        run: toolchain build kivy
 
 
 
