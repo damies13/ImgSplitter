@@ -38,7 +38,7 @@ jobs:
 
       # - name: xcode build numpy
       #   run: toolchain build numpy
-      
+
       - name: xcode build kivy
         run: toolchain build kivy
 
@@ -65,6 +65,13 @@ jobs:
         with:
           name: xcode-ios
           path: ImgSplitter-ios
+
+
+      - name: Archive whole shebang
+        uses: actions/upload-artifact@v4
+        with:
+          name: whole-shebang
+          path: .
 
 
       # - name: macos - build dependacies
