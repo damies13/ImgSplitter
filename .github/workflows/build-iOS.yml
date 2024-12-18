@@ -36,8 +36,8 @@ jobs:
       - name: install pip packages - kivy
         run: pip install -r build_requirements/pip_requirements.txt
 
-      - name: xcode build numpy
-        run: toolchain build numpy
+      # - name: xcode build numpy
+      #   run: toolchain build numpy
 
       - name: create xcode project
         run: toolchain create ImgSplitter $(pwd)/src
