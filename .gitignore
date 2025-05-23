@@ -166,3 +166,12 @@ cython_debug/
 *.yaml
 
 examples/
+src/*.ini
+
+
+
+
+
+
+
+#

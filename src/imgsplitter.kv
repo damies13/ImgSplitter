@@ -169,7 +169,7 @@
 						halign: "center"
 						multiline: False
 						input_filter: 'int'
-						text: str(root.subimg_left)
+						text: app.config.get(app.config.get('ImgSplitter', 'seleted_template'), 'offset_left')
 						hint_text: "Left"
 						on_text_validate: root.set_subimg_left(offset_left)
 						on_touch_move: root.set_subimg_left(offset_left)
@@ -181,7 +181,7 @@
 						halign: "center"
 						multiline: False
 						input_filter: 'int'
-						text: str(root.subimg_top)
+						text: app.config.get(app.config.get('ImgSplitter', 'seleted_template'), 'offset_top')
 						hint_text: "Top"
 						# mode: "rectangle"
 						on_text_validate: root.set_subimg_top(offset_top)
@@ -214,7 +214,7 @@
 						halign: "center"
 						multiline: False
 						input_filter: 'int'
-						text: str(root.subimg_vert)
+						text: app.config.get(app.config.get('ImgSplitter', 'seleted_template'), 'seperation_vertical')
 						hint_text: "Verical"
 						on_text_validate: root.set_subimg_vert(offset_vert)
 						on_touch_move: root.set_subimg_vert(offset_vert)
@@ -226,7 +226,7 @@
 						halign: "center"
 						multiline: False
 						input_filter: 'int'
-						text: str(root.subimg_horz)
+						text: app.config.get(app.config.get('ImgSplitter', 'seleted_template'), 'seperation_horizontal')
 						hint_text: "Horizontal"
 						on_text_validate: root.set_subimg_horz(offset_horz)
 						on_touch_move: root.set_subimg_horz(offset_horz)
@@ -258,7 +258,7 @@
 						halign: "center"
 						multiline: False
 						input_filter: 'int'
-						text: str(root.subimg_width)
+						text: app.config.get(app.config.get('ImgSplitter', 'seleted_template'), 'subimage_width')
 						hint_text: "Width"
 						on_text_validate: root.set_subimg_width(size_width)
 						on_touch_move: root.set_subimg_width(size_width)
@@ -270,7 +270,7 @@
 						halign: "center"
 						multiline: False
 						input_filter: 'int'
-						text: str(root.subimg_height)
+						text: app.config.get(app.config.get('ImgSplitter', 'seleted_template'), 'subimage_height')
 						hint_text: "Height"
 						on_text_validate: root.set_subimg_height(size_height)
 						on_touch_move: root.set_subimg_height(size_height)
@@ -302,7 +302,7 @@
 						halign: "center"
 						multiline: False
 						input_filter: 'int'
-						text: str(root.subimg_cols)
+						text: app.config.get(app.config.get('ImgSplitter', 'seleted_template'), 'grid_columns')
 						hint_text: "Columns"
 						on_text_validate: root.set_subimg_cols(count_cols)
 						on_touch_move: root.set_subimg_cols(count_cols)
@@ -314,7 +314,7 @@
 						halign: "center"
 						multiline: False
 						input_filter: 'int'
-						text: str(root.subimg_rows)
+						text: app.config.get(app.config.get('ImgSplitter', 'seleted_template'), 'grid_rows')
 						hint_text: "Rows"
 						on_text_validate: root.set_subimg_rows(count_rows)
 						on_touch_move: root.set_subimg_rows(count_rows)
