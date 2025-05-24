@@ -28,6 +28,11 @@ from kivy.utils import platform
 
 from kivy.graphics import *
 
+# import easygui
+# import tkinter as tk
+# from tkinter import filedialog
+import filedialpy
+
 from threading import Thread
 from PIL import Image
 
@@ -132,6 +137,8 @@ class ImgSplitterWindow(MDBoxLayout):
 		AppLogger.log("debug", "ImgSplitterWindow.on_start", "ImgSplitterWindow APP LOADED")
 		# t = Thread(target=self.delayed_start)
 		# t.run()
+
+		# self.tkroot = tk.Tk()
 
 		AppLogger.log("debug", "ImgSplitterWindow.on_start", "__file__:", __file__)
 		self.src_dir = os.path.dirname(__file__)
@@ -513,6 +520,47 @@ class ImgSplitterWindow(MDBoxLayout):
 	def dismiss_popup(self):
 		self._popup.dismiss()
 
+	def open_file(self):
+
+		if platform == "android":
+			self.show_load()
+		else:
+
+			# filetypes = (
+			# 	('PNG', '*.png'),
+			# 	('All files', '*.*'),
+			# 	None
+			# )
+				# ('JPEG', '*.jpeg', '*.jpg'),
+				# ('GIF', '*.gif'),
+				# ('JPG', '*.jpg'),
+
+			# filename = filedialog.askopenfilename(
+			# 	title='Select a file',
+			# 	initialdir='~',
+			# 	filetypes=filetypes)
+
+			# filename = filedialog.askopenfilename()
+
+			# filename = easygui.fileopenbox()
+
+			filefilter = " ".join(["*.jpeg","*.jpg","*.png","*.gif","*"])
+			AppLogger.log("debug", "open_file", "filefilter:", filefilter)
+
+			filetitle = "Select an image file"
+
+			# filename = filedialpy.openFile(initial_dir="~", title=filetitle, filter=filefilter)
+			filename = filedialpy.openFile(title=filetitle, filter=filefilter)
+			# filename = filedialpy.openFile(title=filetitle)
+			# filename = filedialpy.openFile(initial_dir="~")
+			# filename = filedialpy.openFile()
+
+			AppLogger.log("debug", "open_file", "filename", filename)
+			if os.path.isfile(filename):
+				self.load_file(filename)
+			else:
+				AppLogger.log("debug", "Caneled", "Clcked Cancel")
+
 	def show_load(self):
 		content = LoadDialog(load=self.load, cancel=self.dismiss_popup)
 		PATH = "."
@@ -545,6 +593,13 @@ class ImgSplitterWindow(MDBoxLayout):
 		# 	self.text_input.text = stream.read()
 
 		filepath = os.path.join(path, filename[0])
+		self.load_file(filepath)
+
+		self.dismiss_popup()
+
+	def load_file(self, filepath):
+
+		AppLogger.log("debug", "load_file", "filepath", filepath)
 
 		# AppLogger.log("debug", "ImgSplitter", "self.img_src", self.img_src)
 		self.img_src = filepath
@@ -554,7 +609,6 @@ class ImgSplitterWindow(MDBoxLayout):
 		self.update_img_data()
 		self.get_img_ratios()
 
-		self.dismiss_popup()
 
 	# def save(self, path, filename):
 	# 	with open(os.path.join(path, filename), 'w') as stream:
