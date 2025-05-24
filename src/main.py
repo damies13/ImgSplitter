@@ -24,6 +24,8 @@ from kivy.uix.popup import Popup
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.button import MDRaisedButton
 
+from kivy.core.window import Window
+
 from kivy.utils import platform
 
 from kivy.graphics import *
@@ -137,6 +139,9 @@ class ImgSplitterWindow(MDBoxLayout):
 		AppLogger.log("debug", "ImgSplitterWindow.on_start", "ImgSplitterWindow APP LOADED")
 		# t = Thread(target=self.delayed_start)
 		# t.run()
+
+		Window.bind(on_drop_file=self.handle_on_drop_file)
+
 
 		# self.tkroot = tk.Tk()
 
@@ -608,6 +613,7 @@ class ImgSplitterWindow(MDBoxLayout):
 
 		self.update_img_data()
 		self.get_img_ratios()
+		self.draw_cut_bars()
 
 
 	# def save(self, path, filename):
@@ -615,6 +621,17 @@ class ImgSplitterWindow(MDBoxLayout):
 	# 		stream.write(self.text_input.text)
 	#
 	# 	self.dismiss_popup()
+
+	def handle_on_drop_file(self, window, filename, x, y):
+	    # print(window, filename, x, y)
+		# AppLogger.log("debug", "on_drop_file", "window:", window, "filename:", filename, "x & y:", x, y)
+		AppLogger.log("debug", "on_drop_file", "x & y:", x, y)
+		AppLogger.log("debug", "on_drop_file", "window:", window)
+		AppLogger.log("debug", "on_drop_file", "filename:", filename.decode('utf-8') )
+
+		if os.path.isfile(filename.decode('utf-8')):
+			self.load_file(filename.decode('utf-8'))
+
 
 class LoadDialog(MDFloatLayout):
 	load = ObjectProperty(None)
