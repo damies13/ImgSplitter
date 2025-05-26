@@ -339,18 +339,23 @@
 					# 		pos: self.pos
 					# 		size: self.size
 
-					MDLabel:
+					MDRaisedButton:
+						id: zoom_in
 						text: '+'
+						on_press: root.zoom_in()
 						halign: "center"
-						valign: 'middle'
+						valign: 'center'
 					MDLabel:
+						id: zoom_number
 						text: f"{root.zoom} %"
 						halign: "center"
-						valign: 'middle'
-					MDLabel:
-						text: '+'
+						valign: 'center'
+					MDRaisedButton:
+						id: zoom_out
+						text: '-'
+						on_press: root.zoom_out()
 						halign: "center"
-						valign: 'middle'
+						valign: 'center'
 
 				# Version info tool
 				MDBoxLayout:

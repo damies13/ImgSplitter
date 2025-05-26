@@ -365,20 +365,22 @@ class ImgSplitterWindow(MDBoxLayout):
 		AppLogger.log("debug", "cut_col", "added col", colnum, " to canvas")
 
 	def calculate_col_width(self, colnum):
-		if colnum > 0:
-			dispwidth = app.config.getint(app.config.get('ImgSplitter', 'seleted_template'), 'seperation_vertical') / self.img_ratios["x"]
-			AppLogger.log("debug", "ImgSplitter", "calculate_col_width:", app.config.getint(app.config.get('ImgSplitter', 'seleted_template'), 'seperation_vertical'), " / ", self.img_ratios["x"], " = dispwidth:", dispwidth)
-			return dispwidth
-		else:
-			dispwidth = app.config.getint(app.config.get('ImgSplitter', 'seleted_template'), 'offset_left') / self.img_ratios["x"]
-			AppLogger.log("debug", "ImgSplitter", "calculate_col_width:", app.config.getint(app.config.get('ImgSplitter', 'seleted_template'), 'offset_left'), " / ", self.img_ratios["x"], " = dispwidth:", dispwidth)
-			return dispwidth
+		if self.img_ratios["x"] > 0:
+			if colnum > 0:
+				dispwidth = app.config.getint(app.config.get('ImgSplitter', 'seleted_template'), 'seperation_vertical') / self.img_ratios["x"]
+				AppLogger.log("debug", "calculate_col_width", "calculate_col_width:", app.config.getint(app.config.get('ImgSplitter', 'seleted_template'), 'seperation_vertical'), " / ", self.img_ratios["x"], " = dispwidth:", dispwidth)
+				return dispwidth
+			else:
+				dispwidth = app.config.getint(app.config.get('ImgSplitter', 'seleted_template'), 'offset_left') / self.img_ratios["x"]
+				AppLogger.log("debug", "calculate_col_width", "calculate_col_width:", app.config.getint(app.config.get('ImgSplitter', 'seleted_template'), 'offset_left'), " / ", self.img_ratios["x"], " = dispwidth:", dispwidth)
+				return dispwidth
+		return 0
 
 	def calculate_col_position(self, colnum):
 		img_pos = 0
 		if colnum > 0:
 			img_pos = (app.config.getint(app.config.get('ImgSplitter', 'seleted_template'), 'offset_left') + (app.config.getint(app.config.get('ImgSplitter', 'seleted_template'), 'seperation_vertical') + app.config.getint(app.config.get('ImgSplitter', 'seleted_template'), 'subimage_width') ) * colnum) - app.config.getint(app.config.get('ImgSplitter', 'seleted_template'), 'seperation_vertical')
-			AppLogger.log("debug", "ImgSplitter", "calculate_col_position", app.config.getint(app.config.get('ImgSplitter', 'seleted_template'), 'offset_left'), " + (", app.config.getint(app.config.get('ImgSplitter', 'seleted_template'), 'seperation_vertical'), " + ", app.config.getint(app.config.get('ImgSplitter', 'seleted_template'), 'subimage_width'), ") * ", colnum, " - ", app.config.getint(app.config.get('ImgSplitter', 'seleted_template'), 'seperation_vertical'), " = ", img_pos)
+			AppLogger.log("debug", "calculate_col_position", "calculate_col_position", app.config.getint(app.config.get('ImgSplitter', 'seleted_template'), 'offset_left'), " + (", app.config.getint(app.config.get('ImgSplitter', 'seleted_template'), 'seperation_vertical'), " + ", app.config.getint(app.config.get('ImgSplitter', 'seleted_template'), 'subimage_width'), ") * ", colnum, " - ", app.config.getint(app.config.get('ImgSplitter', 'seleted_template'), 'seperation_vertical'), " = ", img_pos)
 		else:
 			# img_pos = app.config.getint(app.config.get('ImgSplitter', 'seleted_template'), 'offset_left')
 			img_pos = 0
@@ -388,13 +390,15 @@ class ImgSplitterWindow(MDBoxLayout):
 		else:
 			self.cell_data[f"C{colnum}"] = img_pos + app.config.getint(app.config.get('ImgSplitter', 'seleted_template'), 'offset_left')
 
-		AppLogger.log("debug", "ImgSplitter", f"self.cell_data[C{colnum}]:", self.cell_data[f"C{colnum}"])
+		AppLogger.log("debug", "calculate_col_position", f"self.cell_data[C{colnum}]:", self.cell_data[f"C{colnum}"])
 
 		# rev_img_pos = self.img_data[self.img_src].width - img_pos
-		AppLogger.log("debug", "ImgSplitter", "colnum:", colnum, "	img_pos:", img_pos)
+		AppLogger.log("debug", "calculate_col_position", "colnum:", colnum, "	img_pos:", img_pos)
 
-		disp_pos = img_pos / self.img_ratios["x"]
-		AppLogger.log("debug", "ImgSplitter", "colnum:", colnum, "	disp_pos:", disp_pos)
+		disp_pos = 1
+		if self.img_ratios["x"] > 0:
+			disp_pos = img_pos / self.img_ratios["x"]
+			AppLogger.log("debug", "calculate_col_position", "colnum:", colnum, "	disp_pos:", disp_pos)
 		return disp_pos
 
 	def cut_row(self, rownum):
@@ -429,14 +433,16 @@ class ImgSplitterWindow(MDBoxLayout):
 		# AppLogger.log("debug", "ImgSplitter", "img_canvas children:", self.ids["img_canvas"].canvas.children)
 
 	def calculate_row_height(self, rownum):
-		if rownum > 0:
-			dispheight = app.config.getint(app.config.get('ImgSplitter', 'seleted_template'), 'seperation_horizontal') / self.img_ratios["y"]
-			AppLogger.log("debug", "ImgSplitter", "dispheight:", dispheight)
-			return dispheight
-		else:
-			dispheight = app.config.getint(app.config.get('ImgSplitter', 'seleted_template'), 'offset_top') / self.img_ratios["y"]
-			AppLogger.log("debug", "ImgSplitter", "dispheight:", dispheight)
-			return dispheight
+		if self.img_ratios["y"] > 0:
+			if rownum > 0:
+				dispheight = app.config.getint(app.config.get('ImgSplitter', 'seleted_template'), 'seperation_horizontal') / self.img_ratios["y"]
+				AppLogger.log("debug", "calculate_row_height", "dispheight:", dispheight)
+				return dispheight
+			else:
+				dispheight = app.config.getint(app.config.get('ImgSplitter', 'seleted_template'), 'offset_top') / self.img_ratios["y"]
+				AppLogger.log("debug", "calculate_row_height", "dispheight:", dispheight)
+				return dispheight
+		return 0
 
 	def calculate_row_position(self, rownum):
 		img_pos = 0
@@ -447,13 +453,15 @@ class ImgSplitterWindow(MDBoxLayout):
 
 
 		self.cell_data[f"R{rownum}"] = img_pos
-		AppLogger.log("debug", "ImgSplitter", f"self.cell_data[R{rownum}]:", self.cell_data[f"R{rownum}"])
+		AppLogger.log("debug", "calculate_row_position", f"self.cell_data[R{rownum}]:", self.cell_data[f"R{rownum}"])
 
 		rev_img_pos = self.img_data[self.img_src].height - img_pos
-		AppLogger.log("debug", "ImgSplitter", "rownum:", rownum, "	img_pos:", rev_img_pos)
+		AppLogger.log("debug", "calculate_row_position", "rownum:", rownum, "	img_pos:", rev_img_pos)
 
-		disp_pos = rev_img_pos / self.img_ratios["y"]
-		AppLogger.log("debug", "ImgSplitter", "rownum:", rownum, "	disp_pos:", disp_pos)
+		disp_pos = 1
+		if self.img_ratios["y"] > 0:
+			disp_pos = rev_img_pos / self.img_ratios["y"]
+			AppLogger.log("debug", "calculate_row_position", "rownum:", rownum, "	disp_pos:", disp_pos)
 		return disp_pos
 
 	def get_img_ratios(self):
@@ -470,11 +478,12 @@ class ImgSplitterWindow(MDBoxLayout):
 		canvas_x = img_canvas.size[0]
 		canvas_y = img_canvas.size[1]
 
-		AppLogger.log("debug", "get_img_ratios", "x ratio", image_x / canvas_x)
-		AppLogger.log("debug", "get_img_ratios", "y ratio", image_y / canvas_y)
+		if canvas_x > 0 and canvas_y > 0:
+			AppLogger.log("debug", "get_img_ratios", "x ratio", image_x / canvas_x)
+			AppLogger.log("debug", "get_img_ratios", "y ratio", image_y / canvas_y)
 
-		self.img_ratios["x"] = image_x / canvas_x
-		self.img_ratios["y"] = image_y / canvas_y
+			self.img_ratios["x"] = image_x / canvas_x
+			self.img_ratios["y"] = image_y / canvas_y
 
 	def update_img_data(self):
 
@@ -731,6 +740,59 @@ class ImgSplitterWindow(MDBoxLayout):
 
 		if os.path.isfile(filename.decode('utf-8')):
 			self.load_file(filename.decode('utf-8'))
+
+
+	def zoom_in(self):
+		# AppLogger.log("debug", "zoom_in", "self.ids:", self.ids)
+		# AppLogger.log("debug", "zoom_in", "self.zoom:", self.zoom)
+
+		self.zoom += 5
+		AppLogger.log("debug", "zoom_in", "self.zoom:", self.zoom)
+
+		# AppLogger.log("debug", "zoom_in", "self.ids.zoom_number:", self.ids.zoom_number)
+		# AppLogger.log("debug", "zoom_in", "self.ids.zoom_number:", self.ids.zoom_number.text)
+		self.ids.zoom_number.text = f"{self.zoom} %"
+		self.zoom_image()
+
+	def zoom_out(self):
+		# AppLogger.log("debug", "zoom_out", "self.zoom", self.zoom)
+
+		self.zoom += -5
+		AppLogger.log("debug", "zoom_out", "self.zoom", self.zoom)
+		self.ids.zoom_number.text = f"{self.zoom} %"
+		self.zoom_image()
+
+	def zoom_image(self):
+
+
+		if self.img_src in self.img_data.keys():
+
+			img = self.img_data[self.img_src]
+			# get width and height
+			AppLogger.log("debug", "zoom_image", "img:", img)
+
+			img_canvas = self.ids["img_canvas"]
+			# AppLogger.log("debug", "update_img_data", "img_canvas_bg.size:", img_canvas_bg)
+			AppLogger.log("debug", "zoom_image", "img_canvas.size:", img_canvas.size)
+
+			# img_canvas_bg = self.ids["img_canvas"].canvas.get_group('checkerboard')[0]
+			# # AppLogger.log("debug", "update_img_data", "img_canvas_bg.size:", img_canvas_bg)
+			# AppLogger.log("debug", "zoom_image", "img_canvas_bg.size:", img_canvas_bg.size)
+
+			img_canvas_img = self.ids["img_canvas"].canvas.get_group('image')[0]
+			AppLogger.log("debug", "zoom_image", "img_canvas_img.size:", img_canvas_img.size)
+
+
+			new_canvas_size = (img.size[0] * (self.zoom/100), img.size[1] * (self.zoom/100))
+			# new_canvas_size = (img.size[0] * (self.zoom), img.size[1] * (self.zoom))
+			AppLogger.log("debug", "update_img_data", "new_canvas_size:", new_canvas_size)
+
+			img_canvas_img.size = new_canvas_size
+
+			self.pan_to_start_pos()
+
+			self.draw_cut_bars()
+
 
 
 class LoadDialog(MDFloatLayout):
