@@ -35,6 +35,8 @@ from kivy.graphics import *
 # from tkinter import filedialog
 import filedialpy
 
+import datetime
+
 from threading import Thread
 from PIL import Image
 
@@ -102,6 +104,10 @@ class ImgSplitterWindow(MDBoxLayout):
 
 	dialogue = None
 
+	resize_check = int(datetime.datetime.now().timestamp() * 1000)
+	minimum_width = 700
+	minimum_height = 600
+
 	version_display = StringProperty(f"Version: {__version__}")
 
 	background_colour = ColorProperty([1, 1, 1, 1])
@@ -141,6 +147,7 @@ class ImgSplitterWindow(MDBoxLayout):
 		# t.run()
 
 		Window.bind(on_drop_file=self.handle_on_drop_file)
+		Window.bind(on_resize=self.check_window_size)
 
 
 		# self.tkroot = tk.Tk()
@@ -156,6 +163,41 @@ class ImgSplitterWindow(MDBoxLayout):
 	# 	outpaths = []
 	# 	for path in paths:
 	# 		pathparts =
+
+	def check_window_size(self, window, x, y, *args):
+
+		timestamp = int(datetime.datetime.now().timestamp() * 1000)
+		if (timestamp - self.resize_check) > 10:
+
+			AppLogger.log("debug", "check_window_size", "size x, y:", x, y)
+
+			AppLogger.log("debug", "check_window_size", "minimum size x, y:", self.minimum_width, self.minimum_height)
+
+			if x < self.minimum_width or y < self.minimum_height:
+				new_x = x
+				new_y = y
+
+				if x < self.minimum_width:
+					new_x = self.minimum_width
+					# Window.size = (self.minimum_width, y)
+
+				if y < self.minimum_height:
+					new_y = self.minimum_height
+					# Window.size = (x, self.minimum_height)
+
+				AppLogger.log("debug", "check_window_size", "new size x, y:", new_x, new_y)
+
+				# Window.size = (int(new_y/2), int(new_x/2))
+				# Window.size = (new_y, new_x)
+				# Window.size = (700, 600)
+				# Window.size = (350, 300)
+
+				Window.size = (int(self.minimum_height/2), int(self.minimum_width/2))
+
+
+				self.resize_check = int(datetime.datetime.now().timestamp() * 1000)
+
+			self.draw_cut_bars()
 
 	def split_images(self):
 
