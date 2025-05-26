@@ -344,10 +344,14 @@ class ImgSplitterWindow(MDBoxLayout):
 
 	def cut_col(self, colnum):
 
-		x = 0
+		img_canvas_img = self.ids["img_canvas"].canvas.get_group('image')[0]
+		AppLogger.log("debug", "cut_col", "img_canvas_img:", img_canvas_img)
+
+		# x = 0
+		x = img_canvas_img.pos[1]
 		y = self.calculate_col_position(colnum)
 		w = self.calculate_col_width(colnum)
-		h = self.ids["img_canvas"].height
+		h = img_canvas_img.size[1]
 		id = f"C{colnum}"
 
 		if id in self.crop_bars:
@@ -365,6 +369,9 @@ class ImgSplitterWindow(MDBoxLayout):
 		AppLogger.log("debug", "cut_col", "added col", colnum, " to canvas")
 
 	def calculate_col_width(self, colnum):
+		# img_canvas_img = self.ids["img_canvas"].canvas.get_group('image')[0]
+		# AppLogger.log("debug", "calculate_col_width", "img_canvas_img:", img_canvas_img)
+
 		if self.img_ratios["x"] > 0:
 			if colnum > 0:
 				dispwidth = app.config.getint(app.config.get('ImgSplitter', 'seleted_template'), 'seperation_vertical') / self.img_ratios["x"]
@@ -403,9 +410,13 @@ class ImgSplitterWindow(MDBoxLayout):
 
 	def cut_row(self, rownum):
 
+		img_canvas_img = self.ids["img_canvas"].canvas.get_group('image')[0]
+		AppLogger.log("debug", "cut_row", "img_canvas_img:", img_canvas_img)
+
 		x = self.calculate_row_position(rownum)
 		y = 0
-		w = self.ids["img_canvas"].width
+		# y = img_canvas_img.pos[0]
+		w = img_canvas_img.size[0]
 		h = self.calculate_row_height(rownum)
 		id = f"R{rownum}"
 
