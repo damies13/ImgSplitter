@@ -11,6 +11,8 @@
 		padding: 1
 		spacing: 3
 		orientation: 'vertical'
+		minimum_width: 700
+		minimum_height: 600
 
 		# menu bar
 		MDBoxLayout:
@@ -73,192 +75,243 @@
 				width: 380
 				orientation: 'vertical'
 
-				# header row
 				MDBoxLayout:
-					size_hint: (1, 0.5)
-					orientation: 'horizontal'
-					MDLabel:
-						text: "(image pixels)"
-						halign: "center"
-						valign: 'middle'
-						text_size: self.size
-				# sub header row
-				MDBoxLayout:
-					size_hint: (1, 0.5)
-					orientation: 'horizontal'
-					MDLabel:
-						text: "Offset"
-						halign: "left"
-						valign: 'middle'
-						text_size: self.size
-				# spacer row
-				MDBoxLayout:
-					size_hint: (1, 0.5)
-					orientation: 'horizontal'
-					MDLabel:
-						text: ""
-				MDBoxLayout:
-					size_hint: (1, 0.5)
-					orientation: 'horizontal'
-					MDLabel:
-						text: ""
-					MDTextField:
-						id: offset_left
-						halign: "center"
-						multiline: False
-						input_filter: 'int'
-						text: app.config.get(app.config.get('ImgSplitter', 'seleted_template'), 'offset_left')
-						hint_text: "Left"
-						on_text_validate: root.set_subimg_left(offset_left)
-						on_touch_move: root.set_subimg_left(offset_left)
-						on_touch_up: root.set_subimg_left(offset_left)
-					MDLabel:
-						text: ""
-					MDTextField:
-						id: offset_top
-						halign: "center"
-						multiline: False
-						input_filter: 'int'
-						text: app.config.get(app.config.get('ImgSplitter', 'seleted_template'), 'offset_top')
-						hint_text: "Top"
-						# mode: "rectangle"
-						on_text_validate: root.set_subimg_top(offset_top)
-						on_touch_move: root.set_subimg_top(offset_top)
-						on_touch_up: root.set_subimg_top(offset_top)
-					MDLabel:
-						text: ""
-				# sub header row
-				MDBoxLayout:
-					size_hint: (1, 0.5)
-					orientation: 'horizontal'
-					MDLabel:
-						text: "Seperation"
-						halign: "left"
-						valign: 'middle'
-						text_size: self.size
-				# spacer row
-				MDBoxLayout:
-					size_hint: (1, 0.5)
-					orientation: 'horizontal'
-					MDLabel:
-						text: ""
-				MDBoxLayout:
-					size_hint: (1, 0.5)
-					orientation: 'horizontal'
-					MDLabel:
-						text: ""
-					MDTextField:
-						id: offset_vert
-						halign: "center"
-						multiline: False
-						input_filter: 'int'
-						text: app.config.get(app.config.get('ImgSplitter', 'seleted_template'), 'seperation_vertical')
-						hint_text: "Verical"
-						on_text_validate: root.set_subimg_vert(offset_vert)
-						on_touch_move: root.set_subimg_vert(offset_vert)
-						on_touch_up: root.set_subimg_vert(offset_vert)
-					MDLabel:
-						text: ""
-					MDTextField:
-						id: offset_horz
-						halign: "center"
-						multiline: False
-						input_filter: 'int'
-						text: app.config.get(app.config.get('ImgSplitter', 'seleted_template'), 'seperation_horizontal')
-						hint_text: "Horizontal"
-						on_text_validate: root.set_subimg_horz(offset_horz)
-						on_touch_move: root.set_subimg_horz(offset_horz)
-						on_touch_up: root.set_subimg_horz(offset_horz)
-					MDLabel:
-						text: ""
-				# sub header row
-				MDBoxLayout:
-					size_hint: (1, 0.5)
-					orientation: 'horizontal'
-					MDLabel:
-						text: "Sub Image"
-						halign: "left"
-						valign: 'middle'
-						text_size: self.size
-				# spacer row
-				MDBoxLayout:
-					size_hint: (1, 0.5)
-					orientation: 'horizontal'
-					MDLabel:
-						text: ""
-				MDBoxLayout:
-					size_hint: (1, 0.5)
-					orientation: 'horizontal'
-					MDLabel:
-						text: ""
-					MDTextField:
-						id: size_width
-						halign: "center"
-						multiline: False
-						input_filter: 'int'
-						text: app.config.get(app.config.get('ImgSplitter', 'seleted_template'), 'subimage_width')
-						hint_text: "Width"
-						on_text_validate: root.set_subimg_width(size_width)
-						on_touch_move: root.set_subimg_width(size_width)
-						on_touch_up: root.set_subimg_width(size_width)
-					MDLabel:
-						text: ""
-					MDTextField:
-						id: size_height
-						halign: "center"
-						multiline: False
-						input_filter: 'int'
-						text: app.config.get(app.config.get('ImgSplitter', 'seleted_template'), 'subimage_height')
-						hint_text: "Height"
-						on_text_validate: root.set_subimg_height(size_height)
-						on_touch_move: root.set_subimg_height(size_height)
-						on_touch_up: root.set_subimg_height(size_height)
-					MDLabel:
-						text: ""
-				# sub header row
-				MDBoxLayout:
-					size_hint: (1, 0.5)
-					orientation: 'horizontal'
-					MDLabel:
-						text: "Grid"
-						halign: "left"
-						valign: 'middle'
-						text_size: self.size
-				# spacer row
-				MDBoxLayout:
-					size_hint: (1, 0.5)
-					orientation: 'horizontal'
-					MDLabel:
-						text: ""
-				MDBoxLayout:
-					size_hint: (1, 0.5)
-					orientation: 'horizontal'
-					Label:
-						text: ""
-					MDTextField:
-						id: count_cols
-						halign: "center"
-						multiline: False
-						input_filter: 'int'
-						text: app.config.get(app.config.get('ImgSplitter', 'seleted_template'), 'grid_columns')
-						hint_text: "Columns"
-						on_text_validate: root.set_subimg_cols(count_cols)
-						on_touch_move: root.set_subimg_cols(count_cols)
-						on_touch_up: root.set_subimg_cols(count_cols)
-					MDLabel:
-						text: ""
-					MDTextField:
-						id: count_rows
-						halign: "center"
-						multiline: False
-						input_filter: 'int'
-						text: app.config.get(app.config.get('ImgSplitter', 'seleted_template'), 'grid_rows')
-						hint_text: "Rows"
-						on_text_validate: root.set_subimg_rows(count_rows)
-						on_touch_move: root.set_subimg_rows(count_rows)
-						on_touch_up: root.set_subimg_rows(count_rows)
-					MDLabel:
-						text: ""
+					size_hint: (1, None)
+					height: 500
+					orientation: 'vertical'
+
+					# canvas.before:
+					# 	Color:
+					# 		rgba: (0,0,1,0.5)
+					# 	Rectangle:
+					# 		pos: self.pos
+					# 		size: self.size
+
+					#
+					#	Start Cut lines
+					#
+
+					# header row
+					MDBoxLayout:
+						orientation: 'horizontal'
+						valign: 'top'
+						MDLabel:
+							text: "(image pixels)"
+							halign: 'center'
+							valign: 'center'
+							text_size: self.size
+
+					#
+					#	Offset
+					#
+
+					MDBoxLayout:
+						orientation: 'horizontal'
+						# valign: 'top'
+						MDLabel:
+							id: offset_label
+							text: "Offset"
+							halign: 'left'
+							valign: 'top'
+							font_style: 'Body2'
+							# text_size: self.size
+					# Spacer Row
+					MDBoxLayout:
+						orientation: 'horizontal'
+						# height: 10
+						MDLabel:
+							text: " "
+					MDBoxLayout:
+						orientation: 'horizontal'
+						# halign: "right"
+						valign: 'bottom'
+						MDLabel:
+							text: ""
+						MDLabel:
+							text: ""
+						MDTextField:
+							id: offset_left
+							halign: "center"
+							valign: 'bottom'
+							multiline: False
+							input_filter: 'int'
+							text: app.config.get(app.config.get('ImgSplitter', 'seleted_template'), 'offset_left')
+							hint_text: "Left"
+							on_text_validate: root.set_subimg_left(offset_left)
+							on_touch_move: root.set_subimg_left(offset_left)
+							on_touch_up: root.set_subimg_left(offset_left)
+						MDLabel:
+							text: ""
+						MDTextField:
+							id: offset_top
+							halign: "center"
+							valign: 'bottom'
+							multiline: False
+							input_filter: 'int'
+							text: app.config.get(app.config.get('ImgSplitter', 'seleted_template'), 'offset_top')
+							hint_text: "Top"
+							# mode: "rectangle"
+							on_text_validate: root.set_subimg_top(offset_top)
+							on_touch_move: root.set_subimg_top(offset_top)
+							on_touch_up: root.set_subimg_top(offset_top)
+
+					#
+					#	Seperation
+					#
+					# sub header row
+					MDBoxLayout:
+						orientation: 'horizontal'
+						valign: 'top'
+						MDLabel:
+							text: "Seperation"
+							halign: "left"
+							valign: 'top'
+							font_style: 'Body2'
+							# text_size: self.size
+					# Spacer Row
+					MDBoxLayout:
+						orientation: 'horizontal'
+						# height: 20
+						MDLabel:
+							text: " "
+					MDBoxLayout:
+						orientation: 'horizontal'
+						valign: 'bottom'
+						MDLabel:
+							text: ""
+						MDLabel:
+							text: ""
+						MDTextField:
+							id: offset_vert
+							halign: "center"
+							valign: 'bottom'
+							multiline: False
+							input_filter: 'int'
+							text: app.config.get(app.config.get('ImgSplitter', 'seleted_template'), 'seperation_vertical')
+							hint_text: "Verical"
+							on_text_validate: root.set_subimg_vert(offset_vert)
+							on_touch_move: root.set_subimg_vert(offset_vert)
+							on_touch_up: root.set_subimg_vert(offset_vert)
+						MDLabel:
+							text: ""
+						MDTextField:
+							id: offset_horz
+							halign: "center"
+							valign: 'bottom'
+							multiline: False
+							input_filter: 'int'
+							text: app.config.get(app.config.get('ImgSplitter', 'seleted_template'), 'seperation_horizontal')
+							hint_text: "Horizontal"
+							on_text_validate: root.set_subimg_horz(offset_horz)
+							on_touch_move: root.set_subimg_horz(offset_horz)
+							on_touch_up: root.set_subimg_horz(offset_horz)
+					#
+					#	Sub Image
+					#
+					# sub header row
+					MDBoxLayout:
+						orientation: 'horizontal'
+						valign: 'top'
+						MDLabel:
+							text: "Sub Image"
+							halign: "left"
+							valign: 'top'
+							# font_style: 'Body1'
+							font_style: 'Body2'
+							# text_size: self.size
+					# Spacer Row
+					MDBoxLayout:
+						orientation: 'horizontal'
+						# height: 10
+						MDLabel:
+							text: " "
+					MDBoxLayout:
+						orientation: 'horizontal'
+						valign: 'bottom'
+						MDLabel:
+							text: ""
+						MDLabel:
+							text: ""
+						MDTextField:
+							id: size_width
+							halign: "center"
+							valign: 'bottom'
+							multiline: False
+							input_filter: 'int'
+							text: app.config.get(app.config.get('ImgSplitter', 'seleted_template'), 'subimage_width')
+							hint_text: "Width"
+							on_text_validate: root.set_subimg_width(size_width)
+							on_touch_move: root.set_subimg_width(size_width)
+							on_touch_up: root.set_subimg_width(size_width)
+						MDLabel:
+							text: ""
+						MDTextField:
+							id: size_height
+							halign: "center"
+							valign: 'bottom'
+							multiline: False
+							input_filter: 'int'
+							text: app.config.get(app.config.get('ImgSplitter', 'seleted_template'), 'subimage_height')
+							hint_text: "Height"
+							on_text_validate: root.set_subimg_height(size_height)
+							on_touch_move: root.set_subimg_height(size_height)
+							on_touch_up: root.set_subimg_height(size_height)
+					#
+					#	Grid
+					#
+					# sub header row
+					MDBoxLayout:
+						orientation: 'horizontal'
+						valign: 'top'
+						MDLabel:
+							text: "Grid"
+							halign: "left"
+							valign: 'top'
+							font_style: 'Body2'
+							# text_size: self.size
+					# Spacer Row
+					MDBoxLayout:
+						orientation: 'horizontal'
+						# height: 10
+						MDLabel:
+							text: " "
+					MDBoxLayout:
+						orientation: 'horizontal'
+						valign: 'bottom'
+						Label:
+							text: ""
+						MDLabel:
+							text: ""
+						MDTextField:
+							id: count_cols
+							halign: "center"
+							valign: 'bottom'
+							multiline: False
+							input_filter: 'int'
+							text: app.config.get(app.config.get('ImgSplitter', 'seleted_template'), 'grid_columns')
+							hint_text: "Columns"
+							on_text_validate: root.set_subimg_cols(count_cols)
+							on_touch_move: root.set_subimg_cols(count_cols)
+							on_touch_up: root.set_subimg_cols(count_cols)
+						MDLabel:
+							text: ""
+						MDTextField:
+							id: count_rows
+							halign: "center"
+							valign: 'bottom'
+							multiline: False
+							input_filter: 'int'
+							text: app.config.get(app.config.get('ImgSplitter', 'seleted_template'), 'grid_rows')
+							hint_text: "Rows"
+							on_text_validate: root.set_subimg_rows(count_rows)
+							on_touch_move: root.set_subimg_rows(count_rows)
+							on_touch_up: root.set_subimg_rows(count_rows)
+
+					#
+					#	End Cut lines
+					#
+
+
 				# Block space row
 				MDBoxLayout:
 					size_hint: (1, 5)
@@ -266,28 +319,22 @@
 					MDLabel:
 						text: ""
 				MDBoxLayout:
-					size_hint: (1, 0.5)
+					# size_hint: (1, 0.5)
+					size_hint: (1, None)
+					height: 50
 					orientation: 'horizontal'
+
+					# canvas.before:
+					# 	Color:
+					# 		rgba: (0,1,1,0.5)
+					# 	Rectangle:
+					# 		pos: self.pos
+					# 		size: self.size
+
 					MDLabel:
 						text: root.version_display
 						halign: "center"
-
-
-		# # status bar
-		# MDBoxLayout:
-		# 	orientation: 'horizontal'
-		# 	# size_hint: (1, .05)
-		# 	size_hint: (1, 1)
-		# 	valign: "bottom"
-		# 	halign: "left"
-		#
-		# 	MDLabel:
-		# 		id: status_bar
-		# 		# size_hint: (5, 0.05)
-		# 		text: root.status_bar
-		# 		valign: "bottom"
-		# 		halign: "left"
-
+						valign: 'middle'
 
 
 <Custom@Switch>:
