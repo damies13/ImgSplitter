@@ -41,38 +41,45 @@
 			size_hint: (1, 9)
 			valign: "top"
 
-			FloatLayout:
-				id: img_canvas
+			ScrollView:
+				size_hint: None, None
 				size_hint: (1, 1)
 
-				canvas.before:
-					Color:
-						rgba: 1, 1, 1, 0
-				canvas:
-					# id: base_canvas
-					Color:
-						rgb: 1, 1, 1, 0
-					Rectangle:
-						id: bg
-						source: 'data/images/checkerboard.png'
-						size: self.size
-						group: "checkerboard"
-					Rectangle:
-						id: img
-						source: root.img_src
-						size: self.size
-						group: "image"
+				MDBoxLayout:
+				# FloatLayout:
+					id: img_canvas
+					# size_hint: (1, 1)
 
-				canvas.after:
-					Color:
-						rgba: 1, 1, 1, 0
+					canvas.before:
+						Color:
+							rgba: 1, 1, 1, 0
+					canvas:
+						# id: base_canvas
+						Color:
+							rgb: 1, 1, 1, 0
+						Rectangle:
+							id: img_canvas_bg
+							source: 'data/images/checkerboard.png'
+							size: self.size
+							group: "checkerboard"
+						Rectangle:
+							id: img_canvas_img
+							source: root.img_src
+							# size: self.size
+							# pos: 0, 0
+							group: "image"
 
-			# config tool box
+					canvas.after:
+						Color:
+							rgba: 1, 1, 1, 0
+
+			# config pannel
 			MDBoxLayout:
 				size_hint: (None, 1)
 				width: 380
 				orientation: 'vertical'
 
+				# config tool box
 				MDBoxLayout:
 					size_hint: (1, None)
 					height: 500
@@ -316,6 +323,36 @@
 					orientation: 'horizontal'
 					MDLabel:
 						text: ""
+
+
+				# Zoom tool
+				MDBoxLayout:
+					# size_hint: (1, 0.5)
+					size_hint: (1, None)
+					height: 50
+					orientation: 'horizontal'
+
+					# canvas.before:
+					# 	Color:
+					# 		rgba: (0,1,1,0.5)
+					# 	Rectangle:
+					# 		pos: self.pos
+					# 		size: self.size
+
+					MDLabel:
+						text: '+'
+						halign: "center"
+						valign: 'middle'
+					MDLabel:
+						text: f"{root.zoom} %"
+						halign: "center"
+						valign: 'middle'
+					MDLabel:
+						text: '+'
+						halign: "center"
+						valign: 'middle'
+
+				# Version info tool
 				MDBoxLayout:
 					# size_hint: (1, 0.5)
 					size_hint: (1, None)

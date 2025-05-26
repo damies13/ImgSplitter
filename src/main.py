@@ -108,6 +108,8 @@ class ImgSplitterWindow(MDBoxLayout):
 	minimum_width = 700
 	minimum_height = 600
 
+	zoom = 100
+
 	version_display = StringProperty(f"Version: {__version__}")
 
 	background_colour = ColorProperty([1, 1, 1, 1])
@@ -320,7 +322,7 @@ class ImgSplitterWindow(MDBoxLayout):
 
 		self.cut_row(0)
 		for r in range(app.config.getint(app.config.get('ImgSplitter', 'seleted_template'), 'grid_rows')):
-			AppLogger.log("debug", "ImgSplitter", "row:", r)
+			AppLogger.log("debug", "draw_cut_bars", "row:", r)
 			self.cut_row(r+1)
 
 		# w = self.calculate_row_width()
@@ -329,7 +331,7 @@ class ImgSplitterWindow(MDBoxLayout):
 		self.cut_col(0)
 		# self.cut_col(1)
 		for c in range(app.config.getint(app.config.get('ImgSplitter', 'seleted_template'), 'grid_columns')):
-			AppLogger.log("debug", "ImgSplitter", "col:", c)
+			AppLogger.log("debug", "draw_cut_bars", "col:", c)
 			self.cut_col(c+1)
 
 		img_canvas.canvas.ask_update()
@@ -357,10 +359,10 @@ class ImgSplitterWindow(MDBoxLayout):
 		self.crop_bars[id]["h"] = h
 		self.crop_bars[id]["ig"] = InstructionGroup()
 		self.crop_bars[id]["ig"].add(Color(1, .5, 0.5, 0.4))
-		AppLogger.log("debug", "ImgSplitter", "col", colnum, ": x:", x, " y:", y, " w:", w, " h:", h)
+		AppLogger.log("debug", "cut_col", "col", colnum, ": x:", x, " y:", y, " w:", w, " h:", h)
 		self.crop_bars[id]["ig"].add(Rectangle(pos=(self.crop_bars[id]["y"], self.crop_bars[id]["x"]), size=(self.crop_bars[id]["w"], self.crop_bars[id]["h"])))
 		self.ids["img_canvas"].canvas.add(self.crop_bars[id]["ig"])
-		AppLogger.log("debug", "ImgSplitter", "added col", colnum, " to canvas")
+		AppLogger.log("debug", "cut_col", "added col", colnum, " to canvas")
 
 	def calculate_col_width(self, colnum):
 		if colnum > 0:
@@ -412,10 +414,10 @@ class ImgSplitterWindow(MDBoxLayout):
 		self.crop_bars[id]["h"] = h
 		self.crop_bars[id]["ig"] = InstructionGroup()
 		self.crop_bars[id]["ig"].add(Color(1, .5, 0.5, 0.4))
-		AppLogger.log("debug", "ImgSplitter", "row", rownum, ": x:", x, " y:", y, " w:", w, " h:", h)
+		AppLogger.log("debug", "cut_row", "row", rownum, ": x:", x, " y:", y, " w:", w, " h:", h)
 		self.crop_bars[id]["ig"].add(Rectangle(pos=(self.crop_bars[id]["y"], self.crop_bars[id]["x"]), size=(self.crop_bars[id]["w"], self.crop_bars[id]["h"])))
 		self.ids["img_canvas"].canvas.add(self.crop_bars[id]["ig"])
-		AppLogger.log("debug", "ImgSplitter", "added row", rownum, " to canvas")
+		AppLogger.log("debug", "cut_row", "added row", rownum, " to canvas")
 
 		# self.crop_bars[id]["x"] = x
 		# self.crop_bars[id]["y"] = y
@@ -456,11 +458,11 @@ class ImgSplitterWindow(MDBoxLayout):
 
 	def get_img_ratios(self):
 		self.img_ratios = {"x": 0, "y": 0}
-		AppLogger.log("debug", "ImgSplitter", "self.img_data[self.img_src][size]", self.img_data[self.img_src].size)
+		AppLogger.log("debug", "get_img_ratios", "self.img_data[self.img_src][size]", self.img_data[self.img_src].size)
 
 		img_canvas = self.ids["img_canvas"]
-		AppLogger.log("debug", "ImgSplitter", "img_canvas:", img_canvas)
-		AppLogger.log("debug", "ImgSplitter", "img_canvas.size:", img_canvas.size)
+		AppLogger.log("debug", "get_img_ratios", "img_canvas:", img_canvas)
+		AppLogger.log("debug", "get_img_ratios", "img_canvas.size:", img_canvas.size)
 
 		image_x = self.img_data[self.img_src].width
 		image_y = self.img_data[self.img_src].height
@@ -468,39 +470,61 @@ class ImgSplitterWindow(MDBoxLayout):
 		canvas_x = img_canvas.size[0]
 		canvas_y = img_canvas.size[1]
 
-		AppLogger.log("debug", "ImgSplitter", "x ratio", image_x / canvas_x)
-		AppLogger.log("debug", "ImgSplitter", "y ratio", image_y / canvas_y)
+		AppLogger.log("debug", "get_img_ratios", "x ratio", image_x / canvas_x)
+		AppLogger.log("debug", "get_img_ratios", "y ratio", image_y / canvas_y)
 
 		self.img_ratios["x"] = image_x / canvas_x
 		self.img_ratios["y"] = image_y / canvas_y
 
 	def update_img_data(self):
 
-		AppLogger.log("debug", "ImgSplitter", "self.img_src", self.img_src)
-		AppLogger.log("debug", "ImgSplitter", "self.img_data", self.img_data)
+		AppLogger.log("debug", "update_img_data", "self.img_src", self.img_src)
+		AppLogger.log("debug", "update_img_data", "self.img_data", self.img_data)
 		self.is_animated = False
 		is_animatable = False
 
 		file, ext = os.path.splitext(self.img_src)
 		if ext in [".gif", ".png"]:
 			is_animatable = True
-			AppLogger.log("debug", "ImgSplitter", "is_animatable", is_animatable)
+			AppLogger.log("debug", "update_img_data", "is_animatable", is_animatable)
 
 		if self.img_src not in self.img_data.keys():
 			# self.img_data[self.img_src] = {}
 			self.img_data = {} 		# clear old image
 			img = Image.open(self.img_src)
 			# get width and height
-			AppLogger.log("debug", "ImgSplitter", "img:", img)
+			AppLogger.log("debug", "update_img_data", "img:", img)
 			self.img_data[self.img_src] = img
+
+			img_canvas = self.ids["img_canvas"]
+			AppLogger.log("debug", "update_img_data", "img_canvas.size:", img_canvas.size)
+
+			AppLogger.log("debug", "update_img_data", "self.ids:", self.ids)
+			# AppLogger.log("debug", "update_img_data", "img_canvas.ids:", img_canvas.ids)
+
+
+			img_canvas_bg = self.ids["img_canvas"].canvas.get_group('checkerboard')[0]
+			# AppLogger.log("debug", "update_img_data", "img_canvas_bg.size:", img_canvas_bg)
+			AppLogger.log("debug", "update_img_data", "img_canvas_bg.size:", img_canvas_bg.size)
+
+			img_canvas_img = self.ids["img_canvas"].canvas.get_group('image')[0]
+			AppLogger.log("debug", "update_img_data", "img_canvas_img.size:", img_canvas_img.size)
+
+			AppLogger.log("debug", "update_img_data", "img.size:", img.size)
+
+			new_canvas_size = (img.size[0] * (self.zoom/100), img.size[1] * (self.zoom/100))
+			# new_canvas_size = (img.size[0] * (self.zoom), img.size[1] * (self.zoom))
+			AppLogger.log("debug", "update_img_data", "new_canvas_size:", new_canvas_size)
+
+			img_canvas_img.size = new_canvas_size
 
 			if is_animatable:
 				self.is_animated = img.is_animated
-				AppLogger.log("debug", "ImgSplitter", "img.is_animated", img.is_animated)
+				AppLogger.log("debug", "update_img_data", "img.is_animated", img.is_animated)
 
 			img.close()
-			AppLogger.log("debug", "ImgSplitter", "self.img_data", self.img_data)
-			AppLogger.log("debug", "ImgSplitter", "self.is_animated", self.is_animated)
+			AppLogger.log("debug", "update_img_data", "self.img_data", self.img_data)
+			AppLogger.log("debug", "update_img_data", "self.is_animated", self.is_animated)
 
 			# animated gif and apng
 			# https://stackoverflow.com/questions/1412529/how-do-i-programmatically-check-whether-a-gif-image-is-animated
@@ -606,7 +630,7 @@ class ImgSplitterWindow(MDBoxLayout):
 			if os.path.isfile(filename):
 				self.load_file(filename)
 			else:
-				AppLogger.log("debug", "Caneled", "Clcked Cancel")
+				AppLogger.log("debug", "Canceled", "Clcked Cancel")
 
 	def show_load(self):
 		content = LoadDialog(load=self.load, cancel=self.dismiss_popup)
@@ -648,6 +672,9 @@ class ImgSplitterWindow(MDBoxLayout):
 
 		AppLogger.log("debug", "load_file", "filepath", filepath)
 
+		AppLogger.log("debug", "load_file", "self.img_src", self.img_src)
+		AppLogger.log("debug", "load_file", "self.img_data", self.img_data)
+
 		# AppLogger.log("debug", "ImgSplitter", "self.img_src", self.img_src)
 		self.img_src = filepath
 		# AppLogger.log("debug", "ImgSplitter", "self.img_src", self.img_src)
@@ -655,7 +682,38 @@ class ImgSplitterWindow(MDBoxLayout):
 
 		self.update_img_data()
 		self.get_img_ratios()
+		self.pan_to_start_pos()
 		self.draw_cut_bars()
+
+
+	def pan_to_start_pos(self):
+
+			img_canvas = self.ids["img_canvas"]
+			# AppLogger.log("debug", "update_img_data", "img_canvas_bg.size:", img_canvas_bg)
+			AppLogger.log("debug", "pan_to_start_pos", "img_canvas.size:", img_canvas.size)
+
+			img_canvas_bg = self.ids["img_canvas"].canvas.get_group('checkerboard')[0]
+			# AppLogger.log("debug", "update_img_data", "img_canvas_bg.size:", img_canvas_bg)
+			AppLogger.log("debug", "pan_to_start_pos", "img_canvas_bg.size:", img_canvas_bg.size)
+
+			img_canvas_img = self.ids["img_canvas"].canvas.get_group('image')[0]
+			AppLogger.log("debug", "pan_to_start_pos", "img_canvas_img.size:", img_canvas_img.size)
+
+			# lower left = 0, 0
+
+			# canvas_height = img_canvas.size[1]
+			# image_height = img_canvas_img.size[1]
+			pos_x = 0
+
+			canvas_height = img_canvas.size[1]
+			image_height = img_canvas_img.size[1]
+			pos_y = canvas_height - image_height
+			AppLogger.log("debug", "pan_to_start_pos", "new pos:", pos_x, pos_y)
+			# pos_y = (canvas_height - image_height)/2
+
+			# AppLogger.log("debug", "pan_to_start_pos", "new pos:", pos_x, pos_y)
+			img_canvas_img.pos = (pos_x, pos_y)
+			# img_canvas_img.pos = (10, 139)
 
 
 	# def save(self, path, filename):
