@@ -28,7 +28,7 @@ jobs:
             files:
               - 'src/**'
               - 'build_requirements/**'
-              - '.github/workflows/build-iOS.yml'
+              - '.github/workflows/build-macos.yml'
 
       - name: Get ImageSplitter Version Number
         if: steps.run_build.outputs.files == 'true'
