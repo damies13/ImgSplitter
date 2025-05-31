@@ -10,7 +10,7 @@ from kivymd import hooks_path as kivymd_hooks_path
 path = os.path.abspath(".")
 
 a = Analysis(
-    ['src/*.py'],
+    ['src/main.py'],
 		pathex=[path],
     binaries=[],
     datas=[],
