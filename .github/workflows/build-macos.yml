@@ -22,7 +22,13 @@ jobs:
       - name: Get ImageSplitter Version Number
         shell: python
         run: |
-          from src.__version__ import __version__
+          import os
+          import sys
+          print(os.environ.get('GITHUB_WORKSPACE'))
+          sys.path.append(os.path.abspath(os.path.join(os.environ.get('GITHUB_WORKSPACE'), "src")))
+          from __version__ import __version__
+
+          print("__version__:", __version__)
           with open(env_file, "a") as myfile:
             myfile.write("appversion={}\n".format(__version__))
 

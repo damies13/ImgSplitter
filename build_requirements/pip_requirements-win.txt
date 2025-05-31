@@ -10,3 +10,5 @@ kivy.deps.sdl2
 kivy.deps.glew
 
 pyinstaller
+
+filedialpy

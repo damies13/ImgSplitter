@@ -12,7 +12,7 @@ path = os.path.abspath(".")
 
 
 a = Analysis(
-    ['src/main.py'],
+    ['src/*.py'],
     pathex=[path],
     binaries=[],
     datas=[],
