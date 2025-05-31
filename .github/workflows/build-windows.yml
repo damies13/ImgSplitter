@@ -17,7 +17,19 @@ jobs:
         with:
           python-version: "3.x"
 
+      - name: Check if should run build
+        id: run_build
+        uses: dorny/paths-filter@v3
+        with:
+          base: '${{ env.base }}'
+          filters: |
+            files:
+              - 'src/**'
+              - 'build_requirements/**'
+              - '.github/workflows/build-iOS.yml'
+
       - name: Get ImageSplitter Version Number
+        if: steps.run_build.outputs.files == 'true'
         shell: python
         run: |
           import os
@@ -33,22 +45,30 @@ jobs:
             myfile.write("appversion={}\n".format(__version__))
 
       - name: install pip packages - win
+        if: steps.run_build.outputs.files == 'true'
         run: pip install -r build_requirements/pip_requirements-win.txt
+
       - name: install pip packages - kivy
+        if: steps.run_build.outputs.files == 'true'
         run: pip install -r build_requirements/pip_requirements.txt
 
       - name: copy spec file
+        if: steps.run_build.outputs.files == 'true'
         run: copy build_requirements/ImgSplitter-windows-onefile.spec.src ImgSplitter.spec
 
       - name: build spec
+        if: steps.run_build.outputs.files == 'true'
         run: python -m PyInstaller ImgSplitter.spec
 
       - name: Archive Manager Build
+        if: steps.run_build.outputs.files == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: build-windows-v${{ env.appversion }}
           path: build
+
       - name: Archive Manager dist
+        if: steps.run_build.outputs.files == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: ImgSplitter_v${{ env.appversion }}

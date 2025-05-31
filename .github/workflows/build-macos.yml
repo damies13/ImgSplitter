@@ -19,7 +19,19 @@ jobs:
           # python-version: "3.x"
           python-version: "3.12"
 
+      - name: Check if should run build
+        id: run_build
+        uses: dorny/paths-filter@v3
+        with:
+          base: '${{ env.base }}'
+          filters: |
+            files:
+              - 'src/**'
+              - 'build_requirements/**'
+              - '.github/workflows/build-iOS.yml'
+
       - name: Get ImageSplitter Version Number
+        if: steps.run_build.outputs.files == 'true'
         shell: python
         run: |
           import os
@@ -35,15 +47,20 @@ jobs:
             myfile.write("appversion={}\n".format(__version__))
 
       - name: macos - build dependacies
+        if: steps.run_build.outputs.files == 'true'
         # run: brew reinstall --build-from-source sdl2 sdl2_image sdl2_ttf sdl2_mixer
         run: brew reinstall sdl2 sdl2_image sdl2_ttf sdl2_mixer
 
       - name: install pip packages - macos
+        if: steps.run_build.outputs.files == 'true'
         run: pip install -r build_requirements/pip_requirements-macos.txt
+
       - name: install pip packages - kivy
+        if: steps.run_build.outputs.files == 'true'
         run: pip install -r build_requirements/pip_requirements.txt
 
       - name: copy spec file
+        if: steps.run_build.outputs.files == 'true'
         run: cp build_requirements/ImgSplitter-macos-onefile.spec.src ImgSplitter.spec
 
         # - name: build
@@ -67,24 +84,28 @@ jobs:
         #                       python installation supports the target architecture). If not target architecture is not specified, the current running architecture is targeted.
 
       - name: build spec
+        if: steps.run_build.outputs.files == 'true'
         # run: python -m PyInstaller ImgSplitter.spec
         run: PyInstaller -y --clean ImgSplitter.spec
         # run: PyInstaller -y --clean --target-arch universal2 ImgSplitter.spec
         # run: pyinstaller -y --clean --windowed ImgSplitter.spec
 
       - name: Archive Manager Build
+        if: steps.run_build.outputs.files == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: build-macos-v${{ env.appversion }}
           path: build
 
       - name: Archive Manager dist
+        if: steps.run_build.outputs.files == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: dist-macos-v${{ env.appversion }}
           path: dist
 
       - name: Create DMG File
+        if: steps.run_build.outputs.files == 'true'
         # run:
         #   pushd dist
         #   hdiutil create ./ImgSplitter.dmg -srcfolder ImgSplitter.app -ov
@@ -93,6 +114,7 @@ jobs:
           hdiutil create ./ImgSplitter_v${{ env.appversion }}.dmg -srcfolder dist/ImgSplitter.app -ov
 
       - name: Archive Manager dmg
+        if: steps.run_build.outputs.files == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: dmg-macos-v${{ env.appversion }}
