@@ -1,6 +1,8 @@
 import kivy
 kivy.require('2.3.0')
 
+from __init__ import __version__
+
 # from glob import glob
 # from random import randint
 # from os.path import join, dirname
@@ -98,9 +100,6 @@ class ImgSplitterApp(MDApp):
 
 
 class ImgSplitterWindow(MDBoxLayout):
-# class ImgSplitterWindow(Screen):
-
-	__version__ = "0.2.0"
 
 	dialogue = None
 
