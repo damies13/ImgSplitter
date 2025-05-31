@@ -75,13 +75,13 @@ jobs:
       - name: Archive Manager Build
         uses: actions/upload-artifact@v4
         with:
-          name: build-macos
+          name: build-macos-v${{ env.appversion }}
           path: build
 
       - name: Archive Manager dist
         uses: actions/upload-artifact@v4
         with:
-          name: dist-macos
+          name: dist-macos-v${{ env.appversion }}
           path: dist
 
       - name: Create DMG File
@@ -90,10 +90,10 @@ jobs:
         #   hdiutil create ./ImgSplitter.dmg -srcfolder ImgSplitter.app -ov
         #   popd
         run:
-          hdiutil create ./ImgSplitter.dmg -srcfolder dist/ImgSplitter.app -ov
+          hdiutil create ./ImgSplitter_v${{ env.appversion }}.dmg -srcfolder dist/ImgSplitter.app -ov
 
       - name: Archive Manager dmg
         uses: actions/upload-artifact@v4
         with:
-          name: dmg-macos
-          path: ImgSplitter.dmg
+          name: dmg-macos-v${{ env.appversion }}
+          path: ImgSplitter_v${{ env.appversion }}.dmg

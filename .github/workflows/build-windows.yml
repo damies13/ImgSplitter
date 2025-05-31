@@ -17,6 +17,21 @@ jobs:
         with:
           python-version: "3.x"
 
+      - name: Get ImageSplitter Version Number
+        shell: python
+        run: |
+          import os
+          import sys
+          print("GITHUB_WORKSPACE:", os.getenv('GITHUB_WORKSPACE'))
+          sys.path.append(os.path.abspath(os.path.join(os.getenv('GITHUB_WORKSPACE'), "src")))
+          from __version__ import __version__
+
+          print("__version__:", __version__)
+
+          env_file = os.getenv('GITHUB_ENV')
+          with open(env_file, "a") as myfile:
+            myfile.write("appversion={}\n".format(__version__))
+
       - name: install pip packages - win
         run: pip install -r build_requirements/pip_requirements-win.txt
       - name: install pip packages - kivy
@@ -31,10 +46,10 @@ jobs:
       - name: Archive Manager Build
         uses: actions/upload-artifact@v4
         with:
-          name: build-windows
+          name: build-windows-v${{ env.appversion }}
           path: build
       - name: Archive Manager dist
         uses: actions/upload-artifact@v4
         with:
-          name: dist-windows
+          name: ImgSplitter_v${{ env.appversion }}
           path: dist
