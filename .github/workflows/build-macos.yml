@@ -22,7 +22,7 @@ jobs:
       - name: Get ImageSplitter Version Number
         shell: python
         run: |
-          from src/__version__.py import __version__
+          from src.__version__ import __version__
           with open(env_file, "a") as myfile:
             myfile.write("appversion={}\n".format(__version__))
 
