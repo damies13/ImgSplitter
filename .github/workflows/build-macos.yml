@@ -24,11 +24,13 @@ jobs:
         run: |
           import os
           import sys
-          print(os.environ.get('GITHUB_WORKSPACE'))
-          sys.path.append(os.path.abspath(os.path.join(os.environ.get('GITHUB_WORKSPACE'), "src")))
+          print("GITHUB_WORKSPACE:", os.getenv('GITHUB_WORKSPACE'))
+          sys.path.append(os.path.abspath(os.path.join(os.getenv('GITHUB_WORKSPACE'), "src")))
           from __version__ import __version__
 
           print("__version__:", __version__)
+
+          env_file = os.getenv('GITHUB_ENV')
           with open(env_file, "a") as myfile:
             myfile.write("appversion={}\n".format(__version__))
 
