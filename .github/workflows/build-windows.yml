@@ -160,17 +160,20 @@ jobs:
       - name: Display structure of downloaded files
         run: ls -R mesa
 
-      - name: Install 7z
+      # - name: Install 7z
+      #   uses: milliewalky/setup-7-zip@v2
+      #   with:
+      #       # 7-Zip release tag from its GitHub Releases page e.g. 24.07.
+      #       # default: latest
+      #       tag: ""
+      - name: setup 7-Zip
         uses: milliewalky/setup-7-zip@v2
-        with:
-            # 7-Zip release tag from its GitHub Releases page e.g. 24.07.
-            # default: latest
-            tag: ""
 
       - name: list mesa archive
         # uses: edgarrc/action-7z@v1
         # with:
         #     args: 7z l mesa\${{ env.release_msvc_filename }}
+        shell: cmd
         run: |
             7z l mesa\${{ env.release_msvc_filename }}
 
@@ -178,6 +181,7 @@ jobs:
         # uses: edgarrc/action-7z@v1
         # with:
         #     args: 7z e mesa\${{ env.release_msvc_filename }}
+        shell: cmd
         run: |
             7z e mesa\${{ env.release_msvc_filename }}
 

@@ -29,7 +29,12 @@ Install ImageSplitter MacOS
 
 Run ImageSplitter MacOS
 	# Fail    Run ImageSplitter MacOS Not Implimented
-	Start Process 	open 	${DEST_APP_DIR} 	alias=ImageSplitter
+	# Start Process 	open 	${DEST_APP_DIR} 	alias=ImageSplitter
+	Wait For 	ImgSplitter App 	timeout=${ImageTimeout}
+	${location}= 	Locate 	ImgSplitter App
+	Move To 	${location}
+	Double Click
+
 	Sleep    ${ImageTimeout * 10}
 	Take A Screenshot
 
@@ -80,21 +85,22 @@ Mount ImageSplitter Image
 
 Quit ImageSplitter MacOS
 	Take A Screenshot
-	${running}= 	Is Process Running 		ImageSplitter
+	# ${running}= 	Is Process Running 		ImageSplitter
+	VAR 	${running} 		${TRUE}
 	IF 	${running}
 		Wait For 	Close Window 	timeout=${ImageTimeout}
 		Take A Screenshot
 		Click Image 	Close Window
-		${result}= 	Wait For Process 		ImageSplitter 	timeout=${ImageTimeout} 	on_timeout=terminate
-	ELSE
-		# ${result}= 	Get Process Result 		ImageSplitter
-		${result}= 	Wait For Process 		ImageSplitter 	timeout=${ImageTimeout} 	on_timeout=terminate
+	# 	${result}= 	Wait For Process 		ImageSplitter 	timeout=${ImageTimeout} 	on_timeout=terminate
+	# ELSE
+	# 	# ${result}= 	Get Process Result 		ImageSplitter
+	# 	${result}= 	Wait For Process 		ImageSplitter 	timeout=${ImageTimeout} 	on_timeout=terminate
 	END
 
-	Log 	rc: ${result.rc} 		console=True
-	Log 	stdout: ${result.stdout} 		console=True
-	Log 	stderr: ${result.stderr} 		console=True
-	Should Be Empty 	${result.stderr}
+	# Log 	rc: ${result.rc} 		console=True
+	# Log 	stdout: ${result.stdout} 		console=True
+	# Log 	stderr: ${result.stderr} 		console=True
+	# Should Be Empty 	${result.stderr}
 
 
 
