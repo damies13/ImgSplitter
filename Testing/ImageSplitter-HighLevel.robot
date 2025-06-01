@@ -22,7 +22,7 @@ Set Platform By Python
 
 Install ImageSplitter
 	Set Platform
-	Import Resource 	ImageSplitter-${platform}.robot
+	Import Resource 	${CURDIR}${/}ImageSplitter-${platform}.robot
 	Run Keyword 	Install ImageSplitter ${platform}
 
 Run ImageSplitter
