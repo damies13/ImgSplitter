@@ -1,11 +1,6 @@
 *** Settings ***
-Library 	ImageHorizonLibrary 	reference_folder=${IMAGE_DIR}
-Library 	OperatingSystem
-Library 	Process
 
 *** Variables ***
-${IMAGE_DIR} 	${CURDIR}${/}Images${/}${platform}
-
 
 *** Keywords ***
 Install ImageSplitter MacOS
@@ -26,6 +21,6 @@ Open Finder To
 	Start Process 	open 	${path} 	alias=${alias}
 
 Mount ImageSplitter Image
-	
+
 	Take A Screenshot
 	Fail    Install ImageSplitter MacOS Not Completed

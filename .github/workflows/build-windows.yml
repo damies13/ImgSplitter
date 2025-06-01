@@ -124,7 +124,7 @@ jobs:
           Testing/ImgSplitter.robot
 
       - name: Archive Manager dmg
-        if: steps.run_build.outputs.files == 'true'
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: Tests-Logs-windows-v${{ env.appversion }}

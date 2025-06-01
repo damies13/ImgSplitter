@@ -1,5 +1,10 @@
 *** Settings ***
-Library    imagehorizonlibrary
+Library 	ImageHorizonLibrary 	reference_folder=${IMAGE_DIR}
+Library 	OperatingSystem
+Library 	Process
+
+*** Variables ***
+${IMAGE_DIR} 	${CURDIR}${/}Images${/}${platform}
 
 *** Keywords ***
 
@@ -18,7 +23,6 @@ Set Platform By Python
 	IF 	"${system}" == "Linux"
 		Set Suite Variable    ${platform}    ubuntu
 	END
-
 
 Install ImageSplitter
 	Set Platform
