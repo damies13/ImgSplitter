@@ -116,7 +116,7 @@ jobs:
             import re
             import requests
 
-            github = https://github.com
+            github = 'https://github.com'
 
             release_page = requests.get(github + '/pal1000/mesa-dist-win/releases/latest')
 

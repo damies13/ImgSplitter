@@ -58,6 +58,10 @@ Mount ImageSplitter Image
 	# Take A Screenshot
 	# Fail    Mount ImageSplitter Image Not Completed
 
+	Directory Should Exist 		/Volumes
+	@{items}= 	List Directory 	/Volumes 	*.* 		absolute
+	Directory Should Exist 		/Volumes/ImageSplitter
+	@{items}= 	List Directory 	/Volumes/ImageSplitter 	*.* 		absolute
 	Directory Should Exist 		${SRCE_APP_DIR}
 
 Quit ImageSplitter MacOS
