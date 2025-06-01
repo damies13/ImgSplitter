@@ -10,7 +10,7 @@ ${PROJECT_DIR} 		${CURDIR}${/}..
 ${ImageTimeout} 	${60}
 
 ${APPS_DIR} 		/Applications
-${SRCE_APP_DIR} 	/Volumes/ImageSplitter/ImageSplitter.app
+${SRCE_APP_DIR} 	/Volumes/ImgSplitter/ImgSplitter.app
 ${DEST_APP_DIR} 	${APPS_DIR}/ImageSplitter.app
 
 
@@ -59,10 +59,23 @@ Mount ImageSplitter Image
 	# Fail    Mount ImageSplitter Image Not Completed
 
 	Directory Should Exist 		/Volumes
-	@{items}= 	List Directory 	/Volumes 	*.* 		absolute
+	@{items}= 	List Directory 	/Volumes 	* 		absolute
+
+	Directory Should Exist 		~/Desktop
+	@{items}= 	List Directory 	~/Desktop 	* 		absolute
+
+	${Desktop Path}= 	Normalize Path 		~/Desktop
+
+	Directory Should Exist 		${Desktop Path}
+	@{items}= 	List Directory 	${Desktop Path} 	* 		absolute
+
+	Directory Should Exist 		${Desktop Path}/ImgSplitter
+	@{items}= 	List Directory 	${Desktop Path}/ImgSplitter 	*.* 		absolute
+
+
 	Wait Until Created 		/Volumes/ImageSplitter 	timeout=${ImageTimeout}
-	Directory Should Exist 		/Volumes/ImageSplitter
-	@{items}= 	List Directory 	/Volumes/ImageSplitter 	*.* 		absolute
+	Directory Should Exist 		/Volumes/ImgSplitter
+	@{items}= 	List Directory 	/Volumes/ImgSplitter 	*.* 		absolute
 	Directory Should Exist 		${SRCE_APP_DIR}
 
 Quit ImageSplitter MacOS
