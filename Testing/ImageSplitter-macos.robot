@@ -9,19 +9,29 @@ ${PROJECT_DIR} 		${CURDIR}${/}..
 # ${ImageTimeout} 	${600}
 ${ImageTimeout} 	${60}
 
+${APPS_DIR} 		/Applications
+${SRCE_APP_DIR} 	/Volumes/ImageSplitter/ImageSplitter.app
+${DEST_APP_DIR} 	${APPS_DIR}/ImageSplitter.app
+
+
 *** Keywords ***
 Install ImageSplitter MacOS
 	Open Finder To 		${PROJECT_DIR}
 
 	Mount ImageSplitter Image
 
-	Sleep    2
-	Take A Screenshot
-	Fail    Install ImageSplitter MacOS Not Completed
+	Copy Directory 		${SRCE_APP_DIR} 	${APPS_DIR}
+	Directory Should Exist 		${DEST_APP_DIR}
+
+	# Sleep    2
+	# Take A Screenshot
+	# Fail    Install ImageSplitter MacOS Not Completed
 
 Run ImageSplitter MacOS
-	Fail    Run ImageSplitter MacOS Not Implimented
-
+	# Fail    Run ImageSplitter MacOS Not Implimented
+	Start Process 	open 	${DEST_APP_DIR} 	alias=ImageSplitter
+	Sleep    ${ImageTimeout}
+	Take A Screenshot
 
 Open Finder To
 	[Arguments] 	${path} 	${alias}=Finder
@@ -43,9 +53,12 @@ Mount ImageSplitter Image
 	${dmg file}= 	Get ImageSplitter Image Path
 	Start Process 	open 	${dmg file} 	alias=dmg
 
-	Sleep    2
-	Take A Screenshot
-	Fail    Mount ImageSplitter Image Not Completed
+	Wait For 	ImageSplitter App 	timeout=${ImageTimeout}
+	# Sleep    2
+	# Take A Screenshot
+	# Fail    Mount ImageSplitter Image Not Completed
+
+	Directory Should Exist 		${SRCE_APP_DIR}
 
 Quit ImageSplitter MacOS
 	Take A Screenshot

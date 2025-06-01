@@ -38,7 +38,8 @@ Quit ImageSplitter Windows
 		Click Image 	Close Window
 		${result}= 	Wait For Process 		ImageSplitter 	timeout=${ImageTimeout} 	on_timeout=terminate
 	ELSE
-		${result}= 	Get Process Result 		ImageSplitter
+		# ${result}= 	Get Process Result 		ImageSplitter
+		${result}= 	Wait For Process 		ImageSplitter 	timeout=${ImageTimeout} 	on_timeout=terminate
 	END
 
 	Log 	rc: ${result.rc} 		console=True
