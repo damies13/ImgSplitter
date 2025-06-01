@@ -7,6 +7,7 @@ Library 	Process
 ${IMAGE_DIR} 	${CURDIR}${/}Images${/}${platform}
 # %userprofile%\Desktop
 ${DESKTOP_DIR} 	%{USERPROFILE}${/}Desktop
+${ImageTimeout} 	${600}
 
 *** Keywords ***
 Install ImageSplitter Windows
@@ -15,13 +16,16 @@ Install ImageSplitter Windows
 
 Run ImageSplitter Windows
 	Start Process 	${DESKTOP_DIR}${/}ImgSplitter.exe 	alias=ImageSplitter
-	Sleep    2
-	Is Process Running 	ImageSplitter
+	# Sleep    2
+	${running}= 	Is Process Running 		ImageSplitter
+	Sleep    ${ImageTimeout}
+	${running}= 	Is Process Running 		ImageSplitter
 	Take A Screenshot
 
 Open Explorer To
 	[Arguments] 	${path} 	${alias}=Explorer
 	# https://stackoverflow.com/questions/59521456/how-to-open-finder-with-python-on-mac
 	Start Process 	explorer 	${path} 	alias=${alias}
-	Sleep    2
+	Wait For 	Explorer Quick Access 	timeout=${ImageTimeout}
+	# Sleep    2
 	Take A Screenshot

@@ -158,7 +158,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: dmg-macos-v${{ env.appversion }}
-          path: ImgSplitter_v${{ env.appversion }}.dmg
+          # path: ImgSplitter_v${{ env.appversion }}.dmg
       - name: Display structure of downloaded files
         run: ls -R
 
@@ -176,7 +176,7 @@ jobs:
           sed -i.bak 's/img src=".*Tests-Logs/img src="./g' ./output.xml
           rebot ./output.xml
 
-      - name: Archive Manager dmg
+      - name: Archive Manager Tests-Logs
         if: '!cancelled()'
         uses: actions/upload-artifact@v4
         with:

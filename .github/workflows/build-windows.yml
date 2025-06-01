@@ -108,7 +108,7 @@ jobs:
       - name: install pip packages - robot
         run: pip install -r Testing/requirements-test.txt
 
-      - name: Archive Manager dmg
+      - name: Archive Manager dist
         uses: actions/download-artifact@v4
         with:
           name: ImgSplitter_v${{ env.appversion }}
@@ -130,7 +130,7 @@ jobs:
           sed --in-place=.bak 's/img src=".*Tests-Logs/img src="./g' ./output.xml
           rebot ./output.xml
 
-      - name: Archive Manager dmg
+      - name: Archive Manager Tests-Logs
         if: '!cancelled()'
         uses: actions/upload-artifact@v4
         with:
