@@ -53,7 +53,7 @@ Mount ImageSplitter Image
 	${dmg file}= 	Get ImageSplitter Image Path
 	Start Process 	open 	${dmg file} 	alias=dmg
 
-	Wait For 	ImageSplitter App 	timeout=${ImageTimeout}
+	Wait For 	ImgSplitter App 	timeout=${ImageTimeout}
 	# Sleep    2
 	# Take A Screenshot
 	# Fail    Mount ImageSplitter Image Not Completed

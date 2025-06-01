@@ -108,6 +108,64 @@ jobs:
       - name: install pip packages - robot
         run: pip install -r Testing/requirements-test.txt
 
+      # https://github.com/pal1000/mesa-dist-win/releases
+      # https://github.com/pal1000/mesa-dist-win/releases/download/25.0.7/mesa3d-25.0.7-release-msvc.7z
+      - name: get mesa download url
+        shell: python
+        run: |
+            import re
+            import requests
+
+            github = https://github.com
+
+            release_page = requests.get(github + '/pal1000/mesa-dist-win/releases/latest')
+
+            assets_url = re.findall("src=\"([^\"]*expanded_assets[^\"]*)", release_page.text)[0]
+            print("assets_url:", assets_url)
+
+            assets_page = requests.get(assets_url)
+
+            release_msvc_url = re.findall("href=\"([^\"]*release-msvc\\.7z)", assets_page.text)[0]
+            print("release_msvc_url:", release_msvc_url)
+
+            release_msvc_filename = re.findall("href=\"[^\"]*(mesa3d-[\d\\.]+-release-msvc\\.7z)", assets_page.text)[0]
+            print("release_msvc_filename:", release_msvc_filename)
+
+            release_msvc_url = github + release_msvc_url
+
+            print("release_msvc_url:", release_msvc_url)
+
+            env_file = os.getenv('GITHUB_ENV')
+            with open(env_file, "a") as myfile:
+                myfile.write("release_msvc_url={}\n".format(release_msvc_url))
+                myfile.write("release_msvc_filename={}\n".format(release_msvc_filename))
+
+      - name: Download mesa
+        uses: valitydev/action-download-file@v1
+        with:
+          url: ${{ env.release_msvc_url }}
+          target-path: mesa
+
+      - name: Display structure of downloaded files
+        run: ls -R mesa
+
+      - name: list mesa archive
+        uses: edgarrc/action-7z@v1
+        with:
+            args: 7z l mesa\${{ env.release_msvc_filename }}
+
+      - name: extract mesa
+        uses: edgarrc/action-7z@v1
+        with:
+            args: 7z -e mesa\${{ env.release_msvc_filename }}
+
+      - name: Display structure of extracted files
+        run: ls -R mesa
+
+      # - name: install mesa
+      #   run: some_command.exe
+
+
       - name: Archive Manager dist
         uses: actions/download-artifact@v4
         with:
