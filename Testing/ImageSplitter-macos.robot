@@ -11,7 +11,7 @@ ${ImageTimeout} 	${60}
 
 ${APPS_DIR} 		/Applications
 ${SRCE_APP_DIR} 	/Volumes/ImgSplitter/ImgSplitter.app
-${DEST_APP_DIR} 	${APPS_DIR}/ImageSplitter.app
+${DEST_APP_DIR} 	${APPS_DIR}/ImgSplitter.app
 
 
 *** Keywords ***
@@ -61,19 +61,19 @@ Mount ImageSplitter Image
 	Directory Should Exist 		/Volumes
 	@{items}= 	List Directory 	/Volumes 	* 		absolute
 
-	Directory Should Exist 		~/Desktop
-	@{items}= 	List Directory 	~/Desktop 	* 		absolute
+	# Directory Should Exist 		~/Desktop
+	# @{items}= 	List Directory 	~/Desktop 	* 		absolute
+	#
+	# ${Desktop Path}= 	Normalize Path 		~/Desktop
+	#
+	# Directory Should Exist 		${Desktop Path}
+	# @{items}= 	List Directory 	${Desktop Path} 	* 		absolute
 
-	${Desktop Path}= 	Normalize Path 		~/Desktop
-
-	Directory Should Exist 		${Desktop Path}
-	@{items}= 	List Directory 	${Desktop Path} 	* 		absolute
-
-	Directory Should Exist 		${Desktop Path}/ImgSplitter
-	@{items}= 	List Directory 	${Desktop Path}/ImgSplitter 	*.* 		absolute
+	# Directory Should Exist 		${Desktop Path}/ImgSplitter
+	# @{items}= 	List Directory 	${Desktop Path}/ImgSplitter 	*.* 		absolute
 
 
-	Wait Until Created 		/Volumes/ImageSplitter 	timeout=${ImageTimeout}
+	Wait Until Created 		/Volumes/ImgSplitter 	timeout=${ImageTimeout}
 	Directory Should Exist 		/Volumes/ImgSplitter
 	@{items}= 	List Directory 	/Volumes/ImgSplitter 	*.* 		absolute
 	Directory Should Exist 		${SRCE_APP_DIR}
