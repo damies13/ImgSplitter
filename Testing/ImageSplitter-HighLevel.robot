@@ -1,10 +1,4 @@
 *** Settings ***
-Library 	ImageHorizonLibrary 	reference_folder=${IMAGE_DIR}
-Library 	OperatingSystem
-Library 	Process
-
-*** Variables ***
-${IMAGE_DIR} 	${CURDIR}${/}Images${/}${platform}
 
 *** Keywords ***
 
