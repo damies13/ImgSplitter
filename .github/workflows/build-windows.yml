@@ -183,7 +183,7 @@ jobs:
         #     args: 7z e mesa\${{ env.release_msvc_filename }}
         shell: cmd
         run: |
-            7z e mesa\${{ env.release_msvc_filename }}
+            7z x mesa\${{ env.release_msvc_filename }}
 
       - name: Display structure of extracted files
         run: ls -R mesa

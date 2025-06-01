@@ -29,14 +29,16 @@ Install ImageSplitter MacOS
 
 Run ImageSplitter MacOS
 	# Fail    Run ImageSplitter MacOS Not Implimented
-	# Start Process 	open 	${DEST_APP_DIR} 	alias=ImageSplitter
-	Wait For 	ImgSplitter App 	timeout=${ImageTimeout}
-	${location}= 	Locate 	ImgSplitter App
-	Move To 	${location}
-	Double Click
+	Start Process 	open 	${DEST_APP_DIR} 	alias=ImageSplitter
+	# Wait For 	ImgSplitter App 	timeout=${ImageTimeout}
+	# ${location}= 	Locate 	ImgSplitter App
+	# Move To 	${location}
+	# Double Click
 
-	Sleep    ${ImageTimeout * 10}
-	Take A Screenshot
+	FOR 	${i} 	IN RANGE 	20
+		Sleep    ${ImageTimeout / 2}
+		Take A Screenshot
+	END
 
 Open Finder To
 	[Arguments] 	${path} 	${alias}=Finder
