@@ -162,6 +162,12 @@ jobs:
       - name: Display structure of downloaded files
         run: ls -R
 
+      - name: Run Tests
+        id: robottest
+        run: >
+          robot Testing/ImgSplitter.robot
+
+
 
 
 
