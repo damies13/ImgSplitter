@@ -25,3 +25,6 @@ Install ImageSplitter
 
 Run ImageSplitter
 	Run Keyword 	Run ImageSplitter ${platform}
+
+Quit ImageSplitter
+	Run Keyword 	Quit ImageSplitter ${platform}

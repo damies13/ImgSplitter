@@ -1,12 +1,13 @@
 *** Settings ***
-Library 	ImageHorizonLibrary 	reference_folder=${IMAGE_DIR} 	screenshot_folder=${OUTPUT DIR}
+Library 	ImageHorizonLibrary 	reference_folder=${IMAGE_DIR} 	screenshot_folder=${OUTPUT DIR} 	 confidence=0.9
 Library 	OperatingSystem
 Library 	Process
 
 *** Variables ***
 ${IMAGE_DIR} 		${CURDIR}${/}Images${/}${platform}
 ${PROJECT_DIR} 		${CURDIR}${/}..
-${ImageTimeout} 	${600}
+# ${ImageTimeout} 	${600}
+${ImageTimeout} 	${60}
 
 *** Keywords ***
 Install ImageSplitter MacOS
@@ -45,3 +46,25 @@ Mount ImageSplitter Image
 	Sleep    2
 	Take A Screenshot
 	Fail    Mount ImageSplitter Image Not Completed
+
+Quit ImageSplitter MacOS
+	Take A Screenshot
+	${running}= 	Is Process Running 		ImageSplitter
+	IF 	${running}
+		Wait For 	Close Window 	timeout=${ImageTimeout}
+		Click Image 	Close Window
+		${result}= 	Wait For Process 		ImageSplitter 	timeout=${ImageTimeout} 	on_timeout=terminate
+	ELSE
+		${result}= 	Get Process Result 		ImageSplitter
+	END
+
+	Log 	rc: ${result.rc} 		console=True
+	Log 	stdout: ${result.stdout} 		console=True
+	Log 	stderr: ${result.stderr} 		console=True
+	Should Be Empty 	${result.stderr}
+
+
+
+
+
+#

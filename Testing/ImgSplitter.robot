@@ -8,3 +8,4 @@ Suite Setup 	Install ImageSplitter
 *** Test Cases ***
 Check ImageSplitter Runs
 	Run ImageSplitter
+	Quit ImageSplitter

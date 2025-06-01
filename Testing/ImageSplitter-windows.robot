@@ -1,5 +1,5 @@
 *** Settings ***
-Library 	ImageHorizonLibrary 	reference_folder=${IMAGE_DIR} 	screenshot_folder=${OUTPUT DIR}
+Library 	ImageHorizonLibrary 	reference_folder=${IMAGE_DIR} 	screenshot_folder=${OUTPUT DIR} 	 confidence=0.9
 Library 	OperatingSystem
 Library 	Process
 
@@ -7,7 +7,8 @@ Library 	Process
 ${IMAGE_DIR} 	${CURDIR}${/}Images${/}${platform}
 # %userprofile%\Desktop
 ${DESKTOP_DIR} 	%{USERPROFILE}${/}Desktop
-${ImageTimeout} 	${600}
+# ${ImageTimeout} 	${600}
+${ImageTimeout} 	${60}
 
 *** Keywords ***
 Install ImageSplitter Windows
@@ -19,7 +20,6 @@ Run ImageSplitter Windows
 	# Sleep    2
 	${running}= 	Is Process Running 		ImageSplitter
 	Sleep    ${ImageTimeout}
-	${running}= 	Is Process Running 		ImageSplitter
 	Take A Screenshot
 
 Open Explorer To
@@ -29,3 +29,21 @@ Open Explorer To
 	Wait For 	Explorer Quick Access 	timeout=${ImageTimeout}
 	# Sleep    2
 	Take A Screenshot
+
+Quit ImageSplitter Windows
+	Take A Screenshot
+	${running}= 	Is Process Running 		ImageSplitter
+	IF 	${running}
+		Wait For 	Close Window 	timeout=${ImageTimeout}
+		Click Image 	Close Window
+		${result}= 	Wait For Process 		ImageSplitter 	timeout=${ImageTimeout} 	on_timeout=terminate
+	ELSE
+		${result}= 	Get Process Result 		ImageSplitter
+	END
+
+	Log 	rc: ${result.rc} 		console=True
+	Log 	stdout: ${result.stdout} 		console=True
+	Log 	stderr: ${result.stderr} 		console=True
+	Should Be Empty 	${result.stderr}
+
+#
