@@ -12,6 +12,7 @@ Install ImageSplitter MacOS
 
 	Mount ImageSplitter Image
 
+	Sleep    2
 	Take A Screenshot
 	Fail    Install ImageSplitter MacOS Not Completed
 
@@ -23,8 +24,11 @@ Open Finder To
 	[Arguments] 	${path} 	${alias}=Finder
 	# https://stackoverflow.com/questions/59521456/how-to-open-finder-with-python-on-mac
 	Start Process 	open 	${path} 	alias=${alias}
+	Sleep    2
+	Take A Screenshot
 
 Mount ImageSplitter Image
 
+	Sleep    2
 	Take A Screenshot
 	Fail    Install ImageSplitter MacOS Not Completed
