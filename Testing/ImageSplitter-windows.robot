@@ -1,5 +1,5 @@
 *** Settings ***
-Library 	ImageHorizonLibrary 	reference_folder=${IMAGE_DIR}
+Library 	ImageHorizonLibrary 	reference_folder=${IMAGE_DIR} 	screenshot_folder=${OUTPUT DIR}
 Library 	OperatingSystem
 Library 	Process
 
