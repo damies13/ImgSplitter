@@ -55,11 +55,12 @@ Mount ImageSplitter Image
 
 	Wait For 	ImgSplitter App 	timeout=${ImageTimeout}
 	# Sleep    2
-	# Take A Screenshot
+	Take A Screenshot
 	# Fail    Mount ImageSplitter Image Not Completed
 
 	Directory Should Exist 		/Volumes
 	@{items}= 	List Directory 	/Volumes 	*.* 		absolute
+	Wait Until Created 		/Volumes/ImageSplitter 	timeout=${ImageTimeout}
 	Directory Should Exist 		/Volumes/ImageSplitter
 	@{items}= 	List Directory 	/Volumes/ImageSplitter 	*.* 		absolute
 	Directory Should Exist 		${SRCE_APP_DIR}

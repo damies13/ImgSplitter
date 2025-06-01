@@ -102,7 +102,7 @@ jobs:
           with open(env_file, "a") as myfile:
             myfile.write("appversion={}\n".format(__version__))
 
-      - name: install pip packages - macos
+      - name: install pip packages - windows
         run: pip install -r Testing/requirements-test-win.txt
 
       - name: install pip packages - robot
