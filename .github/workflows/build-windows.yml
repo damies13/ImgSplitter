@@ -163,9 +163,9 @@ jobs:
       - name: Install 7z
         uses: milliewalky/setup-7-zip@v2
         with:
-        # 7-Zip release tag from its GitHub Releases page e.g. 24.07.
-        # default: latest
-        tag: ""
+            # 7-Zip release tag from its GitHub Releases page e.g. 24.07.
+            # default: latest
+            tag: ""
 
       - name: list mesa archive
         # uses: edgarrc/action-7z@v1
