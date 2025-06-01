@@ -160,18 +160,32 @@ jobs:
       - name: Display structure of downloaded files
         run: ls -R mesa
 
-      - name: list mesa archive
-        uses: edgarrc/action-7z@v1
+      - name: Install 7z
+        uses: milliewalky/setup-7-zip@v2
         with:
-            args: 7z l mesa\${{ env.release_msvc_filename }}
+        # 7-Zip release tag from its GitHub Releases page e.g. 24.07.
+        # default: latest
+        tag: ""
+
+      - name: list mesa archive
+        # uses: edgarrc/action-7z@v1
+        # with:
+        #     args: 7z l mesa\${{ env.release_msvc_filename }}
+        run: |
+            7z l mesa\${{ env.release_msvc_filename }}
 
       - name: extract mesa
-        uses: edgarrc/action-7z@v1
-        with:
-            args: 7z e mesa\${{ env.release_msvc_filename }}
+        # uses: edgarrc/action-7z@v1
+        # with:
+        #     args: 7z e mesa\${{ env.release_msvc_filename }}
+        run: |
+            7z e mesa\${{ env.release_msvc_filename }}
 
       - name: Display structure of extracted files
         run: ls -R mesa
+
+      - name: Display structure of extracted files
+        run: ls mesa\${{ env.release_msvc_folder }}
 
       - name: install mesa
         shell: pwsh

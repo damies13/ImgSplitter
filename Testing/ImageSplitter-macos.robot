@@ -30,7 +30,7 @@ Install ImageSplitter MacOS
 Run ImageSplitter MacOS
 	# Fail    Run ImageSplitter MacOS Not Implimented
 	Start Process 	open 	${DEST_APP_DIR} 	alias=ImageSplitter
-	Sleep    ${ImageTimeout}
+	Sleep    ${ImageTimeout * 10}
 	Take A Screenshot
 
 Open Finder To
@@ -83,10 +83,12 @@ Quit ImageSplitter MacOS
 	${running}= 	Is Process Running 		ImageSplitter
 	IF 	${running}
 		Wait For 	Close Window 	timeout=${ImageTimeout}
+		Take A Screenshot
 		Click Image 	Close Window
 		${result}= 	Wait For Process 		ImageSplitter 	timeout=${ImageTimeout} 	on_timeout=terminate
 	ELSE
-		${result}= 	Get Process Result 		ImageSplitter
+		# ${result}= 	Get Process Result 		ImageSplitter
+		${result}= 	Wait For Process 		ImageSplitter 	timeout=${ImageTimeout} 	on_timeout=terminate
 	END
 
 	Log 	rc: ${result.rc} 		console=True

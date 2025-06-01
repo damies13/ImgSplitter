@@ -19,7 +19,7 @@ Run ImageSplitter Windows
 	Start Process 	${DESKTOP_DIR}${/}ImgSplitter.exe 	alias=ImageSplitter
 	# Sleep    2
 	${running}= 	Is Process Running 		ImageSplitter
-	Sleep    ${ImageTimeout}
+	Sleep    ${ImageTimeout * 10}
 	Take A Screenshot
 
 Open Explorer To
@@ -35,6 +35,7 @@ Quit ImageSplitter Windows
 	${running}= 	Is Process Running 		ImageSplitter
 	IF 	${running}
 		Wait For 	Close Window 	timeout=${ImageTimeout}
+		Take A Screenshot
 		Click Image 	Close Window
 		${result}= 	Wait For Process 		ImageSplitter 	timeout=${ImageTimeout} 	on_timeout=terminate
 	ELSE
