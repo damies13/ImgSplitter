@@ -151,7 +151,7 @@ jobs:
       - name: install pip packages - macos
         run: pip install -r Testing/requirements-test-mac.txt
 
-      - name: install pip packages - kivy
+      - name: install pip packages - robot
         run: pip install -r Testing/requirements-test.txt
 
       - name: Archive Manager dmg
