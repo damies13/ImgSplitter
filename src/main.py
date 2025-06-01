@@ -1,3 +1,10 @@
+import os, sys
+# print("__file__:", __file__)
+# appdir = os.path.dirname(__file__)
+# print("appdir:", appdir)
+sys.path.append(os.path.abspath(os.path.dirname(__file__)))
+
+
 import kivy
 kivy.require('2.3.0')
 
@@ -42,7 +49,6 @@ import datetime
 from threading import Thread
 from PIL import Image
 
-import os, sys
 from kivy.resources import resource_add_path, resource_find
 
 class ImgSplitterApp(MDApp):
