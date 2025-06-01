@@ -119,3 +119,52 @@ jobs:
         with:
           name: dmg-macos-v${{ env.appversion }}
           path: ImgSplitter_v${{ env.appversion }}.dmg
+
+  Test-MacOS:
+    runs-on: macos-latest
+    needs: Build-MacOS
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: setup python
+        uses: actions/setup-python@v5
+        with:
+          # python-version: "3.x"
+          python-version: "3.12"
+
+      - name: Get ImageSplitter Version Number
+        shell: python
+        run: |
+          import os
+          import sys
+          print("GITHUB_WORKSPACE:", os.getenv('GITHUB_WORKSPACE'))
+          sys.path.append(os.path.abspath(os.path.join(os.getenv('GITHUB_WORKSPACE'), "src")))
+          from __version__ import __version__
+
+          print("__version__:", __version__)
+
+          env_file = os.getenv('GITHUB_ENV')
+          with open(env_file, "a") as myfile:
+            myfile.write("appversion={}\n".format(__version__))
+
+      - name: install pip packages - macos
+        run: pip install -r Testing/requirements-test-mac.txt
+
+      - name: install pip packages - kivy
+        run: pip install -r Testing/requirements-test.txt
+
+      - name: Archive Manager dmg
+        uses: actions/download-artifact@v4
+        with:
+          name: dmg-macos-v${{ env.appversion }}
+          path: ImgSplitter_v${{ env.appversion }}.dmg
+      - name: Display structure of downloaded files
+        run: ls -R
+
+
+
+
+
+
+#
