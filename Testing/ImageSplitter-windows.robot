@@ -48,9 +48,12 @@ Quit ImageSplitter Windows
 	Log 	Quit ImageSplitter Windows 	console=True
 
 	${running}= 	Is Process Running 		ImageSplitter
+	Log 	Quit ImageSplitter - running: ${running} 	console=True
 	IF 	${running}
+		Log 	Wait For Close Window 	console=True
 		Wait For 	Close Window 	timeout=${ImageTimeout}
 		Take A Screenshot
+		Log 	Click Close Window 	console=True
 		Click Image 	Close Window
 		# ${result}= 	Wait For Process 		ImageSplitter 	timeout=${ImageTimeout} 	on_timeout=terminate
 	# 	${result}= 	Wait For Process 		ImageSplitter 	timeout=${ImageTimeout}
@@ -60,6 +63,7 @@ Quit ImageSplitter Windows
 	# 	${result}= 	Wait For Process 		ImageSplitter 	timeout=${ImageTimeout}
 	END
 
+	Log 	Last Take A Screenshot 	console=True
 	Take A Screenshot
 	# Log 	rc: ${result.rc} 		console=True
 	# Log 	stdout: ${result.stdout} 		console=True
