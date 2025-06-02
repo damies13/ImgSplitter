@@ -23,6 +23,7 @@ Install ImageSplitter MacOS
 	Copy Directory 		${SRCE_APP_DIR} 	${APPS_DIR}
 	Directory Should Exist 		${DEST_APP_DIR}
 
+	MacOS Security Authorise App 	${DEST_APP_DIR}
 	# Sleep    2
 	# Take A Screenshot
 	# Fail    Install ImageSplitter MacOS Not Completed
@@ -39,6 +40,17 @@ Run ImageSplitter MacOS
 		Sleep    ${ImageTimeout / 2}
 		Take A Screenshot
 	END
+
+MacOS Security Authorise App
+	[Arguments] 	${app_path}
+	# https://github.com/archimatetool/archi/issues/555
+	# xattr -r -d com.apple.quarantine /path/to/ImgSplitter.app
+	${result}= 	Run Process 	xattr 	${path} 	-r 	-d 	com.apple.quarantine 	${app_path}
+	Log 	rc: ${result.rc} 		console=True
+	Log 	stdout: ${result.stdout} 		console=True
+	Log 	stderr: ${result.stderr} 		console=True
+	Should Be Empty 	${result.stderr}
+
 
 Open Finder To
 	[Arguments] 	${path} 	${alias}=Finder
