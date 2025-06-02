@@ -51,7 +51,6 @@ MacOS Security Authorise App
 	Log 	stderr: ${result.stderr} 		console=True
 	Should Be Empty 	${result.stderr}
 
-
 Open Finder To
 	[Arguments] 	${path} 	${alias}=Finder
 	# https://stackoverflow.com/questions/59521456/how-to-open-finder-with-python-on-mac

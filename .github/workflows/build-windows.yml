@@ -192,7 +192,7 @@ jobs:
         run: ls mesa\${{ env.release_msvc_folder }}
 
       - name: install mesa
-        shell: pwsh
+        # shell: pwsh
         run: |
           cd mesa\${{ env.release_msvc_folder }}
           systemwidedeploy.cmd 1
