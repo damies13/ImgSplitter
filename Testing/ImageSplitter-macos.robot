@@ -39,8 +39,21 @@ Run ImageSplitter MacOS
 	Log    ${vars}
 	Log 	Run ImageSplitter MacOS 	console=True
 
+	Directory Should Exist 		${DEST_APP_DIR}
+
+	@{items}= 	List Directory 	${Desktop Path} 	* 		absolute
+	Log 	${items}
+
+	@{items}= 	List Directory 	${Desktop Path}/Contents 	* 		absolute
+	Log 	${items}
+
+	@{items}= 	List Directory 	${Desktop Path}/Contents/MacOS 	* 		absolute
+	Log 	${items}
+
+
 	# Fail    Run ImageSplitter MacOS Not Implimented
-	Start Process 	open 	-a 	${DEST_APP_DIR} 	alias=ImageSplitter 	shell=true
+	# Start Process 	open 	-a 	${DEST_APP_DIR} 	alias=ImageSplitter 	shell=true
+	Start Process 	${Desktop Path}/Contents/MacOS/ImgSplitter 	alias=ImageSplitter 	shell=true
 	# Wait For 	ImgSplitter App 	timeout=${ImageTimeout}
 	# ${location}= 	Locate 	ImgSplitter App
 	# Move To 	${location}

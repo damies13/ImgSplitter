@@ -217,7 +217,8 @@ jobs:
 
       - name: Try and fix images with relative path
         # if: '!cancelled()'
-        if: ${{ !cancelled() }}
+        # if: ${{ !cancelled() }}
+        if: ${{ always() }}
         run: |
           cd Tests-Logs
           sed --in-place=.bak 's/img src=".*Tests-Logs/img src="./g' ./output.xml
