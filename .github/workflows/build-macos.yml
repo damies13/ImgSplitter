@@ -148,6 +148,9 @@ jobs:
           with open(env_file, "a") as myfile:
             myfile.write("appversion={}\n".format(__version__))
 
+      - name: Install mesa - macos
+        run: brew install mesa
+
       - name: install pip packages - macos
         run: pip install -r Testing/requirements-test-mac.txt
 
