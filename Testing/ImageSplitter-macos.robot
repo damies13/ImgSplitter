@@ -36,7 +36,7 @@ Run ImageSplitter MacOS
 	# Move To 	${location}
 	# Double Click
 
-	FOR 	${i} 	IN RANGE 	20
+	FOR 	${i} 	IN RANGE 	10
 		Sleep    ${ImageTimeout / 2}
 		Take A Screenshot
 	END
@@ -45,7 +45,7 @@ MacOS Security Authorise App
 	[Arguments] 	${app_path}
 	# https://github.com/archimatetool/archi/issues/555
 	# xattr -r -d com.apple.quarantine /path/to/ImgSplitter.app
-	${result}= 	Run Process 	xattr 	-r 	-d 	com.apple.quarantine 	${app_path}
+	${result}= 	Run Process 	xattr 	-r 	-d 	com.apple.quarantine 	${app_path} 	shell=true
 	Log 	rc: ${result.rc} 		console=True
 	Log 	stdout: ${result.stdout} 		console=True
 	Log 	stderr: ${result.stderr} 		console=True
@@ -104,16 +104,18 @@ Quit ImageSplitter MacOS
 		Wait For 	Close Window 	timeout=${ImageTimeout}
 		Take A Screenshot
 		Click Image 	Close Window
-	# 	${result}= 	Wait For Process 		ImageSplitter 	timeout=${ImageTimeout} 	on_timeout=terminate
-	# ELSE
-	# 	# ${result}= 	Get Process Result 		ImageSplitter
-	# 	${result}= 	Wait For Process 		ImageSplitter 	timeout=${ImageTimeout} 	on_timeout=terminate
+		# ${result}= 	Wait For Process 		ImageSplitter 	timeout=${ImageTimeout} 	on_timeout=terminate
+		${result}= 	Wait For Process 		ImageSplitter 	timeout=${ImageTimeout}
+	ELSE
+		# ${result}= 	Get Process Result 		ImageSplitter
+		# ${result}= 	Wait For Process 		ImageSplitter 	timeout=${ImageTimeout} 	on_timeout=terminate
+		${result}= 	Wait For Process 		ImageSplitter 	timeout=${ImageTimeout}
 	END
 
-	# Log 	rc: ${result.rc} 		console=True
-	# Log 	stdout: ${result.stdout} 		console=True
-	# Log 	stderr: ${result.stderr} 		console=True
-	# Should Be Empty 	${result.stderr}
+	Log 	rc: ${result.rc} 		console=True
+	Log 	stdout: ${result.stdout} 		console=True
+	Log 	stderr: ${result.stderr} 		console=True
+	Should Be Empty 	${result.stderr}
 
 
 
