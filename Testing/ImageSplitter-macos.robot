@@ -17,6 +17,8 @@ ${DEST_APP_DIR} 	${APPS_DIR}/ImgSplitter.app
 *** Keywords ***
 Install ImageSplitter MacOS
 
+	${vars}= 	Get Variables
+	Log    ${vars}
 	Log 	Install ImageSplitter MacOS 	console=True
 
 	Open Finder To 		${PROJECT_DIR}
@@ -33,6 +35,8 @@ Install ImageSplitter MacOS
 
 Run ImageSplitter MacOS
 
+	${vars}= 	Get Variables
+	Log    ${vars}
 	Log 	Run ImageSplitter MacOS 	console=True
 
 	# Fail    Run ImageSplitter MacOS Not Implimented
@@ -54,15 +58,15 @@ MacOS Security Authorise App
 
 	# https://github.com/archimatetool/archi/issues/555
 	# xattr -r -d com.apple.quarantine /path/to/ImgSplitter.app
-	${result}= 	Run Process 	xattr 	-r 	-v 	-l 	${app_path} 	shell=true
-	Log 	rc: ${result.rc} 		console=True
-	Log 	stdout: ${result.stdout} 		console=True
-	Log 	stderr: ${result.stderr} 		console=True
-
-	${result}= 	Run Process 	xattr 	-r 	-v 	-p 	com.apple.quarantine 	${app_path} 	shell=true
-	Log 	rc: ${result.rc} 		console=True
-	Log 	stdout: ${result.stdout} 		console=True
-	Log 	stderr: ${result.stderr} 		console=True
+	# ${result}= 	Run Process 	xattr 	-r 	-v 	-l 	${app_path} 	shell=true
+	# Log 	rc: ${result.rc} 		console=True
+	# Log 	stdout: ${result.stdout} 		console=True
+	# Log 	stderr: ${result.stderr} 		console=True
+	#
+	# ${result}= 	Run Process 	xattr 	-r 	-v 	-p 	com.apple.quarantine 	${app_path} 	shell=true
+	# Log 	rc: ${result.rc} 		console=True
+	# Log 	stdout: ${result.stdout}
+	# Log 	stderr: ${result.stderr}
 
 	${result}= 	Run Process 	xattr 	-r 	-v 	-d 	com.apple.quarantine 	${app_path} 	shell=true
 	Log 	rc: ${result.rc} 		console=True
@@ -76,9 +80,9 @@ Open Finder To
 	Log 	Open Finder To ${path} 	console=True
 
 	# https://stackoverflow.com/questions/59521456/how-to-open-finder-with-python-on-mac
-	Start Process 	open 	${path} 	alias=${alias}
+	Start Process 	open 	-a 	${path} 	alias=${alias}
 	Wait For 	Finder Favorites 	timeout=${ImageTimeout}
-	# Sleep    2
+	Sleep    5
 	Take A Screenshot
 
 Get ImageSplitter Image Path
@@ -90,6 +94,17 @@ Get ImageSplitter Image Path
 	# Should Be True 		${files}
 	Should Be True 		${files} 	msg=no dmg files found in ${PROJECT_DIR}
 	RETURN 		${files}[0]
+
+# Run AppleScript Commands
+# 	[Arguments] 	@{Commands}
+#
+# 	osascript -e 'tell application "Finder"' -e 'get the name of every process whose visible is true' -e 'end tell'
+# 	osascript -e 'tell application "RawTherapee" to if it is running then quit'
+#
+# 	${result}= 	Run Process 	xattr 	-r 	-v 	-d 	com.apple.quarantine 	${app_path} 	shell=true
+# 	Log 	rc: ${result.rc} 		console=True
+# 	Log 	stdout: ${result.stdout} 		console=True
+# 	Log 	stderr: ${result.stderr} 		console=True
 
 Mount ImageSplitter Image
 

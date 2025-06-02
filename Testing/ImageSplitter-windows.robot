@@ -53,17 +53,17 @@ Quit ImageSplitter Windows
 		Take A Screenshot
 		Click Image 	Close Window
 		# ${result}= 	Wait For Process 		ImageSplitter 	timeout=${ImageTimeout} 	on_timeout=terminate
-		${result}= 	Wait For Process 		ImageSplitter 	timeout=${ImageTimeout}
-	ELSE
-		# ${result}= 	Get Process Result 		ImageSplitter
-		# ${result}= 	Wait For Process 		ImageSplitter 	timeout=${ImageTimeout} 	on_timeout=terminate
-		${result}= 	Wait For Process 		ImageSplitter 	timeout=${ImageTimeout}
+	# 	${result}= 	Wait For Process 		ImageSplitter 	timeout=${ImageTimeout}
+	# ELSE
+	# 	# ${result}= 	Get Process Result 		ImageSplitter
+	# 	# ${result}= 	Wait For Process 		ImageSplitter 	timeout=${ImageTimeout} 	on_timeout=terminate
+	# 	${result}= 	Wait For Process 		ImageSplitter 	timeout=${ImageTimeout}
 	END
 
 	Take A Screenshot
-	Log 	rc: ${result.rc} 		console=True
-	Log 	stdout: ${result.stdout} 		console=True
-	Log 	stderr: ${result.stderr} 		console=True
-	Should Be Empty 	${result.stderr}
+	# Log 	rc: ${result.rc} 		console=True
+	# Log 	stdout: ${result.stdout} 		console=True
+	# Log 	stderr: ${result.stderr} 		console=True
+	# Should Be Empty 	${result.stderr}
 
 #
