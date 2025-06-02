@@ -53,7 +53,7 @@ Run ImageSplitter MacOS
 
 	# Fail    Run ImageSplitter MacOS Not Implimented
 	# Start Process 	open 	-a 	${DEST_APP_DIR} 	alias=ImageSplitter 	shell=true
-	Start Process 	${Desktop Path}/Contents/MacOS/ImgSplitter 	alias=ImageSplitter 	shell=true
+	Start Process 	${DEST_APP_DIR}/Contents/MacOS/ImgSplitter 	alias=ImageSplitter 	shell=true
 	# Wait For 	ImgSplitter App 	timeout=${ImageTimeout}
 	# ${location}= 	Locate 	ImgSplitter App
 	# Move To 	${location}
