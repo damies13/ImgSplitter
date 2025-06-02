@@ -45,7 +45,7 @@ MacOS Security Authorise App
 	[Arguments] 	${app_path}
 	# https://github.com/archimatetool/archi/issues/555
 	# xattr -r -d com.apple.quarantine /path/to/ImgSplitter.app
-	${result}= 	Run Process 	xattr 	${path} 	-r 	-d 	com.apple.quarantine 	${app_path}
+	${result}= 	Run Process 	xattr 	-r 	-d 	com.apple.quarantine 	${app_path}
 	Log 	rc: ${result.rc} 		console=True
 	Log 	stdout: ${result.stdout} 		console=True
 	Log 	stderr: ${result.stderr} 		console=True
