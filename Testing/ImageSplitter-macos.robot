@@ -40,7 +40,7 @@ Run ImageSplitter MacOS
 	Log 	Run ImageSplitter MacOS 	console=True
 
 	# Fail    Run ImageSplitter MacOS Not Implimented
-	Start Process 	open 	${DEST_APP_DIR} 	alias=ImageSplitter 	shell=true
+	Start Process 	open 	-a 	${DEST_APP_DIR} 	alias=ImageSplitter 	shell=true
 	# Wait For 	ImgSplitter App 	timeout=${ImageTimeout}
 	# ${location}= 	Locate 	ImgSplitter App
 	# Move To 	${location}
@@ -80,7 +80,7 @@ Open Finder To
 	Log 	Open Finder To ${path} 	console=True
 
 	# https://stackoverflow.com/questions/59521456/how-to-open-finder-with-python-on-mac
-	Start Process 	open 	-a 	${path} 	alias=${alias}
+	Start Process 	open 	${path} 	alias=${alias}
 	Wait For 	Finder Favorites 	timeout=${ImageTimeout}
 	Sleep    5
 	Take A Screenshot
@@ -97,7 +97,7 @@ Get ImageSplitter Image Path
 
 # Run AppleScript Commands
 # 	[Arguments] 	@{Commands}
-#
+#	# https://github.com/actions/runner-images/issues/10329
 # 	osascript -e 'tell application "Finder"' -e 'get the name of every process whose visible is true' -e 'end tell'
 # 	osascript -e 'tell application "RawTherapee" to if it is running then quit'
 #
