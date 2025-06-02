@@ -41,13 +41,13 @@ Run ImageSplitter MacOS
 
 	Directory Should Exist 		${DEST_APP_DIR}
 
-	@{items}= 	List Directory 	${Desktop Path} 	* 		absolute
+	@{items}= 	List Directory 	${DEST_APP_DIR} 	* 		absolute
 	Log 	${items}
 
-	@{items}= 	List Directory 	${Desktop Path}/Contents 	* 		absolute
+	@{items}= 	List Directory 	${DEST_APP_DIR}/Contents 	* 		absolute
 	Log 	${items}
 
-	@{items}= 	List Directory 	${Desktop Path}/Contents/MacOS 	* 		absolute
+	@{items}= 	List Directory 	${DEST_APP_DIR}/Contents/MacOS 	* 		absolute
 	Log 	${items}
 
 
