@@ -16,6 +16,9 @@ ${DEST_APP_DIR} 	${APPS_DIR}/ImgSplitter.app
 
 *** Keywords ***
 Install ImageSplitter MacOS
+
+	Log 	Install ImageSplitter MacOS 	console=True
+
 	Open Finder To 		${PROJECT_DIR}
 
 	Mount ImageSplitter Image
@@ -29,8 +32,11 @@ Install ImageSplitter MacOS
 	# Fail    Install ImageSplitter MacOS Not Completed
 
 Run ImageSplitter MacOS
+
+	Log 	Run ImageSplitter MacOS 	console=True
+
 	# Fail    Run ImageSplitter MacOS Not Implimented
-	Start Process 	open 	${DEST_APP_DIR} 	alias=ImageSplitter
+	Start Process 	open 	${DEST_APP_DIR} 	alias=ImageSplitter 	shell=true
 	# Wait For 	ImgSplitter App 	timeout=${ImageTimeout}
 	# ${location}= 	Locate 	ImgSplitter App
 	# Move To 	${location}
@@ -43,9 +49,22 @@ Run ImageSplitter MacOS
 
 MacOS Security Authorise App
 	[Arguments] 	${app_path}
+
+	Log 	MacOS Security Authorise App ${app_path} 	console=True
+
 	# https://github.com/archimatetool/archi/issues/555
 	# xattr -r -d com.apple.quarantine /path/to/ImgSplitter.app
-	${result}= 	Run Process 	xattr 	-r 	-d 	com.apple.quarantine 	${app_path} 	shell=true
+	${result}= 	Run Process 	xattr 	-r 	-v 	-l 	${app_path} 	shell=true
+	Log 	rc: ${result.rc} 		console=True
+	Log 	stdout: ${result.stdout} 		console=True
+	Log 	stderr: ${result.stderr} 		console=True
+
+	${result}= 	Run Process 	xattr 	-r 	-v 	-p 	com.apple.quarantine 	${app_path} 	shell=true
+	Log 	rc: ${result.rc} 		console=True
+	Log 	stdout: ${result.stdout} 		console=True
+	Log 	stderr: ${result.stderr} 		console=True
+
+	${result}= 	Run Process 	xattr 	-r 	-v 	-d 	com.apple.quarantine 	${app_path} 	shell=true
 	Log 	rc: ${result.rc} 		console=True
 	Log 	stdout: ${result.stdout} 		console=True
 	Log 	stderr: ${result.stderr} 		console=True
@@ -53,6 +72,9 @@ MacOS Security Authorise App
 
 Open Finder To
 	[Arguments] 	${path} 	${alias}=Finder
+
+	Log 	Open Finder To ${path} 	console=True
+
 	# https://stackoverflow.com/questions/59521456/how-to-open-finder-with-python-on-mac
 	Start Process 	open 	${path} 	alias=${alias}
 	Wait For 	Finder Favorites 	timeout=${ImageTimeout}
@@ -60,6 +82,9 @@ Open Finder To
 	Take A Screenshot
 
 Get ImageSplitter Image Path
+
+	Log 	Get ImageSplitter Image Path 	console=True
+
 	@{files}= 	List Files In Directory 	${PROJECT_DIR} 	*.dmg 		absolute
 	Log 	Files: ${files} 		console=True
 	# Should Be True 		${files}
@@ -67,6 +92,8 @@ Get ImageSplitter Image Path
 	RETURN 		${files}[0]
 
 Mount ImageSplitter Image
+
+	Log 	Mount ImageSplitter Image 	console=True
 
 	${dmg file}= 	Get ImageSplitter Image Path
 	Start Process 	open 	${dmg file} 	alias=dmg
@@ -98,6 +125,9 @@ Mount ImageSplitter Image
 
 Quit ImageSplitter MacOS
 	Take A Screenshot
+
+	Log 	Quit ImageSplitter MacOS 	console=True
+
 	# ${running}= 	Is Process Running 		ImageSplitter
 	VAR 	${running} 		${TRUE}
 	IF 	${running}

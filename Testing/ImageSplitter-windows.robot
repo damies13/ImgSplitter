@@ -12,10 +12,16 @@ ${ImageTimeout} 	${60}
 
 *** Keywords ***
 Install ImageSplitter Windows
+	${vars}= 	Get Variables
+	Log    ${vars}
+	Log 	Install ImageSplitter Windows 	console=True
 	Copy File    ${CURDIR}${/}..${/}dist${/}ImgSplitter.exe    ${DESKTOP_DIR}
 	Open Explorer To 	${DESKTOP_DIR}
 
 Run ImageSplitter Windows
+	${vars}= 	Get Variables
+	Log    ${vars}
+	Log 	Run ImageSplitter Windows 	console=True
 	Start Process 	${DESKTOP_DIR}${/}ImgSplitter.exe 	alias=ImageSplitter
 	# Sleep    2
 	${running}= 	Is Process Running 		ImageSplitter
@@ -27,6 +33,9 @@ Run ImageSplitter Windows
 
 Open Explorer To
 	[Arguments] 	${path} 	${alias}=Explorer
+
+	Log 	Open Explorer To ${path} 	console=True
+
 	# https://stackoverflow.com/questions/59521456/how-to-open-finder-with-python-on-mac
 	Start Process 	explorer 	${path} 	alias=${alias}
 	Wait For 	Explorer Quick Access 	timeout=${ImageTimeout}
@@ -35,6 +44,9 @@ Open Explorer To
 
 Quit ImageSplitter Windows
 	Take A Screenshot
+
+	Log 	Quit ImageSplitter Windows 	console=True
+
 	${running}= 	Is Process Running 		ImageSplitter
 	IF 	${running}
 		Wait For 	Close Window 	timeout=${ImageTimeout}
