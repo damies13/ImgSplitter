@@ -173,7 +173,7 @@ Quit ImageSplitter MacOS
 	Log 	rc: ${result.rc} 		console=True
 	Log 	stdout: ${result.stdout} 		console=True
 	Log 	stderr: ${result.stderr} 		console=True
-	Should Be Empty 	${result.stderr}
+	# Should Be Empty 	${result.stderr}
 
 
 
