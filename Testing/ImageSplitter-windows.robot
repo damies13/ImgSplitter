@@ -32,10 +32,16 @@ Run ImageSplitter Windows
 	# Sleep    2
 	${running}= 	Is Process Running 		ImageSplitter
 
-	FOR 	${i} 	IN RANGE 	10
-		Sleep    ${ImageTimeout / 2}
-		Take A Screenshot
-	END
+	Wait For 	Heading Image Pixeels 	timeout=${ImageTimeout}
+
+	${location}= 	Locate 		Heading Image Pixeels
+	Move To 	${location}
+
+	Take A Screenshot
+	# FOR 	${i} 	IN RANGE 	10
+	# 	Sleep    ${ImageTimeout / 2}
+	# 	Take A Screenshot
+	# END
 
 Open Explorer To
 	[Arguments] 	${path} 	${alias}=Explorer
