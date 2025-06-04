@@ -59,7 +59,7 @@ Run ImageSplitter MacOS
 	# Move To 	${location}
 	# Double Click
 
-	FOR 	${i} 	IN RANGE 	10
+	FOR 	${i} 	IN RANGE 	2
 		Sleep    ${ImageTimeout / 2}
 		Take A Screenshot
 	END

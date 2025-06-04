@@ -22,7 +22,9 @@ Install ImageSplitter Windows
 	# Log    ${vars}
 	Log 	Install ImageSplitter Windows 	console=True
 	Copy File    ${CURDIR}${/}..${/}dist${/}ImgSplitter.exe    ${DESKTOP_DIR}
-	Open Explorer To 	${DESKTOP_DIR}
+	# Now we minimise the windows runner we don't neeed to open explorer to see rge desktop
+	# Open Explorer To 	${DESKTOP_DIR}
+	Take A Screenshot
 
 Run ImageSplitter Windows
 	${vars}= 	Get Variables
