@@ -16,7 +16,16 @@
 		MDBoxLayout:
 			orientation: 'horizontal'
 			size_hint: (1, None)
-			height: 80
+
+			# https://kivy.org/doc/stable/api-kivy.metrics.html
+			# https://stackoverflow.com/questions/51845848/kivy-dynamically-alter-base-widget-property
+			# AppLogger.log("debug", "check_window_size", "KIVY_METRICS_DENSITY: ", os.environ['KIVY_METRICS_DENSITY'])
+			# 	Set the  KIVY_METRICS_DENSITY OS environment variable to values from 0.5 to 2.0 to test app behaviour with different screen scaling settings
+			# AppLogger.log("debug", "check_window_size", "KIVY_DPI: ", os.environ['KIVY_DPI'])
+			# AppLogger.log("debug", "check_window_size", "KIVY_METRICS_FONTSCALE: ", os.environ['KIVY_METRICS_FONTSCALE'])
+			# height: 80
+			# use the kivy sp() function to auto handle the screen scaling factor
+			height: sp(40)
 
 
 			MDRaisedButton:
@@ -76,13 +85,15 @@
 			# config pannel
 			MDBoxLayout:
 				size_hint: (None, 1)
-				width: 380
+				# width: 380
+				width: sp(190)
 				orientation: 'vertical'
 
 				# config tool box
 				MDBoxLayout:
 					size_hint: (1, None)
-					height: 500
+					# height: 500
+					height: sp(250)
 					orientation: 'vertical'
 
 					# canvas.before:
@@ -329,7 +340,8 @@
 				MDBoxLayout:
 					# size_hint: (1, 0.5)
 					size_hint: (1, None)
-					height: 50
+					# height: 50
+					height: sp(25)
 					orientation: 'horizontal'
 
 					# canvas.before:
@@ -361,7 +373,8 @@
 				MDBoxLayout:
 					# size_hint: (1, 0.5)
 					size_hint: (1, None)
-					height: 50
+					# height: 50
+					height: sp(25)
 					orientation: 'horizontal'
 
 					# canvas.before:
