@@ -51,13 +51,14 @@
 			valign: "top"
 
 			ScrollView:
-				size_hint: None, None
 				size_hint: (1, 1)
+				do_scroll_x: True
+				do_scroll_y: True
+				bar_width: 10
 
 				MDBoxLayout:
-				# FloatLayout:
 					id: img_canvas
-					# size_hint: (1, 1)
+					size_hint: (None, None)
 
 					canvas.before:
 						Color:
@@ -74,8 +75,6 @@
 						Rectangle:
 							id: img_canvas_img
 							source: root.img_src
-							# size: self.size
-							# pos: 0, 0
 							group: "image"
 
 					canvas.after:

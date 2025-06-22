@@ -559,6 +559,7 @@ class ImgSplitterWindow(MDBoxLayout):
 			AppLogger.log("debug", "update_img_data", "new_canvas_size:", new_canvas_size)
 
 			img_canvas_img.size = new_canvas_size
+			img_canvas.size = new_canvas_size
 
 			if is_animatable:
 				self.is_animated = img.is_animated
