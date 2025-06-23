@@ -52,6 +52,8 @@ from PIL import Image
 
 from kivy.resources import resource_add_path, resource_find
 
+from kivy.core.image import Image as CoreImage
+
 class ImgSplitterApp(MDApp):
 
 	appwindow = None
@@ -126,6 +128,8 @@ class ImgSplitterWindow(MDBoxLayout):
 	img_src = StringProperty('data/images/transperent.png')
 	src_dir = None
 
+	checkerboard = None
+
 	# status_bar = StringProperty('')
 	status_bar = StringProperty("Status Bar")
 
@@ -157,6 +161,12 @@ class ImgSplitterWindow(MDBoxLayout):
 		Window.bind(on_drop_file=self.handle_on_drop_file)
 		Window.bind(on_resize=self.check_window_size)
 
+		# create texture
+		# self.checkerboard_img = CoreImage("data/images/checkerboard_small.png")
+		self.checkerboard = CoreImage("data/images/checkerboard_small.png").texture
+		self.checkerboard.wrap = 'repeat'
+		img_canvas_bg = self.ids["img_canvas"].canvas.get_group('checkerboard')[0]
+		img_canvas_bg.texture = self.checkerboard
 
 		# self.tkroot = tk.Tk()
 
